@@ -64,7 +64,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
           </div>
         )}
         <pre
-          className={`bg-neutral-900 p-4 overflow-x-auto text-sm ${language ? "rounded-b-lg" : "rounded-lg"}`}
+          className={`bg-neutral-900 p-4 whitespace-pre-wrap break-words text-sm ${language ? "rounded-b-lg" : "rounded-lg"}`}
         >
           <code ref={codeRef} className={className} {...props}>
             {children}
@@ -103,7 +103,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 
             return (
               <code
-                className="bg-neutral-800 px-1.5 py-0.5 rounded text-orange-300 text-sm"
+                className="bg-neutral-800 px-1.5 py-0.5 rounded text-orange-300 text-sm break-words"
                 {...props}
               >
                 {children}
@@ -120,7 +120,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             }
 
             return (
-              <pre className="bg-neutral-800 p-4 rounded-lg overflow-x-auto mb-4 text-sm">
+              <pre className="bg-neutral-800 p-4 rounded-lg whitespace-pre-wrap break-words mb-4 text-sm">
                 {children}
               </pre>
             );
