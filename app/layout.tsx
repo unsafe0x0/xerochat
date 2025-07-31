@@ -1,17 +1,20 @@
 import type { Metadata } from "next";
-import { Public_Sans } from "next/font/google";
+import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "@/utils/ThemeProvider";
 
-const publicSans = Public_Sans({
-  weight: ["400", "500", "600", "700"],
+const geistSans = Geist({
+  variable: "--font-geist-sans",
+  subsets: ["latin"],
+});
+
+const geistMono = Geist_Mono({
+  variable: "--font-geist-mono",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "0GPT",
-  description: "0GPT - ChatGPT but Reimagined",
-  keywords: ["ChatGPT", "AI", "Artificial Intelligence", "Chat", "GPT"],
+  title: "XeroChat - AI Assistant",
+  description: "A beautiful dark chat interface powered by AI",
 };
 
 export default function RootLayout({
@@ -20,9 +23,11 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={publicSans.className}>
-        <ThemeProvider>{children}</ThemeProvider>
+    <html lang="en" className="dark">
+      <body
+        className={`${geistSans.variable} ${geistMono.variable} antialiased bg-[#1a1a1a] text-neutral-100 min-h-screen`}
+      >
+        {children}
       </body>
     </html>
   );
