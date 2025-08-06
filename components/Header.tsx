@@ -27,7 +27,7 @@ export default function Header({
   onSelectModel,
 }: HeaderProps) {
   return (
-    <header className="flex items-center justify-between p-4 border-b border-neutral-800 bg-[#1a1a1a]">
+    <header className="flex items-center justify-between px-4 py-[16px] border-b border-neutral-800 bg-[#1a1a1a] min-h-[72px]">
       <div className="flex items-center gap-4">
         <button
           onClick={onToggleSidebar}
@@ -60,11 +60,11 @@ export default function Header({
                 <button
                   key={model.id}
                   onClick={() => onSelectModel(model)}
-                  className={`w-full text-left px-3 py-2 mb-1 last:mb-0 rounded-md hover:bg-neutral-700 transition-colors cursor-pointer ${
-                    selectedModel.id === model.id ? "bg-neutral-700" : ""
+                  className={`w-full text-left px-3 py-2 mb-1 last:mb-0 rounded-md hover:bg-neutral-700/50 transition-colors cursor-pointer ${
+                    selectedModel.id === model.id ? "bg-neutral-800 text-sm" : ""
                   }`}
                 >
-                  <div className="font-medium text-white text-xs">
+                  <div className="font-medium text-white text-sm">
                     {model.name}
                   </div>
                   <div className="text-xs text-neutral-400 mt-0.5">

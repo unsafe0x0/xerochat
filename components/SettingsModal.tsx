@@ -22,7 +22,7 @@ export default function SettingsModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-[#171717] border border-neutral-700 rounded-lg w-full max-w-md">
+      <div className="bg-[#1a1a1a] border border-neutral-700 rounded-lg w-full max-w-md">
         <div className="flex items-center justify-between p-4 border-b border-neutral-700">
           <h2 className="text-lg font-semibold">Settings</h2>
           <button

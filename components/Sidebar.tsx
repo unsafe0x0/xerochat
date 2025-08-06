@@ -39,13 +39,13 @@ export default function Sidebar({
 }: SidebarProps) {
   return (
     <div
-      className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-50 w-80 bg-[#171717] border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
+      className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-50 w-80 bg-[#1a1a1a] border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
     >
       <div className="flex flex-col h-full">
-        <div className="p-4 border-b border-neutral-800">
+        <div className="px-4 py-[16px] border-b border-neutral-800 flex items-center min-h-[72px]">
           <button
             onClick={onNewChat}
-            className="flex items-center gap-2 w-full px-4 py-2 text-neutral-100 bg-neutral-800 rounded-lg hover:bg-neutral-900 transition-colors font-medium cursor-pointer"
+            className="flex items-center gap-2 w-full px-4 py-2 text-neutral-100 bg-neutral-800 rounded-lg hover:bg-neutral-700 transition-colors text-sm font-medium cursor-pointer"
           >
             <Plus size={16} />
             New Chat
@@ -70,9 +70,9 @@ export default function Sidebar({
                 <span className="truncate flex-1 mr-2">{chat.title}</span>
                 <button
                   onClick={(e) => onDeleteChat(chat.id, e)}
-                  className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-orange-400 transition-all p-1 cursor-pointer"
+                  className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-red-400 transition-all p-1 cursor-pointer"
                 >
-                  <Trash2 size={12} />
+                  <Trash2 size={14} />
                 </button>
               </div>
             ))}
@@ -85,9 +85,12 @@ export default function Sidebar({
         </div>
 
         <div className="p-4 border-t border-neutral-800">
+          <p className="text-xs text-neutral-500 mb-2">
+            Save your api key here
+          </p>
           <button
             onClick={onOpenSettings}
-            className="flex items-center gap-2 w-full px-3 py-2 text-neutral-400 hover:text-white hover:bg-neutral-800 rounded-lg transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-3 py-2 text-neutral-400 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors cursor-pointer"
           >
             <Settings size={18} />
             Settings

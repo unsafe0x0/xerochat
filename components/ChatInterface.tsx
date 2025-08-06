@@ -6,6 +6,7 @@ import Header from "./Header";
 import MessageArea from "./MessageArea";
 import MessageInput from "./MessageInput";
 import SettingsModal from "./SettingsModal";
+import models from "@/data/Models";
 
 interface Message {
   id: string;
@@ -21,33 +22,6 @@ interface Chat {
   messages: Message[];
   timestamp: Date;
 }
-
-const models = [
-  {
-    id: "meta-llama/llama-4-scout-17b-16e-instruct",
-    name: "Llama 4 Scout",
-    description:
-      "Meta’s high-performance instruction-following model with 131K context",
-  },
-  {
-    id: "gemma2-9b-it",
-    name: "Gemma 2 9B IT",
-    description:
-      "Google’s small instruction-tuned open-weight model, fast and efficient",
-  },
-  {
-    id: "deepseek-r1-distill-llama-70b",
-    name: "DeepSeek R1 Distill",
-    description:
-      "Open coding model tuned for completion, reasoning, and synthesis",
-  },
-  {
-    id: "qwen/qwen3-32b",
-    name: "Qwen3 32B",
-    description:
-      "Strong multilingual and reasoning capabilities, open-weight by Alibaba",
-  },
-];
 
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -197,8 +171,8 @@ export default function ChatInterface() {
             prev.map((msg) =>
               msg.id === assistantMessage.id
                 ? { ...msg, content: msg.content + chunk }
-                : msg,
-            ),
+                : msg
+            )
           );
         }
       }
@@ -277,8 +251,8 @@ export default function ChatInterface() {
             prev.map((msg) =>
               msg.id === assistantMessage.id
                 ? { ...msg, content: msg.content + chunk }
-                : msg,
-            ),
+                : msg
+            )
           );
         }
       }

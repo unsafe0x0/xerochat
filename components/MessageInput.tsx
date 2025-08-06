@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useRef } from "react";
-import { Send } from "lucide-react";
+import { SendHorizontal } from "lucide-react";
 
 interface MessageInputProps {
   input: string;
@@ -64,7 +64,7 @@ export default function MessageInput({
               disabled={!input.trim() || isLoading}
               className="flex-shrink-0 w-10 h-10 bg-white text-neutral-900 rounded-lg flex items-center justify-center hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
             >
-              <Send size={18} />
+              <SendHorizontal size={18} />
             </button>
           </div>
         </form>

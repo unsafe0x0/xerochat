@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     const systemPrompt = {
       role: "system",
       content:
-        "You are XeroChat, an intelligent and helpful AI assistant built for developers. Be concise, technically accurate, and straight to the point, do not include any suggestions regarding XeroChat.",
+        "You are XeroChat, an AI assistant that helps developers solve coding problems. Respond concisely, technically accurate, and straight to the point. Use Markdown for code, include only the necessary explanation, and ask clarifying questions when needed. Avoid speculation, hallucination, or off‑topic discussion. Do not mention or promote XeroChat itself.",
     };
 
     const finalMessages = [systemPrompt, ...messages];
@@ -43,8 +43,8 @@ export async function POST(req: Request) {
           console.error("Streaming error:", error);
           controller.enqueue(
             encoder.encode(
-              "Sorry, an error occurred while processing your request.",
-            ),
+              "Sorry, an error occurred while processing your request."
+            )
           );
         } finally {
           controller.close();
