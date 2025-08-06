@@ -2,13 +2,24 @@
 
 import React, { useRef } from "react";
 import { SendHorizontal } from "lucide-react";
+import ModelSelector from "./ModelSelector";
+
+interface Model {
+  id: string;
+  name: string;
+  description: string;
+}
 
 interface MessageInputProps {
   input: string;
   onInputChange: (value: string) => void;
   onSubmit: (e: React.FormEvent) => void;
   isLoading: boolean;
-  selectedModelName: string;
+  selectedModel: Model;
+  models: Model[];
+  isModelDropdownOpen: boolean;
+  onToggleModelDropdown: () => void;
+  onSelectModel: (model: Model) => void;
 }
 
 export default function MessageInput({
@@ -16,7 +27,11 @@ export default function MessageInput({
   onInputChange,
   onSubmit,
   isLoading,
-  selectedModelName,
+  selectedModel,
+  models,
+  isModelDropdownOpen,
+  onToggleModelDropdown,
+  onSelectModel,
 }: MessageInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -40,32 +55,47 @@ export default function MessageInput({
   }, [input]);
 
   return (
-    <div className="border-t border-neutral-800 bg-[#1a1a1a] p-4">
+    <div className="border-t border-neutral-800 bg-neutral-900 p-4">
       <div className="max-w-4xl mx-auto">
         <form onSubmit={onSubmit} className="relative">
-          <div className="flex items-end gap-3 p-4 bg-neutral-800 rounded-xl border border-neutral-700 focus-within:border-neutral-600">
-            <textarea
-              ref={textareaRef}
-              value={input}
-              onChange={(e) => onInputChange(e.target.value)}
-              placeholder="Message XeroChat..."
-              className="flex-1 bg-transparent text-white placeholder-neutral-400 resize-none outline-none min-h-[24px] max-h-[200px] leading-6"
-              rows={1}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" && !e.shiftKey) {
-                  e.preventDefault();
-                  onSubmit(e);
-                }
-              }}
-              onInput={handleTextareaInput}
-            />
-            <button
-              type="submit"
-              disabled={!input.trim() || isLoading}
-              className="flex-shrink-0 w-10 h-10 bg-white text-neutral-900 rounded-lg flex items-center justify-center hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
-            >
-              <SendHorizontal size={18} />
-            </button>
+          <div className="bg-neutral-900 rounded-xl border border-neutral-700 focus-within:border-neutral-600">
+            <div className="p-4">
+              <textarea
+                ref={textareaRef}
+                value={input}
+                onChange={(e) => onInputChange(e.target.value)}
+                placeholder="Message XeroChat..."
+                className="w-full bg-transparent text-white placeholder-neutral-400 resize-none outline-none min-h-[24px] max-h-[200px] leading-6"
+                rows={1}
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" && !e.shiftKey) {
+                    e.preventDefault();
+                    onSubmit(e);
+                  }
+                }}
+                onInput={handleTextareaInput}
+              />
+            </div>
+
+            <div className="flex items-center justify-between px-4 pb-4">
+              <ModelSelector
+                selectedModel={selectedModel}
+                models={models}
+                isModelDropdownOpen={isModelDropdownOpen}
+                onToggleModelDropdown={onToggleModelDropdown}
+                onSelectModel={onSelectModel}
+                variant="desktop"
+                className=""
+              />
+
+              <button
+                type="submit"
+                disabled={!input.trim() || isLoading}
+                className="w-10 h-10 bg-white text-neutral-900 rounded-lg flex items-center justify-center hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+              >
+                <SendHorizontal size={18} />
+              </button>
+            </div>
           </div>
         </form>
         <div className="text-xs text-neutral-500 mt-2 text-center">

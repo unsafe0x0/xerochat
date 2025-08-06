@@ -39,10 +39,13 @@ export default function Sidebar({
 }: SidebarProps) {
   return (
     <div
-      className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-50 w-80 bg-[#1a1a1a] border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
+      className={`${isSidebarOpen ? "translate-x-0" : "-translate-x-full"} fixed inset-y-0 left-0 z-50 w-80 bg-neutral-900 border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
     >
       <div className="flex flex-col h-full">
-        <div className="px-4 py-[16px] border-b border-neutral-800 flex items-center min-h-[72px]">
+        <div className="px-4 py-4 border-b border-neutral-800">
+          <h1 className="text-2xl font-semibold text-center mb-4 hidden lg:block">
+            XeroChat
+          </h1>
           <button
             onClick={onNewChat}
             className="flex items-center gap-2 w-full px-4 py-2 text-neutral-100 bg-neutral-800 rounded-lg hover:bg-neutral-700 transition-colors text-sm font-medium cursor-pointer"

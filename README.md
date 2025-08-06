@@ -3,13 +3,13 @@
 A modern, responsive AI chat interface built with Next.js and React. XeroChat provides a sleek ChatGPT-like experience with support for multiple AI models, conversation management, and real-time streaming responses.
 
 ![XeroChat Interface](https://img.shields.io/badge/Next.js-15.4.5-black)
-![React](https://img.shields.io/badge/React-19.1.0-blue)
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC)
 
 ## ✨ Features
 
 ### 🎯 Core Features
+
 - **Real-time AI Conversations** - Streaming responses with typing indicators
 - **Multiple AI Models** - Support for various models including Llama, GPT-OSS, and more
 - **Conversation Management** - Save, load, and delete chat histories
@@ -17,6 +17,7 @@ A modern, responsive AI chat interface built with Next.js and React. XeroChat pr
 - **Dark Theme** - Beautiful dark mode interface with neutral color palette
 
 ### 🛠️ Advanced Features
+
 - **Markdown Support** - Rich text rendering with syntax highlighting for code blocks
 - **Message Actions** - Copy, regenerate, and feedback options for each message
 - **Settings Modal** - Secure API key management with local storage
@@ -24,8 +25,9 @@ A modern, responsive AI chat interface built with Next.js and React. XeroChat pr
 - **Model Switching** - Easy switching between different AI models during conversations
 
 ### 🎨 UI/UX Features
+
 - **Clean Interface** - Minimalist design inspired by modern chat applications
-- **Perfect Alignment** - Pixel-perfect header and sidebar border alignment
+- **Responsive Model Selection** - Desktop inline selector, mobile top navbar placement
 - **Mobile Responsive** - Optimized for desktop, tablet, and mobile devices
 - **Accessibility** - Keyboard navigation and screen reader friendly
 
@@ -43,31 +45,35 @@ A modern, responsive AI chat interface built with Next.js and React. XeroChat pr
 ## 🚀 Getting Started
 
 ### Prerequisites
+
 - Node.js 18+ or Bun
 - A Groq API key ([Get one here](https://console.groq.com/))
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/unsafe0x0/xerochat.git
    cd xerochat
    ```
 
 2. **Install dependencies**
+
    ```bash
    # Using bun (recommended)
    bun install
-   
+
    # Or using npm
    npm install
    ```
 
 3. **Start the development server**
+
    ```bash
    # Using bun
    bun dev
-   
+
    # Or using npm
    npm run dev
    ```
@@ -87,38 +93,47 @@ XeroChat supports multiple AI models:
 - **GPT-OSS 20B** - OpenAI's open-weight model (20B parameters)
 - **GPT-OSS 120B** - OpenAI's powerful model (120B parameters)
 - **Llama 4 Scout** - Meta's high-performance instruction model
-- **Llama 3.3 70B** - Meta's versatile reasoning model
-- **Gemma 2 9B** - Google's efficient language model
-- **Mixtral 8x7B** - Mistral's mixture of experts model
+- **DeepSeek R1 Distill** - DeepSeek's efficient language model
 
 ## 📁 Project Structure
 
 ```
 xerochat/
 ├── app/                          # Next.js App Router
-│   ├── api/chat/route.ts        # Chat API endpoint
-│   ├── layout.tsx               # Root layout
-│   └── page.tsx                 # Home page
+│   ├── api/
+│   │   └── chat/
+│   │       └── route.ts         # Chat API endpoint with streaming support
+│   ├── favicon.ico              # App favicon
+│   ├── globals.css              # Global styles and Tailwind imports
+│   ├── layout.tsx               # Root layout with metadata
+│   └── page.tsx                 # Home page (main chat interface)
 ├── components/                   # React components
-│   ├── ChatInterface.tsx        # Main chat interface
-│   ├── Header.tsx               # Top navigation bar
-│   ├── Sidebar.tsx              # Chat history sidebar
-│   ├── MessageArea.tsx          # Message display area
-│   ├── MessageInput.tsx         # Message input form
-│   ├── MessageActions.tsx       # Message action buttons
-│   ├── MarkdownRenderer.tsx     # Markdown content renderer
-│   └── SettingsModal.tsx        # Settings configuration modal
+│   ├── ChatInterface.tsx        # Main chat interface orchestrator
+│   ├── Sidebar.tsx              # Chat history sidebar with XeroChat branding
+│   ├── MessageArea.tsx          # Message display area with responsive headers
+│   ├── MessageInput.tsx         # Message input form with integrated model selection
+│   ├── ModelSelector.tsx        # Reusable model selection dropdown component
+│   ├── MessageActions.tsx       # Message action buttons (copy, regenerate, feedback)
+│   ├── MarkdownRenderer.tsx     # Markdown content renderer with syntax highlighting
+│   └── SettingsModal.tsx        # Settings configuration modal for API keys
 ├── data/
 │   └── Models.tsx               # Available AI models configuration
-└── public/                      # Static assets
+├── bun.lock                     # Bun lockfile
+├── next.config.ts               # Next.js configuration
+├── package.json                 # Dependencies and scripts
+├── postcss.config.mjs           # PostCSS configuration for Tailwind
+├── README.md                    # Project documentation
+└── tsconfig.json                # TypeScript configuration
 ```
 
 ## 🔧 Configuration
 
 ### Environment Variables
+
 No environment variables required! XeroChat uses client-side API key storage for security and convenience.
 
 ### Customization
+
 - **Models**: Edit `data/Models.tsx` to add or modify available AI models
 - **Styling**: Modify Tailwind classes in components for custom theming
 - **API**: Customize the chat API in `app/api/chat/route.ts`
@@ -126,9 +141,9 @@ No environment variables required! XeroChat uses client-side API key storage for
 ## 🎯 Usage
 
 1. **Start a Conversation**: Click "New Chat" or start typing in the input field
-2. **Switch Models**: Use the dropdown in the header to select different AI models
+2. **Switch Models**: Use the dropdown button inside the message input area to select different AI models
 3. **Manage Chats**: View, load, or delete previous conversations from the sidebar
-4. **Message Actions**: 
+4. **Message Actions**:
    - Copy message content
    - Regenerate AI responses
    - Provide feedback (thumbs up/down)
@@ -160,6 +175,7 @@ const response = await fetch("/api/chat", {
 ## 🚀 Build & Deploy
 
 ### Build for Production
+
 ```bash
 # Using bun
 bun run build
@@ -169,6 +185,7 @@ npm run build
 ```
 
 ### Start Production Server
+
 ```bash
 # Using bun
 bun start
@@ -178,7 +195,9 @@ npm start
 ```
 
 ### Deploy
+
 Deploy easily on platforms like:
+
 - [Vercel](https://vercel.com/) (recommended for Next.js)
 - [Netlify](https://netlify.com/)
 - [Railway](https://railway.app/)
@@ -194,10 +213,6 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 📝 License
-
-This project is open source and available under the [MIT License](LICENSE).
-
 ## 🙏 Acknowledgments
 
 - [Next.js](https://nextjs.org/) for the amazing React framework
@@ -209,6 +224,7 @@ This project is open source and available under the [MIT License](LICENSE).
 ## 📞 Support
 
 If you have any questions or need help, please:
+
 - Open an issue on GitHub
 - Check existing discussions and issues
 - Review the documentation
@@ -217,4 +233,4 @@ If you have any questions or need help, please:
 
 **Built with ❤️ by unsafe0x0**
 
-*XeroChat - Where conversations meet cutting-edge AI technology*
+_XeroChat - Where conversations meet cutting-edge AI technology_

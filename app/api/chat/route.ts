@@ -43,8 +43,8 @@ export async function POST(req: Request) {
           console.error("Streaming error:", error);
           controller.enqueue(
             encoder.encode(
-              "Sorry, an error occurred while processing your request."
-            )
+              "Sorry, an error occurred while processing your request.",
+            ),
           );
         } finally {
           controller.close();

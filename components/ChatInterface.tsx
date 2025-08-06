@@ -2,7 +2,6 @@
 
 import React, { useState, useRef, useEffect } from "react";
 import Sidebar from "./Sidebar";
-import Header from "./Header";
 import MessageArea from "./MessageArea";
 import MessageInput from "./MessageInput";
 import SettingsModal from "./SettingsModal";
@@ -171,8 +170,8 @@ export default function ChatInterface() {
             prev.map((msg) =>
               msg.id === assistantMessage.id
                 ? { ...msg, content: msg.content + chunk }
-                : msg
-            )
+                : msg,
+            ),
           );
         }
       }
@@ -251,8 +250,8 @@ export default function ChatInterface() {
             prev.map((msg) =>
               msg.id === assistantMessage.id
                 ? { ...msg, content: msg.content + chunk }
-                : msg
-            )
+                : msg,
+            ),
           );
         }
       }
@@ -275,7 +274,7 @@ export default function ChatInterface() {
   };
 
   return (
-    <div className="flex h-screen bg-[#1a1a1a] text-neutral-100">
+    <div className="flex h-screen bg-neutral-900 text-neutral-100">
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         recentChats={recentChats}
@@ -292,8 +291,20 @@ export default function ChatInterface() {
         />
       )}
       <div className="flex-1 flex flex-col lg:ml-0">
-        <Header
-          onToggleSidebar={() => setIsSidebarOpen(true)}
+        <div className="flex-1 overflow-y-auto">
+          <MessageArea
+            messages={messages}
+            isLoading={isLoading}
+            messagesEndRef={messagesEndRef}
+            onRegenerateMessage={regenerateMessage}
+            onToggleSidebar={() => setIsSidebarOpen(true)}
+          />
+        </div>
+        <MessageInput
+          input={input}
+          onInputChange={setInput}
+          onSubmit={handleSubmit}
+          isLoading={isLoading}
           selectedModel={selectedModel}
           models={models}
           isModelDropdownOpen={isModelDropdownOpen}
@@ -304,21 +315,6 @@ export default function ChatInterface() {
             setSelectedModel(model);
             setIsModelDropdownOpen(false);
           }}
-        />
-        <div className="flex-1 overflow-y-auto">
-          <MessageArea
-            messages={messages}
-            isLoading={isLoading}
-            messagesEndRef={messagesEndRef}
-            onRegenerateMessage={regenerateMessage}
-          />
-        </div>
-        <MessageInput
-          input={input}
-          onInputChange={setInput}
-          onSubmit={handleSubmit}
-          isLoading={isLoading}
-          selectedModelName={selectedModel.name}
         />
       </div>
       <SettingsModal

@@ -18,22 +18,10 @@ const models = [
       "Meta’s high-performance instruction-following model with 131K context",
   },
   {
-    id: "gemma2-9b-it",
-    name: "Gemma 2 9B IT",
-    description:
-      "Google’s small instruction-tuned open-weight model, fast and efficient",
-  },
-  {
     id: "deepseek-r1-distill-llama-70b",
     name: "DeepSeek R1 Distill",
     description:
       "Open coding model tuned for completion, reasoning, and synthesis",
-  },
-  {
-    id: "qwen/qwen3-32b",
-    name: "Qwen3 32B",
-    description:
-      "Strong multilingual and reasoning capabilities, open-weight by Alibaba",
   },
 ];
 

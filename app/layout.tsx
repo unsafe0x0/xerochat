@@ -25,7 +25,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${primary.variable} ${secondary.variable} antialiased bg-[#1a1a1a] text-neutral-100 h-screen`}
+        className={`${primary.variable} ${secondary.variable} antialiased bg-neutral-900 text-neutral-100 h-screen`}
       >
         {children}
       </body>
