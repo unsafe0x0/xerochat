@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Public_Sans, Open_Sans } from "next/font/google";
 import "./globals.css";
+import { Analytics } from "@vercel/analytics/next";
 
 const primary = Public_Sans({
   variable: "--font-primary",
@@ -13,8 +14,47 @@ const secondary = Open_Sans({
 });
 
 export const metadata: Metadata = {
-  title: "XeroChat - AI Assistant",
-  description: "A beautiful dark chat interface powered by AI",
+  title: "XeroChat",
+  description:
+    "XeroChat – Modern AI chat interface built with Next.js. Supports GPT‑OSS, Llama, and more. Fast, responsive, and open source.",
+  keywords: [
+    "XeroChat",
+    "Unsafezero",
+    "Unsafe0x0",
+    "AI assistant",
+    "chat interface",
+    "Next.js AI app",
+    "GPT-OSS",
+    "Llama model chat",
+    "Groq API",
+    "real-time AI chat",
+    "dark mode assistant",
+    "open source chat UI",
+  ],
+  openGraph: {
+    title: "XeroChat",
+    description:
+      "Modern AI chat interface built with Next.js. Supports GPT‑OSS, Llama, and more. Fast, responsive, and open source.",
+    url: "https://xerochat.tech",
+    siteName: "XeroChat",
+    images: [
+      {
+        url: "https://xerochat.tech/og.png",
+        width: 1200,
+        height: 630,
+        alt: "XeroChat OpenGraph Image",
+      },
+    ],
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "XeroChat",
+    description:
+      "Modern AI chat interface built with Next.js. Supports GPT‑OSS, Llama, and more. Fast, responsive, and open source.",
+    images: ["https://xerochat.tech/og.png"],
+    creator: "@unsafe0x0",
+  },
 };
 
 export default function RootLayout({
@@ -28,6 +68,7 @@ export default function RootLayout({
         className={`${primary.variable} ${secondary.variable} antialiased bg-neutral-900 text-neutral-100 h-screen`}
       >
         {children}
+        <Analytics />
       </body>
     </html>
   );

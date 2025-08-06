@@ -86,14 +86,14 @@ export default function MessageArea({
   return (
     <div className="flex flex-col h-full">
       {onToggleSidebar && (
-        <div className="lg:hidden flex items-center p-4 border-b border-neutral-800">
+        <div className="lg:hidden flex items-center justify-between p-2 border-b border-neutral-800">
+          <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
           <button
             onClick={onToggleSidebar}
             className="text-neutral-400 hover:text-white cursor-pointer"
           >
-            <Menu size={24} />
+            <Menu size={28} />
           </button>
-          <h1 className="ml-4 text-xl font-semibold">XeroChat</h1>
         </div>
       )}
 
@@ -102,10 +102,16 @@ export default function MessageArea({
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex gap-4 group ${message.role === "user" ? "justify-end" : "justify-start"}`}
+              className={`flex gap-4 group ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
             >
               <div
-                className={`flex-1 min-w-0 ${message.role === "user" ? "flex flex-col items-end" : "flex flex-col items-start"}`}
+                className={`flex-1 min-w-0 ${
+                  message.role === "user"
+                    ? "flex flex-col items-end"
+                    : "flex flex-col items-start"
+                }`}
               >
                 {message.images && message.images.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-2">
@@ -122,7 +128,11 @@ export default function MessageArea({
 
                 {message.content && (
                   <div
-                    className={`max-w-none ${message.role === "user" ? "bg-neutral-800 rounded-lg p-4" : ""}`}
+                    className={`max-w-none ${
+                      message.role === "user"
+                        ? "bg-neutral-800 rounded-lg p-4"
+                        : ""
+                    }`}
                   >
                     {message.role === "assistant" ? (
                       <MarkdownRenderer content={message.content} />

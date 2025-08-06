@@ -23,7 +23,6 @@ body {
   padding: 0;
 }
 
-/* Custom scrollbar */
 ::-webkit-scrollbar {
   width: 6px;
 }
@@ -41,7 +40,6 @@ body {
   background: #525252;
 }
 
-/* Markdown styles */
 .markdown-content {
   color: #e5e5e5;
   line-height: 1.6;
