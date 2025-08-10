@@ -1,11 +1,34 @@
 import { OpenAI } from "openai";
+import { streamText } from "ai";
+import { createGoogleGenerativeAI } from "@ai-sdk/google";
 
 export async function POST(req: Request) {
   try {
     const { messages, model, accessToken } = await req.json();
+    if (!accessToken) return new Response("API key is required", { status: 400 });
 
-    if (!accessToken) {
-      return new Response("API key is required", { status: 400 });
+    const systemPrompt = {
+      role: "system",
+      content:
+        `You are XeroChat, a developer-focused AI assistant.
+          - Always introduce yourself as "XeroChat" if the user asks who you are.
+          - Respond concisely, with technically accurate and direct answers.
+          - Use Markdown for code blocks.
+          - Provide only the necessary explanation, no filler.
+          - Ask clarifying questions if needed.
+          - Avoid speculation, hallucination, or unrelated topics.
+          - Do not describe your capabilities unless directly asked.`,
+    };
+
+    const finalMessages = [systemPrompt, ...messages];
+
+    if (model && model.toLowerCase().includes("gemini")) {
+      const gemini = createGoogleGenerativeAI({ apiKey: accessToken });
+      const result = await streamText({
+        model: gemini(model || "gemini-1.5-flash-latest"),
+        messages: finalMessages,
+      });
+      return result.toTextStreamResponse();
     }
 
     const client = new OpenAI({
@@ -13,16 +36,8 @@ export async function POST(req: Request) {
       apiKey: accessToken,
     });
 
-    const systemPrompt = {
-      role: "system",
-      content:
-        "You are XeroChat, an AI assistant that helps developers solve coding problems. Respond concisely, technically accurate, and straight to the point. Use Markdown for code, include only the necessary explanation, and ask clarifying questions when needed. Avoid speculation, hallucination, or off‑topic discussion. Do not mention or promote XeroChat itself.",
-    };
-
-    const finalMessages = [systemPrompt, ...messages];
-
     const stream = await client.chat.completions.create({
-      model: model || "meta-llama/llama-4-scout-17b-16e-instruct",
+      model: model || "openai/gpt-oss-20b",
       messages: finalMessages,
       stream: true,
       max_tokens: 4096,
@@ -35,17 +50,10 @@ export async function POST(req: Request) {
         try {
           for await (const chunk of stream) {
             const content = chunk.choices?.[0]?.delta?.content || "";
-            if (content) {
-              controller.enqueue(encoder.encode(content));
-            }
+            if (content) controller.enqueue(encoder.encode(content));
           }
-        } catch (error) {
-          console.error("Streaming error:", error);
-          controller.enqueue(
-            encoder.encode(
-              "Sorry, an error occurred while processing your request.",
-            ),
-          );
+        } catch {
+          controller.enqueue(encoder.encode("Sorry, an error occurred while processing your request."));
         } finally {
           controller.close();
         }
@@ -59,8 +67,7 @@ export async function POST(req: Request) {
         Connection: "keep-alive",
       },
     });
-  } catch (error) {
-    console.error("API error:", error);
+  } catch {
     return new Response("Internal Server Error", { status: 500 });
   }
 }

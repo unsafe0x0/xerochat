@@ -6,16 +6,20 @@ import Link from "next/link";
 
 interface SettingsModalProps {
   isOpen: boolean;
-  accessToken: string;
-  onTokenChange: (value: string) => void;
+  apiKeyGroq: string;
+  onApiKeyGroqChange: (value: string) => void;
+  apiKeyGemini: string;
+  onApiKeyGeminiChange: (value: string) => void;
   onSave: () => void;
   onClose: () => void;
 }
 
 export default function SettingsModal({
   isOpen,
-  accessToken,
-  onTokenChange,
+  apiKeyGroq,
+  onApiKeyGroqChange,
+  apiKeyGemini,
+  onApiKeyGeminiChange,
   onSave,
   onClose,
 }: SettingsModalProps) {
@@ -37,19 +41,42 @@ export default function SettingsModal({
         <div className="p-4 space-y-4">
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-2">
-              Access Token
+              API key Groq
             </label>
             <input
               type="password"
-              value={accessToken}
-              onChange={(e) => onTokenChange(e.target.value)}
-              placeholder="Enter your Access token..."
+              value={apiKeyGroq}
+              onChange={(e) => onApiKeyGroqChange(e.target.value)}
+              placeholder="Enter your Groq API key..."
               className="w-full px-3 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
             />
             <p className="text-xs text-neutral-400 mt-1">
-              Required for API access. Get your token from{" "}
+              Required for API access. Get your API key from{" "}
               <Link
                 href="https://console.groq.com/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-orange-400 hover:underline"
+              >
+                here
+              </Link>
+            </p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-neutral-300 mb-2">
+              API key Gemini
+            </label>
+            <input
+              type="password"
+              value={apiKeyGemini}
+              onChange={(e) => onApiKeyGeminiChange(e.target.value)}
+              placeholder="Enter your Gemini API key..."
+              className="w-full px-3 py-2 bg-neutral-800 border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
+            />
+            <p className="text-xs text-neutral-400 mt-1">
+              Required for API access. Get your API key from{" "}
+              <Link
+                href="https://console.cloud.google.com/generative-ai"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-orange-400 hover:underline"

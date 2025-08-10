@@ -12,6 +12,18 @@ const models = [
       "OpenAI’s powerful open-weight model with 120 billion parameters, ideal for complex tasks",
   },
   {
+    id: "gemini-2.5-pro",
+    name: "Gemini 2.5 Pro",
+    description:
+      "High-quality reasoning model for complex tasks from Gemini",
+  },
+  {
+    id: "gemini-2.5-flash", 
+    name: "Gemini 2.5 Flash",
+    description:
+      "Fast, cost-efficient Gemini model for quick responses",
+  },
+  {
     id: "meta-llama/llama-4-scout-17b-16e-instruct",
     name: "Llama 4 Scout",
     description:

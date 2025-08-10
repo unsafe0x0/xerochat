@@ -22,18 +22,26 @@ interface Chat {
   timestamp: Date;
 }
 
+interface Model {
+  id: string;
+  name: string;
+  description: string;
+  [k: string]: any;
+}
+
 export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
-  const [selectedModel, setSelectedModel] = useState(models[0]);
+  const [selectedModel, setSelectedModel] = useState<Model>(models[0] as Model);
   const [isModelDropdownOpen, setIsModelDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [accessToken, setAccessToken] = useState("");
+  const [apiKeyGroq, setApiKeyGroq] = useState("");
+  const [apiKeyGemini, setApiKeyGemini] = useState("");
   const [recentChats, setRecentChats] = useState<Chat[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
-  const messagesEndRef = useRef<HTMLDivElement>(null);
+  const messagesEndRef = useRef<HTMLDivElement | null>(null);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
@@ -44,22 +52,28 @@ export default function ChatInterface() {
   }, [messages]);
 
   useEffect(() => {
-    const savedToken = localStorage.getItem("access_token");
-    if (savedToken) {
-      setAccessToken(savedToken);
-    }
+    const savedApiKeyGroq = localStorage.getItem("apiKeyGroq");
+    if (savedApiKeyGroq) setApiKeyGroq(savedApiKeyGroq);
+
+    const savedApiKeyGemini = localStorage.getItem("apiKeyGemini");
+    if (savedApiKeyGemini) setApiKeyGemini(savedApiKeyGemini);
 
     const savedChats = localStorage.getItem("recent_chats");
     if (savedChats) {
-      const parsedChats = JSON.parse(savedChats).map((chat: any) => ({
-        ...chat,
-        timestamp: new Date(chat.timestamp),
-        messages: chat.messages.map((msg: any) => ({
-          ...msg,
-          timestamp: new Date(msg.timestamp),
-        })),
-      }));
-      setRecentChats(parsedChats);
+      try {
+        const parsedChats = JSON.parse(savedChats).map((chat: any) => ({
+          ...chat,
+          timestamp: new Date(chat.timestamp),
+          messages: chat.messages.map((msg: any) => ({
+            ...msg,
+            timestamp: new Date(msg.timestamp),
+          })),
+        }));
+        setRecentChats(parsedChats);
+      } catch (err) {
+        console.error("Failed to parse saved chats", err);
+        localStorage.removeItem("recent_chats");
+      }
     }
   }, []);
 
@@ -95,8 +109,8 @@ export default function ChatInterface() {
     setIsSidebarOpen(false);
   };
 
-  const deleteChat = (chatId: string, e: React.MouseEvent) => {
-    e.stopPropagation();
+  const deleteChat = (chatId: string, e?: React.MouseEvent) => {
+    if (e) e.stopPropagation();
     const updatedChats = recentChats.filter((chat) => chat.id !== chatId);
     setRecentChats(updatedChats);
     saveChatsToStorage(updatedChats);
@@ -106,13 +120,14 @@ export default function ChatInterface() {
     }
   };
 
-  const saveaccessToken = () => {
-    localStorage.setItem("access_token", accessToken);
+  const saveAccessToken = () => {
+    localStorage.setItem("apiKeyGroq", apiKeyGroq);
+    localStorage.setItem("apiKeyGemini", apiKeyGemini);
     setIsSettingsOpen(false);
   };
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSubmit = async (e?: React.FormEvent) => {
+    e?.preventDefault();
     if (!input.trim() || isLoading) return;
 
     const userMessage: Message = {
@@ -122,7 +137,8 @@ export default function ChatInterface() {
       timestamp: new Date(),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const updatedMessages = [...messages, userMessage];
+    setMessages(updatedMessages);
     setInput("");
     setIsLoading(true);
 
@@ -131,18 +147,15 @@ export default function ChatInterface() {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          messages: [
-            ...messages.map((m) => ({
-              role: m.role,
-              content: m.content,
-            })),
-            {
-              role: "user",
-              content: input,
-            },
-          ],
+          messages: updatedMessages.map((m) => ({
+            role: m.role,
+            content: m.content,
+            images: m.images,
+          })),
           model: selectedModel.id,
-          accessToken: accessToken,
+          accessToken: selectedModel.id.toLowerCase().includes("gemini")
+            ? apiKeyGemini
+            : apiKeyGroq,
         }),
       });
 
@@ -164,8 +177,7 @@ export default function ChatInterface() {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-
-          const chunk = decoder.decode(value);
+          const chunk = decoder.decode(value, { stream: true });
           setMessages((prev) =>
             prev.map((msg) =>
               msg.id === assistantMessage.id
@@ -180,7 +192,7 @@ export default function ChatInterface() {
       setMessages((prev) => [
         ...prev,
         {
-          id: (Date.now() + 1).toString(),
+          id: (Date.now() + 2).toString(),
           content: "Sorry, I encountered an error. Please try again.",
           role: "assistant",
           timestamp: new Date(),
@@ -222,7 +234,9 @@ export default function ChatInterface() {
         body: JSON.stringify({
           messages: conversationHistory,
           model: selectedModel.id,
-          accessToken: accessToken,
+          accessToken: selectedModel.id.toLowerCase().includes("gemini")
+            ? apiKeyGemini
+            : apiKeyGroq,
         }),
       });
 
@@ -244,8 +258,7 @@ export default function ChatInterface() {
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
-
-          const chunk = decoder.decode(value);
+          const chunk = decoder.decode(value, { stream: true });
           setMessages((prev) =>
             prev.map((msg) =>
               msg.id === assistantMessage.id
@@ -309,19 +322,22 @@ export default function ChatInterface() {
           models={models}
           isModelDropdownOpen={isModelDropdownOpen}
           onToggleModelDropdown={() =>
-            setIsModelDropdownOpen(!isModelDropdownOpen)
+            setIsModelDropdownOpen((s) => !s)
           }
-          onSelectModel={(model) => {
+          onSelectModel={(model: Model) => {
             setSelectedModel(model);
             setIsModelDropdownOpen(false);
           }}
         />
       </div>
+
       <SettingsModal
         isOpen={isSettingsOpen}
-        accessToken={accessToken}
-        onTokenChange={setAccessToken}
-        onSave={saveaccessToken}
+        apiKeyGroq={apiKeyGroq}
+        apiKeyGemini={apiKeyGemini}
+        onApiKeyGroqChange={setApiKeyGroq}
+        onApiKeyGeminiChange={setApiKeyGemini}
+        onSave={saveAccessToken}
         onClose={() => setIsSettingsOpen(false)}
       />
     </div>

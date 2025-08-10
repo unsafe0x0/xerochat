@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Bot, User, Menu } from "lucide-react";
+import { Menu } from "lucide-react";
 import MarkdownRenderer from "./MarkdownRenderer";
 import MessageActions from "./MessageActions";
 
@@ -44,11 +44,6 @@ export default function MessageArea({
         )}
 
         <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-          <div className="bg-orange-500/10 rounded-full p-4 mb-6">
-            <div className="w-12 h-12 flex items-center justify-center">
-              <span className="text-orange-400 text-2xl">✨</span>
-            </div>
-          </div>
           <h2 className="text-2xl font-semibold mb-2">Welcome to XeroChat</h2>
           <p className="text-neutral-400 mb-8 max-w-md">
             Your AI assistant is ready to help. Choose a model below and start a
@@ -102,16 +97,14 @@ export default function MessageArea({
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex gap-4 group ${
-                message.role === "user" ? "justify-end" : "justify-start"
-              }`}
+              className={`flex gap-4 group ${message.role === "user" ? "justify-end" : "justify-start"
+                }`}
             >
               <div
-                className={`flex-1 min-w-0 ${
-                  message.role === "user"
+                className={`flex-1 min-w-0 ${message.role === "user"
                     ? "flex flex-col items-end"
                     : "flex flex-col items-start"
-                }`}
+                  }`}
               >
                 {message.images && message.images.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-2">
@@ -128,11 +121,10 @@ export default function MessageArea({
 
                 {message.content && (
                   <div
-                    className={`max-w-none ${
-                      message.role === "user"
+                    className={`max-w-none ${message.role === "user"
                         ? "bg-neutral-800 rounded-lg p-4"
                         : ""
-                    }`}
+                      }`}
                   >
                     {message.role === "assistant" ? (
                       <MarkdownRenderer content={message.content} />
@@ -155,9 +147,10 @@ export default function MessageArea({
             <div className="flex gap-4 justify-start">
               <div className="flex-1">
                 <div className="flex items-center gap-1">
-                  <div className="w-2 h-2 bg-neutral-400 rounded-full animate-pulse"></div>
-                  <div className="w-2 h-2 bg-neutral-400 rounded-full animate-pulse delay-75"></div>
-                  <div className="w-2 h-2 bg-neutral-400 rounded-full animate-pulse delay-150"></div>
+                  <p className="text-sm text-neutral-400">Thinking</p>
+                  <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse"></div>
+                  <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse delay-75"></div>
+                  <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse delay-150"></div>
                 </div>
               </div>
             </div>
