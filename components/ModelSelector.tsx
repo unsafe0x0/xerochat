@@ -53,8 +53,8 @@ export default function ModelSelector({
 
   const dropdownPositionClasses =
     variant === "mobile"
-      ? "bottom-full mb-2 left-0 w-64"
-      : "bottom-full mb-2 left-0 w-64";
+      ? "bottom-full mb-2 left-0"
+      : "bottom-full mb-2 left-0";
 
   return (
     <div ref={dropdownRef} className={`relative ${className}`}>
@@ -86,12 +86,12 @@ export default function ModelSelector({
                   selectedModel.id === model.id ? "bg-neutral-700 text-sm" : ""
                 }`}
               >
-                <div className="font-medium text-white text-xs">
+                <div className="font-medium text-white text-xs whitespace-nowrap">
                   {model.name}
                 </div>
-                <div className="text-xs text-neutral-400 mt-0.5">
+                {/* <div className="text-xs text-neutral-400 mt-0.5">
                   {model.description}
-                </div>
+                </div> */}
               </button>
             ))}
           </div>

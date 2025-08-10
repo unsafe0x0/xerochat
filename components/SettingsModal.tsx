@@ -76,7 +76,7 @@ export default function SettingsModal({
             <p className="text-xs text-neutral-400 mt-1">
               Required for API access. Get your API key from{" "}
               <Link
-                href="https://console.cloud.google.com/generative-ai"
+                href="https://console.cloud.google.com/"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="text-orange-400 hover:underline"
