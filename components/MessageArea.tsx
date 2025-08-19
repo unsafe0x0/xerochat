@@ -147,7 +147,6 @@ export default function MessageArea({
             <div className="flex gap-4 justify-start">
               <div className="flex-1">
                 <div className="flex items-center gap-1">
-                  <p className="text-sm text-neutral-400">Thinking</p>
                   <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse"></div>
                   <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse delay-75"></div>
                   <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse delay-150"></div>

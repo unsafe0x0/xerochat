@@ -303,8 +303,8 @@ export default function ChatInterface() {
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
-      <div className="flex-1 flex flex-col lg:ml-0">
-        <div className="flex-1 overflow-y-auto">
+  <div className="flex-1 flex flex-col">
+  <div className="flex-1 overflow-y-auto pb-40 relative"> 
           <MessageArea
             messages={messages}
             isLoading={isLoading}
@@ -312,23 +312,22 @@ export default function ChatInterface() {
             onRegenerateMessage={regenerateMessage}
             onToggleSidebar={() => setIsSidebarOpen(true)}
           />
+
+          <MessageInput
+            input={input}
+            onInputChange={setInput}
+            onSubmit={handleSubmit}
+            isLoading={isLoading}
+            selectedModel={selectedModel}
+            models={models}
+            isModelDropdownOpen={isModelDropdownOpen}
+            onToggleModelDropdown={() => setIsModelDropdownOpen((s) => !s)}
+            onSelectModel={(model: Model) => {
+              setSelectedModel(model);
+              setIsModelDropdownOpen(false);
+            }}
+          />
         </div>
-        <MessageInput
-          input={input}
-          onInputChange={setInput}
-          onSubmit={handleSubmit}
-          isLoading={isLoading}
-          selectedModel={selectedModel}
-          models={models}
-          isModelDropdownOpen={isModelDropdownOpen}
-          onToggleModelDropdown={() =>
-            setIsModelDropdownOpen((s) => !s)
-          }
-          onSelectModel={(model: Model) => {
-            setSelectedModel(model);
-            setIsModelDropdownOpen(false);
-          }}
-        />
       </div>
 
       <SettingsModal

@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Plus, Settings, Trash2, Github } from "lucide-react";
+import { SquarePen, Settings, Trash2, Github } from "lucide-react";
 import Link from "next/link";
 
 interface Message {
@@ -42,7 +42,7 @@ export default function Sidebar({
     <div
       className={`${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } fixed inset-y-0 left-0 z-50 w-80 bg-neutral-900 border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
+  } fixed inset-y-0 left-0 z-50 w-64 bg-neutral-900 border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
     >
       <div className="flex flex-col h-full">
         <div className="px-4 py-4 border-b border-neutral-800">
@@ -51,9 +51,9 @@ export default function Sidebar({
           </h1>
           <button
             onClick={onNewChat}
-            className="flex items-center gap-2 w-full px-3 py-2 text-neutral-800 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors cursor-pointer"
           >
-            <Plus size={18} />
+            <SquarePen size={18} />
             New Chat
           </button>
         </div>
@@ -67,7 +67,7 @@ export default function Sidebar({
               <div
                 key={chat.id}
                 onClick={() => onLoadChat(chat)}
-                className={`group flex items-center justify-between px-3 py-2 rounded-lg text-sm cursor-pointer transition-colors hover:bg-neutral-700 ${
+                className={`group flex items-center justify-between px-3 py-1.5 rounded-lg text-sm cursor-pointer transition-colors hover:bg-neutral-700 ${
                   currentChatId === chat.id
                     ? "bg-neutral-700"
                     : "bg-neutral-800"
@@ -96,7 +96,7 @@ export default function Sidebar({
           </p>
           <button
             onClick={onOpenSettings}
-            className="flex items-center gap-2 w-full px-3 py-2 text-neutral-400 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors cursor-pointer mb-2"
+            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-400 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors cursor-pointer mb-2"
           >
             <Settings size={18} />
             Settings
@@ -104,7 +104,7 @@ export default function Sidebar({
           <Link
             href={"https://github.com/unsafe0x0/xerochat"}
             target="_blank"
-            className="flex items-center gap-2 w-full px-3 py-2 text-neutral-800 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-neutral-100 hover:bg-neutral-200 rounded-lg transition-colors cursor-pointer"
           >
             <Github size={18} />
             GitHub

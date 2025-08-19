@@ -55,10 +55,10 @@ export default function MessageInput({
   }, [input]);
 
   return (
-    <div className="border-t border-neutral-800 bg-neutral-900 p-4">
-      <div className="max-w-4xl mx-auto">
+    <div className="absolute left-0 right-0 bottom-4 z-50 pointer-events-none">
+      <div className="max-w-4xl mx-auto pointer-events-auto">
         <form onSubmit={onSubmit} className="relative">
-          <div className="bg-neutral-900 rounded-xl border border-neutral-700 focus-within:border-neutral-600">
+          <div className="bg-neutral-900/95 rounded-2xl border border-neutral-700 shadow-lg backdrop-blur-sm focus-within:border-neutral-600">
             <div className="p-4">
               <textarea
                 ref={textareaRef}
