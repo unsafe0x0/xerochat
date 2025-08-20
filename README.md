@@ -104,8 +104,6 @@ You can add or modify models in `data/Models.tsx`.
 xerochat/
 ├── app/                          # Next.js App Router
 │   ├── api/
-│   │   ├── chat/
-│   │   │   └── route.ts         # Chat API endpoint with streaming support
 │   │   └── open-router/
 │   │       └── route.ts         # Open Router API endpoint
 │   ├── globals.css              # Global styles and Tailwind imports

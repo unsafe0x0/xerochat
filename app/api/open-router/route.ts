@@ -31,7 +31,7 @@ export async function POST(req: Request) {
     });
 
     const stream = await client.chat.completions.create({
-      model: model || "openrouter/openai/gpt-oss-20b:free",
+      model: model || "openai/gpt-oss-20b:free",
       messages: finalMessages,
       stream: true,
       max_tokens: 4096,
