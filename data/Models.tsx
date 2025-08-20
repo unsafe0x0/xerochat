@@ -1,39 +1,33 @@
 const models = [
   {
-    id: "openai/gpt-oss-20b",
+    id: "openai/gpt-oss-20b:free",
     name: "GPT-OSS 20B",
     description:
       "OpenAI’s open-weight model with 20 billion parameters, optimized for performance",
   },
   {
-    id: "openai/gpt-oss-120b",
-    name: "GPT-OSS 120B",
+    id: "z-ai/glm-4.5-air:free",
+    name: "GLM-4.5 Air",
     description:
-      "OpenAI’s powerful open-weight model with 120 billion parameters, ideal for complex tasks",
+      "A lightweight and efficient model from Z-AI, optimized for real-time applications",
   },
   {
-    id: "gemini-2.5-pro",
-    name: "Gemini 2.5 Pro",
+    id: "deepseek/deepseek-r1:free",
+    name: "DeepSeek R1",
     description:
-      "High-quality reasoning model for complex tasks from Gemini",
+      "A versatile model from DeepSeek, optimized for a wide range of tasks including chat and code generation",
   },
   {
-    id: "gemini-2.5-flash", 
-    name: "Gemini 2.5 Flash",
+    id: "qwen/qwen3-14b:free",
+    name: "Qwen 3",
     description:
-      "Fast, cost-efficient Gemini model for quick responses",
+      "A powerful model from Qwen, optimized for a wide range of tasks including chat and code generation",
   },
   {
-    id: "meta-llama/llama-4-scout-17b-16e-instruct",
-    name: "Llama 4 Scout",
+    id: "microsoft/mai-ds-r1:free",
+    name: "MAI-DS R1",
     description:
-      "Meta’s high-performance instruction-following model with 131K context",
-  },
-  {
-    id: "deepseek-r1-distill-llama-70b",
-    name: "DeepSeek R1 Distill",
-    description:
-      "Open coding model tuned for completion, reasoning, and synthesis",
+      "A model from Microsoft, optimized for a wide range of tasks including chat and code generation",
   },
 ];
 

@@ -1,14 +1,14 @@
 import type { Metadata } from "next";
-import { Public_Sans, Open_Sans } from "next/font/google";
+import { Inter, Roboto } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 
-const primary = Public_Sans({
+const primary = Inter({
   variable: "--font-primary",
   subsets: ["latin"],
 });
 
-const secondary = Open_Sans({
+const secondary = Roboto({
   variable: "--font-secondary",
   subsets: ["latin"],
 });
@@ -26,7 +26,7 @@ export const metadata: Metadata = {
     "Next.js AI app",
     "GPT-OSS",
     "Llama model chat",
-    "Groq API",
+    "Open Router API",
     "real-time AI chat",
     "dark mode assistant",
     "open source chat UI",

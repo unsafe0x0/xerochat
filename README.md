@@ -1,4 +1,4 @@
-# XeroChat 🚀
+# XeroChat
 
 A modern, responsive AI chat interface built with Next.js and React. XeroChat provides a sleek ChatGPT-like experience with support for multiple AI models, conversation management, and real-time streaming responses.
 
@@ -6,9 +6,9 @@ A modern, responsive AI chat interface built with Next.js and React. XeroChat pr
 ![TypeScript](https://img.shields.io/badge/TypeScript-5-blue)
 ![Tailwind CSS](https://img.shields.io/badge/Tailwind_CSS-4-38B2AC)
 
-## ✨ Features
+## Features
 
-### 🎯 Core Features
+### Core Features
 
 - **Real-time AI Conversations** - Streaming responses with typing indicators
 - **Multiple AI Models** - Support for various models including Llama, GPT-OSS, and more
@@ -16,7 +16,7 @@ A modern, responsive AI chat interface built with Next.js and React. XeroChat pr
 - **Responsive Design** - Mobile-first responsive UI with collapsible sidebar
 - **Dark Theme** - Beautiful dark mode interface with neutral color palette
 
-### 🛠️ Advanced Features
+### Advanced Features
 
 - **Markdown Support** - Rich text rendering with syntax highlighting for code blocks
 - **Message Actions** - Copy, regenerate, and feedback options for each message
@@ -24,30 +24,30 @@ A modern, responsive AI chat interface built with Next.js and React. XeroChat pr
 - **Auto-save** - Automatic conversation saving to localStorage
 - **Model Switching** - Easy switching between different AI models during conversations
 
-### 🎨 UI/UX Features
+### UI/UX Features
 
 - **Clean Interface** - Minimalist design inspired by modern chat applications
 - **Responsive Model Selection** - Desktop inline selector, mobile top navbar placement
 - **Mobile Responsive** - Optimized for desktop, tablet, and mobile devices
 - **Accessibility** - Keyboard navigation and screen reader friendly
 
-## 🏗️ Tech Stack
+## Tech Stack
 
-- **Framework**: [Next.js 15.4.5](https://nextjs.org/) with App Router
-- **Frontend**: [React 19.1.0](https://reactjs.org/) with TypeScript
-- **Styling**: [Tailwind CSS 4](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Markdown**: [React Markdown](https://github.com/remarkjs/react-markdown) with GFM support
-- **Syntax Highlighting**: [Highlight.js](https://highlightjs.org/)
-- **AI Integration**: [OpenAI SDK](https://github.com/openai/openai-node) with Groq API
-- **Runtime**: [Bun](https://bun.sh/) for fast package management
+- **Framework**: Next.js (App Router)
+- **Frontend**: React with TypeScript
+- **Styling**: Tailwind CSS
+- **Icons**: Lucide React
+- **Markdown**: React Markdown with GFM support
+- **Syntax Highlighting**: Highlight.js
+- **AI Integration**: OpenAI SDK, Open Router API, Google AI SDK
+- **Runtime**: Bun for fast package management
 
-## 🚀 Getting Started
+## Getting Started
 
 ### Prerequisites
 
 - Node.js 18+ or Bun
-- A Groq API key ([Get one here](https://console.groq.com/))
+- A Open Router API key ([Get one here](https://console.Open Router.com/))
 
 ### Installation
 
@@ -83,41 +83,53 @@ A modern, responsive AI chat interface built with Next.js and React. XeroChat pr
 
 5. **Configure API Key**
    - Click the Settings button in the sidebar
-   - Enter your Groq API key
+   - Enter your Open Router API key
    - Start chatting!
 
-## 🎛️ Available Models
+## Available Models
 
-XeroChat supports multiple AI models:
+XeroChat supports the following AI models by default:
 
-- **GPT-OSS 20B** - OpenAI's open-weight model (20B parameters)
-- **GPT-OSS 120B** - OpenAI's powerful model (120B parameters)
-- **Llama 4 Scout** - Meta's high-performance instruction model
-- **DeepSeek R1 Distill** - DeepSeek's efficient language model
+- **GPT-OSS 20B** – OpenAI’s open-weight model, optimized for performance
+- **GLM-4.5 Air** – Z-AI’s lightweight, efficient model for real-time applications
+- **DeepSeek R1** – Versatile model for chat and code generation
+- **Qwen 3** – Powerful model for a wide range of tasks
+- **MAI-DS R1** – Microsoft’s model for chat and code generation
 
-## 📁 Project Structure
+You can add or modify models in `data/Models.tsx`.
+
+## Project Structure
 
 ```
 xerochat/
 ├── app/                          # Next.js App Router
 │   ├── api/
-│   │   └── chat/
-│   │       └── route.ts         # Chat API endpoint with streaming support
-│   ├── favicon.ico              # App favicon
+│   │   ├── chat/
+│   │   │   └── route.ts         # Chat API endpoint with streaming support
+│   │   └── open-router/
+│   │       └── route.ts         # Open Router API endpoint
 │   ├── globals.css              # Global styles and Tailwind imports
 │   ├── layout.tsx               # Root layout with metadata
 │   └── page.tsx                 # Home page (main chat interface)
 ├── components/                   # React components
 │   ├── ChatInterface.tsx        # Main chat interface orchestrator
-│   ├── Sidebar.tsx              # Chat history sidebar with XeroChat branding
-│   ├── MessageArea.tsx          # Message display area with responsive headers
-│   ├── MessageInput.tsx         # Message input form with integrated model selection
-│   ├── ModelSelector.tsx        # Reusable model selection dropdown component
-│   ├── MessageActions.tsx       # Message action buttons (copy, regenerate, feedback)
-│   ├── MarkdownRenderer.tsx     # Markdown content renderer with syntax highlighting
-│   └── SettingsModal.tsx        # Settings configuration modal for API keys
+│   ├── Sidebar.tsx              # Chat history sidebar
+│   ├── MessageArea.tsx          # Message display area
+│   ├── MessageInput.tsx         # Message input form
+│   ├── ModelSelector.tsx        # Model selection dropdown
+│   ├── MessageActions.tsx       # Message action buttons
+│   ├── MarkdownRenderer.tsx     # Markdown content renderer
+│   └── SettingsModal.tsx        # Settings modal for API keys
 ├── data/
 │   └── Models.tsx               # Available AI models configuration
+├── public/                      # Static assets (icons, images)
+│   ├── favicon.ico
+│   ├── file.svg
+│   ├── globe.svg
+│   ├── next.svg
+│   ├── og.png
+│   ├── vercel.svg
+│   └── window.svg
 ├── bun.lock                     # Bun lockfile
 ├── next.config.ts               # Next.js configuration
 ├── package.json                 # Dependencies and scripts
@@ -126,7 +138,7 @@ xerochat/
 └── tsconfig.json                # TypeScript configuration
 ```
 
-## 🔧 Configuration
+## Configuration
 
 ### Environment Variables
 
@@ -138,7 +150,7 @@ No environment variables required! XeroChat uses client-side API key storage for
 - **Styling**: Modify Tailwind classes in components for custom theming
 - **API**: Customize the chat API in `app/api/chat/route.ts`
 
-## 🎯 Usage
+## Usage
 
 1. **Start a Conversation**: Click "New Chat" or start typing in the input field
 2. **Switch Models**: Use the dropdown button inside the message input area to select different AI models
@@ -149,13 +161,13 @@ No environment variables required! XeroChat uses client-side API key storage for
    - Provide feedback (thumbs up/down)
 5. **Settings**: Configure your API key through the settings modal
 
-## 🔌 API Integration
+## API Integration
 
-XeroChat uses the Groq API for AI completions:
+XeroChat uses the Open Router API for AI completions:
 
 ```typescript
 // Example API call structure
-const response = await fetch("/api/chat", {
+const response = await fetch("/api/open-router", {
   method: "POST",
   headers: { "Content-Type": "application/json" },
   body: JSON.stringify({
@@ -166,13 +178,13 @@ const response = await fetch("/api/chat", {
 });
 ```
 
-## 🛡️ Security
+## Security
 
 - **Client-side API Keys**: API keys are stored securely in browser localStorage
 - **No Server-side Storage**: No sensitive data is stored on the server
 - **HTTPS Required**: API communications use secure HTTPS connections
 
-## 🚀 Build & Deploy
+## Build & Deploy
 
 ### Build for Production
 
@@ -203,7 +215,7 @@ Deploy easily on platforms like:
 - [Railway](https://railway.app/)
 - Any Node.js hosting platform
 
-## 🤝 Contributing
+## Contributing
 
 Contributions are welcome! Please feel free to submit a Pull Request. For major changes, please open an issue first to discuss what you would like to change.
 
@@ -213,15 +225,15 @@ Contributions are welcome! Please feel free to submit a Pull Request. For major 
 4. Push to the branch (`git push origin feature/AmazingFeature`)
 5. Open a Pull Request
 
-## 🙏 Acknowledgments
+## Acknowledgments
 
 - [Next.js](https://nextjs.org/) for the amazing React framework
 - [Tailwind CSS](https://tailwindcss.com/) for the utility-first CSS framework
-- [Groq](https://groq.com/) for providing fast AI inference
+- [Open Router](https://openrouter.ai/) for providing fast AI inference
 - [Lucide](https://lucide.dev/) for the beautiful icon set
 - [Vercel](https://vercel.com/) for the deployment platform
 
-## 📞 Support
+## Support
 
 If you have any questions or need help, please:
 

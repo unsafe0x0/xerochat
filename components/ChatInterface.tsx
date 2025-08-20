@@ -37,8 +37,9 @@ export default function ChatInterface() {
   const [isModelDropdownOpen, setIsModelDropdownOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [apiKeyGroq, setApiKeyGroq] = useState("");
-  const [apiKeyGemini, setApiKeyGemini] = useState("");
+  const [apiKeyOpenRouter, setApiKeyOpenRouter] = useState("");
+  const [customInstructions, setCustomInstructions] = useState("");
+  
   const [recentChats, setRecentChats] = useState<Chat[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -52,11 +53,11 @@ export default function ChatInterface() {
   }, [messages]);
 
   useEffect(() => {
-    const savedApiKeyGroq = localStorage.getItem("apiKeyGroq");
-    if (savedApiKeyGroq) setApiKeyGroq(savedApiKeyGroq);
+    const savedApiKeyOpenRouter = localStorage.getItem("apiKeyOpenRouter");
+    if (savedApiKeyOpenRouter) setApiKeyOpenRouter(savedApiKeyOpenRouter);
 
-    const savedApiKeyGemini = localStorage.getItem("apiKeyGemini");
-    if (savedApiKeyGemini) setApiKeyGemini(savedApiKeyGemini);
+  const savedCustomInstructions = localStorage.getItem("custom_instructions");
+  if (savedCustomInstructions) setCustomInstructions(savedCustomInstructions);
 
     const savedChats = localStorage.getItem("recent_chats");
     if (savedChats) {
@@ -121,8 +122,8 @@ export default function ChatInterface() {
   };
 
   const saveAccessToken = () => {
-    localStorage.setItem("apiKeyGroq", apiKeyGroq);
-    localStorage.setItem("apiKeyGemini", apiKeyGemini);
+    localStorage.setItem("apiKeyOpenRouter", apiKeyOpenRouter);
+  localStorage.setItem("custom_instructions", customInstructions);
     setIsSettingsOpen(false);
   };
 
@@ -143,7 +144,7 @@ export default function ChatInterface() {
     setIsLoading(true);
 
     try {
-      const response = await fetch("/api/chat", {
+      const response = await fetch("/api/open-router", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -153,13 +154,16 @@ export default function ChatInterface() {
             images: m.images,
           })),
           model: selectedModel.id,
-          accessToken: selectedModel.id.toLowerCase().includes("gemini")
-            ? apiKeyGemini
-            : apiKeyGroq,
+          accessToken: apiKeyOpenRouter,
+          customInstructions: customInstructions,
         }),
       });
 
-      if (!response.ok) throw new Error("Failed to send message");
+      if (!response.ok) {
+        const text = await response.text().catch(() => "");
+        console.error("Chat API error", response.status, text);
+        throw new Error(`Failed to send message: ${response.status} ${text}`);
+      }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
@@ -182,8 +186,8 @@ export default function ChatInterface() {
             prev.map((msg) =>
               msg.id === assistantMessage.id
                 ? { ...msg, content: msg.content + chunk }
-                : msg,
-            ),
+                : msg
+            )
           );
         }
       }
@@ -228,19 +232,22 @@ export default function ChatInterface() {
     }));
 
     try {
-      const response = await fetch("/api/chat", {
+      const response = await fetch("/api/open-router", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           messages: conversationHistory,
           model: selectedModel.id,
-          accessToken: selectedModel.id.toLowerCase().includes("gemini")
-            ? apiKeyGemini
-            : apiKeyGroq,
+          accessToken: apiKeyOpenRouter,
+          customInstructions: customInstructions,
         }),
       });
 
-      if (!response.ok) throw new Error("Failed to regenerate message");
+      if (!response.ok) {
+        const text = await response.text().catch(() => "");
+        console.error("Chat API regenerate error", response.status, text);
+        throw new Error(`Failed to regenerate message: ${response.status} ${text}`);
+      }
 
       const reader = response.body?.getReader();
       const decoder = new TextDecoder();
@@ -263,8 +270,8 @@ export default function ChatInterface() {
             prev.map((msg) =>
               msg.id === assistantMessage.id
                 ? { ...msg, content: msg.content + chunk }
-                : msg,
-            ),
+                : msg
+            )
           );
         }
       }
@@ -303,8 +310,8 @@ export default function ChatInterface() {
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
-  <div className="flex-1 flex flex-col">
-  <div className="flex-1 overflow-y-auto pb-40 relative"> 
+      <div className="flex-1 flex flex-col">
+        <div className="flex-1 overflow-y-auto pb-40 relative">
           <MessageArea
             messages={messages}
             isLoading={isLoading}
@@ -332,11 +339,11 @@ export default function ChatInterface() {
 
       <SettingsModal
         isOpen={isSettingsOpen}
-        apiKeyGroq={apiKeyGroq}
-        apiKeyGemini={apiKeyGemini}
-        onApiKeyGroqChange={setApiKeyGroq}
-        onApiKeyGeminiChange={setApiKeyGemini}
-        onSave={saveAccessToken}
+    apiKeyOpenRouter={apiKeyOpenRouter}
+    onApiKeyOpenRouterChange={setApiKeyOpenRouter}
+  customInstructions={customInstructions}
+  onCustomInstructionsChange={setCustomInstructions}
+  onSave={saveAccessToken}
         onClose={() => setIsSettingsOpen(false)}
       />
     </div>
