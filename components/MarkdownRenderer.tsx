@@ -50,13 +50,13 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
     return (
       <div className="relative group mb-4">
         {language && (
-          <div className="flex justify-between items-center bg-neutral-800 px-4 py-2 rounded-t-lg border-b border-neutral-600">
+          <div className="flex justify-between items-center bg-[#222222] px-4 py-2 rounded-t-lg border-b border-neutral-600">
             <span className="text-xs text-neutral-400 font-mono">
               {language}
             </span>
             <button
               onClick={handleCopy}
-              className="opacity-0 group-hover:opacity-100 transition-opacity bg-neutral-700 hover:bg-neutral-600 text-white px-2 py-1 rounded text-xs flex items-center gap-1 cursor-pointer"
+              className="opacity-0 group-hover:opacity-100 transition-opacity bg-[#242424] hover:bg-[#282828] text-white px-2 py-1 rounded text-xs flex items-center gap-1 cursor-pointer"
             >
               {copied ? <Check size={12} /> : <Copy size={12} />}
               {copied ? "Copied!" : "Copy"}
@@ -64,7 +64,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
           </div>
         )}
         <pre
-          className={`bg-neutral-900 p-4 whitespace-pre-wrap break-words text-sm ${language ? "rounded-b-lg" : "rounded-lg"}`}
+          className={`bg-[#191919] p-4 whitespace-pre-wrap break-words text-sm ${language ? "rounded-b-lg" : "rounded-lg"}`}
         >
           <code ref={codeRef} className={className} {...props}>
             {children}
@@ -73,7 +73,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
         {!language && (
           <button
             onClick={handleCopy}
-            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-neutral-700 hover:bg-neutral-600 text-white p-1.5 rounded text-xs flex items-center gap-1 cursor-pointer"
+            className="absolute top-2 right-2 opacity-0 group-hover:opacity-100 transition-opacity bg-[#242424] hover:bg-[#282828] text-white p-1.5 rounded text-xs flex items-center gap-1 cursor-pointer"
           >
             {copied ? <Check size={12} /> : <Copy size={12} />}
             {copied ? "Copied!" : "Copy"}
@@ -103,7 +103,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
 
             return (
               <code
-                className="bg-neutral-800 px-1.5 py-0.5 rounded text-orange-300 text-sm break-words"
+                className="bg-[#222222] px-1.5 py-0.5 rounded text-orange-300 text-sm break-words"
                 {...props}
               >
                 {children}
@@ -120,7 +120,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             }
 
             return (
-              <pre className="bg-neutral-800 p-4 rounded-lg whitespace-pre-wrap break-words mb-4 text-sm">
+              <pre className="bg-[#222222] p-4 rounded-lg whitespace-pre-wrap break-words mb-4 text-sm">
                 {children}
               </pre>
             );
@@ -162,7 +162,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             <li className="text-neutral-100">{children}</li>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-neutral-600 pl-4 my-4 text-neutral-300 italic bg-neutral-800/30 py-2">
+            <blockquote className="border-l-4 border-neutral-600 pl-4 my-4 text-neutral-300 italic bg-[#222222] py-2">
               {children}
             </blockquote>
           ),
@@ -174,7 +174,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             </div>
           ),
           th: ({ children }) => (
-            <th className="border border-neutral-600 px-3 py-2 bg-neutral-700 text-left font-semibold text-white">
+            <th className="border border-neutral-600 px-3 py-2 bg-[#242424] text-left font-semibold text-white">
               {children}
             </th>
           ),

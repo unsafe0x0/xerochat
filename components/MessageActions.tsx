@@ -51,7 +51,7 @@ export default function MessageActions({
     >
       <button
         onClick={handleCopy}
-        className="p-1.5 rounded hover:bg-neutral-700 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+        className="p-1.5 rounded hover:bg-[#242424] text-neutral-400 hover:text-white transition-colors cursor-pointer"
         title="Copy message"
       >
         {copied ? <Check size={14} /> : <Copy size={14} />}
@@ -60,7 +60,7 @@ export default function MessageActions({
       {message.role === "assistant" && onRegenerate && (
         <button
           onClick={handleRegenerate}
-          className="p-1.5 rounded hover:bg-neutral-700 text-neutral-400 hover:text-white transition-colors cursor-pointer"
+          className="p-1.5 rounded hover:bg-[#242424] text-neutral-400 hover:text-white transition-colors cursor-pointer"
           title="Regenerate response"
         >
           <RotateCcw size={14} />
@@ -74,7 +74,7 @@ export default function MessageActions({
             className={`p-1.5 rounded transition-colors cursor-pointer ${
               feedback === "up"
                 ? "bg-green-600 text-white"
-                : "hover:bg-neutral-700 text-neutral-400 hover:text-white"
+                : "hover:bg-[#242424] text-neutral-400 hover:text-white"
             }`}
             title="Good response"
           >
@@ -84,8 +84,8 @@ export default function MessageActions({
             onClick={() => handleFeedback("down")}
             className={`p-1.5 rounded transition-colors cursor-pointer ${
               feedback === "down"
-                ? "bg-orange-600 text-white"
-                : "hover:bg-neutral-700 text-neutral-400 hover:text-white"
+                ? "bg-red-600 text-white"
+                : "hover:bg-[#242424] text-neutral-400 hover:text-white"
             }`}
             title="Bad response"
           >
