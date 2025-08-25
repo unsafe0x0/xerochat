@@ -10,7 +10,12 @@ interface UserCardProps {
   onLogout: () => void;
 }
 
-export default function UserCard({ name, email, image, onLogout }: UserCardProps) {
+export default function UserCard({
+  name,
+  email,
+  image,
+  onLogout,
+}: UserCardProps) {
   return (
     <div className="flex items-center gap-3 p-3 bg-[#202020] border border-[#282828] rounded-lg">
       <img

@@ -73,9 +73,7 @@ export default function Sidebar({
                 key={chat.id}
                 onClick={() => onLoadChat(chat)}
                 className={`group flex items-center justify-between px-3 py-1.5 rounded-lg text-sm cursor-pointer transition-colors hover:bg-[#242424] ${
-                  currentChatId === chat.id
-                    ? "bg-[#242424]"
-                    : "bg-[#222222]"
+                  currentChatId === chat.id ? "bg-[#242424]" : "bg-[#222222]"
                 }`}
               >
                 <span className="truncate flex-1 mr-2">{chat.title}</span>
@@ -95,7 +93,7 @@ export default function Sidebar({
           </div>
         </div>
 
-  <div className="p-4 border-t border-[#282828] flex flex-col gap-2">
+        <div className="p-4 border-t border-[#282828] flex flex-col gap-2">
           {user && user.email && (
             <UserCard
               name={user.name || ""}
@@ -104,9 +102,7 @@ export default function Sidebar({
               onLogout={handleLogout}
             />
           )}
-          <p className="text-xs text-neutral-500">
-            Save your api key here
-          </p>
+          <p className="text-xs text-neutral-500">Save your api key here</p>
           <button
             onClick={onOpenSettings}
             className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-400 bg-[#222222] hover:bg-[#242424] rounded-lg transition-colors cursor-pointer"

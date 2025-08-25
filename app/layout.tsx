@@ -68,9 +68,7 @@ export default function RootLayout({
       <body
         className={`${primary.variable} ${secondary.variable} antialiased bg-[#191919] text-neutral-100 h-screen`}
       >
-        <SessionProviderClient>
-          {children}
-        </SessionProviderClient>
+        <SessionProviderClient>{children}</SessionProviderClient>
         <Analytics />
       </body>
     </html>

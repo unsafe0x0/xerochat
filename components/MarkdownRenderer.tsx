@@ -50,7 +50,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
     return (
       <div className="relative group mb-4">
         {language && (
-          <div className="flex justify-between items-center bg-[#222222] px-4 py-2 rounded-t-lg border-b border-neutral-600">
+          <div className="flex justify-between items-center bg-[#222222] px-4 py-2 rounded-t-lg border-b border-[#282828]">
             <span className="text-xs text-neutral-400 font-mono">
               {language}
             </span>
@@ -162,24 +162,24 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             <li className="text-neutral-100">{children}</li>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-neutral-600 pl-4 my-4 text-neutral-300 italic bg-[#222222] py-2">
+            <blockquote className="border-l-4 border-[#282828] pl-4 my-4 text-neutral-300 italic bg-[#222222] py-2">
               {children}
             </blockquote>
           ),
           table: ({ children }) => (
             <div className="overflow-x-auto my-4">
-              <table className="min-w-full border-collapse border border-neutral-600">
+              <table className="min-w-full border-collapse border border-[#282828]">
                 {children}
               </table>
             </div>
           ),
           th: ({ children }) => (
-            <th className="border border-neutral-600 px-3 py-2 bg-[#242424] text-left font-semibold text-white">
+            <th className="border border-[#282828] px-3 py-2 bg-[#242424] text-left font-semibold text-white">
               {children}
             </th>
           ),
           td: ({ children }) => (
-            <td className="border border-neutral-600 px-3 py-2 text-neutral-100">
+            <td className="border border-[#282828] px-3 py-2 text-neutral-100">
               {children}
             </td>
           ),
@@ -199,7 +199,7 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
           em: ({ children }) => (
             <em className="italic text-neutral-200">{children}</em>
           ),
-          hr: () => <hr className="border-t border-neutral-600 my-6" />,
+          hr: () => <hr className="border-t border-[#282828] my-6" />,
         }}
       >
         {content}

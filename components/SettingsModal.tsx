@@ -57,7 +57,7 @@ export default function SettingsModal({
               value={apiKeyOpenRouter}
               onChange={(e) => onApiKeyOpenRouterChange(e.target.value)}
               placeholder="Enter your Open Router API key..."
-              className="w-full px-3 py-2 bg-[#222222] border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
             />
             <p className="text-xs text-neutral-400 mt-1">
               Required for API access. Get your API key from{" "}
@@ -80,7 +80,7 @@ export default function SettingsModal({
               value={apiKeyGemini}
               onChange={(e) => onApiKeyGeminiChange(e.target.value)}
               placeholder="Enter your Gemini API key..."
-              className="w-full px-3 py-2 bg-[#222222] border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
             />
             <p className="text-xs text-neutral-400 mt-1">
               Required for API access. Get your Gemini API key from{" "}
@@ -103,7 +103,7 @@ export default function SettingsModal({
               value={apiKeyGroq}
               onChange={(e) => onApiKeyGroqChange(e.target.value)}
               placeholder="Enter your Groq API key..."
-              className="w-full px-3 py-2 bg-[#222222] border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
             />
             <p className="text-xs text-neutral-400 mt-1">
               Required for API access. Get your Groq API key from{" "}
@@ -125,7 +125,7 @@ export default function SettingsModal({
               value={customInstructions}
               onChange={(e) => onCustomInstructionsChange(e.target.value)}
               placeholder="Provide custom instructions for the assistant..."
-              className="w-full px-3 py-2 bg-[#222222] border border-neutral-600 rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500 min-h-[100px] resize-none"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500 min-h-[100px] resize-none"
             />
             <p className="text-xs text-neutral-400 mt-1">
               These instructions will be prepended to the system prompt for

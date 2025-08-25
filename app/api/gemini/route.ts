@@ -8,7 +8,7 @@ export async function POST(req: Request) {
     if (!accessToken)
       return new Response("API key is required", { status: 400 });
 
-  const finalMessages = [buildSystemPrompt(customInstructions), ...messages];
+    const finalMessages = [buildSystemPrompt(customInstructions), ...messages];
 
     const client = new OpenAI({
       baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",

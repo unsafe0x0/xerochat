@@ -37,7 +37,7 @@ export default function ModelModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-[#191919] border border-[#282828] rounded-lg w-full max-w-md">
+      <div className="bg-[#191919] border border-[#282828] rounded-lg w-full max-w-md max-h-[90vh] overflow-hidden">
         <div className="flex items-center justify-between p-4 border-b border-[#282828]">
           <h3 className="text-lg font-semibold">Choose a model</h3>
           <button
@@ -48,7 +48,7 @@ export default function ModelModal({
           </button>
         </div>
 
-        <div className="p-4 space-y-6">
+        <div className="p-4 space-y-6 overflow-y-auto max-h-[calc(90vh-72px)]">
           {Object.keys(grouped).map((endpoint) => (
             <div key={endpoint}>
               <div className="text-sm text-neutral-400 mb-2 font-medium">
@@ -60,13 +60,15 @@ export default function ModelModal({
                   <button
                     key={m.id}
                     onClick={() => onSelectModel(m)}
-                    className={`text-left px-3 py-2 transition-colors rounded-lg min-w-[200px] flex-none ${
+                    className={`text-left px-3 py-2 transition-colors rounded-lg min-w-[140px] sm:min-w-[200px] flex-none ${
                       selectedModel?.id === m.id
                         ? "bg-white text-neutral-900 border border-neutral-200"
                         : "bg-[#222222] text-neutral-100 hover:bg-[#242424] border border-[#282828]"
                     } cursor-pointer`}
                   >
-                    <div className="font-medium text-sm truncate">{m.name}</div>
+                    <div className="font-medium text-xs sm:text-sm truncate">
+                      {m.name}
+                    </div>
                   </button>
                 ))}
               </div>

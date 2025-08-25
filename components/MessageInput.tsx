@@ -62,11 +62,13 @@ export default function MessageInput({
     >
       <div
         className={`${
-          isInitial ? "max-w-3xl mx-auto" : "max-w-4xl mx-auto pointer-events-auto"
+          isInitial
+            ? "max-w-3xl mx-auto"
+            : "max-w-4xl mx-auto pointer-events-auto"
         }`}
       >
         <form onSubmit={onSubmit} className="relative">
-          <div className="bg-[#191919]/95 rounded-2xl border border-[#282828] backdrop-blur-sm focus-within:border-neutral-600">
+          <div className="bg-[#191919]/95 rounded-2xl border border-[#282828] backdrop-blur-sm focus-within:border-[#282828]">
             <div className="p-4">
               <textarea
                 ref={textareaRef}
@@ -89,9 +91,11 @@ export default function MessageInput({
               <button
                 type="button"
                 onClick={onOpenModelModal}
-                className="flex items-center gap-2 rounded-lg border border-neutral-600 transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]"
+                className="flex items-center gap-2 rounded-lg border border-[#282828] transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]"
               >
-                <span className="font-medium">{selectedModel.name}</span>
+                <span className="font-medium truncate max-w-[8rem] sm:max-w-[12rem] text-sm sm:text-xs">
+                  {selectedModel.name}
+                </span>
               </button>
 
               <button
@@ -102,11 +106,15 @@ export default function MessageInput({
                 }}
                 className={`w-9 h-9 rounded-md flex items-center justify-center transition-colors cursor-pointer border ${
                   isLoading
-                    ? "bg-[#242424] text-white hover:bg-[#282828] border-neutral-600"
-                    : "bg-white text-neutral-900 hover:bg-neutral-100 border-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                    ? "bg-[#242424] text-white hover:bg-[#282828] border-[#282828]"
+                    : "bg-white text-neutral-900 hover:bg-neutral-100 border-[#282828] disabled:opacity-50 disabled:cursor-not-allowed"
                 }`}
               >
-                {isLoading ? <Square size={20} /> : <SendHorizontal size={20} />}
+                {isLoading ? (
+                  <Square size={20} />
+                ) : (
+                  <SendHorizontal size={20} />
+                )}
               </button>
             </div>
           </div>
