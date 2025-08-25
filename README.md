@@ -45,9 +45,3 @@ Deploy on Vercel (zero config) or any Node host.
 - Styling: tweak Tailwind classes in components
 - Models: edit `data/Models.tsx`
 - Proxy logic: adjust `app/api/<provider>/route.ts`
-
-## License
-MIT (see repo if added). Keep attribution appreciated.
-
----
-Simple on purpose.
