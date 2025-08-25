@@ -1,9 +1,10 @@
 import type { Metadata } from "next";
-import { Inter, Roboto } from "next/font/google";
+import { Public_Sans, Roboto } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
+import SessionProviderClient from "@/components/SessionProviderClient";
 
-const primary = Inter({
+const primary = Public_Sans({
   variable: "--font-primary",
   subsets: ["latin"],
 });
@@ -65,9 +66,11 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${primary.variable} ${secondary.variable} antialiased bg-neutral-900 text-neutral-100 h-screen`}
+        className={`${primary.variable} ${secondary.variable} antialiased bg-[#191919] text-neutral-100 h-screen`}
       >
-        {children}
+        <SessionProviderClient>
+          {children}
+        </SessionProviderClient>
         <Analytics />
       </body>
     </html>

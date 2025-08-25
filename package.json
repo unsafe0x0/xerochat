@@ -6,17 +6,20 @@
     "dev": "next dev --turbopack",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate"
   },
   "dependencies": {
     "@ai-sdk/google": "^2.0.3",
     "@ai-sdk/openai": "^2.0.8",
+    "@prisma/client": "^6.14.0",
     "@vercel/analytics": "^1.5.0",
     "ai": "^5.0.9",
     "highlight.js": "^11.11.1",
     "lucide-react": "^0.535.0",
     "next": "15.4.5",
     "next-auth": "^4.24.11",
+    "prisma": "^6.14.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-markdown": "^10.1.0",

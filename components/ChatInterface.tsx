@@ -1,11 +1,14 @@
 "use client";
 
 import React, { useState, useRef, useEffect } from "react";
+import { useSession } from "next-auth/react";
 import Sidebar from "./Sidebar";
 import MessageArea from "./MessageArea";
 import MessageInput from "./MessageInput";
 import SettingsModal from "./SettingsModal";
 import models from "@/data/Models";
+import ModelModal from "./ModelModal";
+import { callModelEndpoint, ProviderKeys } from "@/utils/api";
 
 interface Message {
   id: string;
@@ -25,21 +28,26 @@ interface Chat {
 interface Model {
   id: string;
   name: string;
-  description: string;
+  description?: string;
   [k: string]: any;
 }
 
 export default function ChatInterface() {
+  const { data: session } = useSession();
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [selectedModel, setSelectedModel] = useState<Model>(models[0] as Model);
-  const [isModelDropdownOpen, setIsModelDropdownOpen] = useState(false);
+  const [isModelModalOpen, setIsModelModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [apiKeyOpenRouter, setApiKeyOpenRouter] = useState("");
+  const [apiKeyGemini, setApiKeyGemini] = useState("");
+  const [apiKeyGroq, setApiKeyGroq] = useState("");
   const [customInstructions, setCustomInstructions] = useState("");
-  
+  const [abortController, setAbortController] =
+    useState<AbortController | null>(null);
+
   const [recentChats, setRecentChats] = useState<Chat[]>([]);
   const [currentChatId, setCurrentChatId] = useState<string | null>(null);
   const messagesEndRef = useRef<HTMLDivElement | null>(null);
@@ -55,9 +63,13 @@ export default function ChatInterface() {
   useEffect(() => {
     const savedApiKeyOpenRouter = localStorage.getItem("apiKeyOpenRouter");
     if (savedApiKeyOpenRouter) setApiKeyOpenRouter(savedApiKeyOpenRouter);
+    const savedApiKeyGemini = localStorage.getItem("apiKeyGemini");
+    if (savedApiKeyGemini) setApiKeyGemini(savedApiKeyGemini);
+    const savedApiKeyGroq = localStorage.getItem("apiKeyGroq");
+    if (savedApiKeyGroq) setApiKeyGroq(savedApiKeyGroq);
 
-  const savedCustomInstructions = localStorage.getItem("custom_instructions");
-  if (savedCustomInstructions) setCustomInstructions(savedCustomInstructions);
+    const savedCustomInstructions = localStorage.getItem("custom_instructions");
+    if (savedCustomInstructions) setCustomInstructions(savedCustomInstructions);
 
     const savedChats = localStorage.getItem("recent_chats");
     if (savedChats) {
@@ -123,7 +135,9 @@ export default function ChatInterface() {
 
   const saveAccessToken = () => {
     localStorage.setItem("apiKeyOpenRouter", apiKeyOpenRouter);
-  localStorage.setItem("custom_instructions", customInstructions);
+    localStorage.setItem("apiKeyGemini", apiKeyGemini);
+    localStorage.setItem("apiKeyGroq", apiKeyGroq);
+    localStorage.setItem("custom_instructions", customInstructions);
     setIsSettingsOpen(false);
   };
 
@@ -143,20 +157,26 @@ export default function ChatInterface() {
     setInput("");
     setIsLoading(true);
 
+    const controller = new AbortController();
+    setAbortController(controller);
     try {
-      const response = await fetch("/api/open-router", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: updatedMessages.map((m) => ({
-            role: m.role,
-            content: m.content,
-            images: m.images,
-          })),
-          model: selectedModel.id,
-          accessToken: apiKeyOpenRouter,
-          customInstructions: customInstructions,
-        }),
+      const providerKeys: ProviderKeys = {
+        openRouter: apiKeyOpenRouter,
+        gemini: apiKeyGemini,
+        groq: apiKeyGroq,
+      };
+
+      const response = await callModelEndpoint({
+        endpoint: (selectedModel as any).endpoint || "/api/open-router",
+        messages: updatedMessages.map((m) => ({
+          role: m.role,
+          content: m.content,
+          images: m.images,
+        })),
+        modelId: selectedModel.id,
+        keys: providerKeys,
+        customInstructions: customInstructions,
+        signal: controller.signal,
       });
 
       if (!response.ok) {
@@ -178,17 +198,23 @@ export default function ChatInterface() {
       setMessages((prev) => [...prev, assistantMessage]);
 
       if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === assistantMessage.id
-                ? { ...msg, content: msg.content + chunk }
-                : msg
-            )
-          );
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantMessage.id
+                  ? { ...msg, content: msg.content + chunk }
+                  : msg
+              )
+            );
+          }
+        } catch (err: any) {
+          if (err?.name !== "AbortError") {
+            console.error("Stream error:", err);
+          }
         }
       }
     } catch (error) {
@@ -204,6 +230,7 @@ export default function ChatInterface() {
       ]);
     } finally {
       setIsLoading(false);
+      setAbortController(null);
       setTimeout(() => saveCurrentChat(), 100);
     }
   };
@@ -231,22 +258,30 @@ export default function ChatInterface() {
       images: m.images,
     }));
 
+    const controller = new AbortController();
+    setAbortController(controller);
     try {
-      const response = await fetch("/api/open-router", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          messages: conversationHistory,
-          model: selectedModel.id,
-          accessToken: apiKeyOpenRouter,
-          customInstructions: customInstructions,
-        }),
+      const providerKeys: ProviderKeys = {
+        openRouter: apiKeyOpenRouter,
+        gemini: apiKeyGemini,
+        groq: apiKeyGroq,
+      };
+
+      const response = await callModelEndpoint({
+        endpoint: (selectedModel as any).endpoint || "/api/open-router",
+        messages: conversationHistory,
+        modelId: selectedModel.id,
+        keys: providerKeys,
+        customInstructions: customInstructions,
+        signal: controller.signal,
       });
 
       if (!response.ok) {
         const text = await response.text().catch(() => "");
         console.error("Chat API regenerate error", response.status, text);
-        throw new Error(`Failed to regenerate message: ${response.status} ${text}`);
+        throw new Error(
+          `Failed to regenerate message: ${response.status} ${text}`
+        );
       }
 
       const reader = response.body?.getReader();
@@ -262,17 +297,23 @@ export default function ChatInterface() {
       setMessages((prev) => [...prev, assistantMessage]);
 
       if (reader) {
-        while (true) {
-          const { done, value } = await reader.read();
-          if (done) break;
-          const chunk = decoder.decode(value, { stream: true });
-          setMessages((prev) =>
-            prev.map((msg) =>
-              msg.id === assistantMessage.id
-                ? { ...msg, content: msg.content + chunk }
-                : msg
-            )
-          );
+        try {
+          while (true) {
+            const { done, value } = await reader.read();
+            if (done) break;
+            const chunk = decoder.decode(value, { stream: true });
+            setMessages((prev) =>
+              prev.map((msg) =>
+                msg.id === assistantMessage.id
+                  ? { ...msg, content: msg.content + chunk }
+                  : msg
+              )
+            );
+          }
+        } catch (err: any) {
+          if (err?.name !== "AbortError") {
+            console.error("Stream error:", err);
+          }
         }
       }
     } catch (error) {
@@ -289,12 +330,22 @@ export default function ChatInterface() {
       ]);
     } finally {
       setIsLoading(false);
+      setAbortController(null);
+      setTimeout(() => saveCurrentChat(), 100);
+    }
+  };
+
+  const stopGeneration = () => {
+    if (abortController) {
+      abortController.abort();
+      setAbortController(null);
+      setIsLoading(false);
       setTimeout(() => saveCurrentChat(), 100);
     }
   };
 
   return (
-    <div className="flex h-screen bg-neutral-900 text-neutral-100">
+    <div className="flex h-screen bg-[#191919] text-neutral-100">
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         recentChats={recentChats}
@@ -311,40 +362,99 @@ export default function ChatInterface() {
         />
       )}
       <div className="flex-1 flex flex-col">
-        <div className="flex-1 overflow-y-auto pb-40 relative">
-          <MessageArea
-            messages={messages}
-            isLoading={isLoading}
-            messagesEndRef={messagesEndRef}
-            onRegenerateMessage={regenerateMessage}
-            onToggleSidebar={() => setIsSidebarOpen(true)}
-          />
-
-          <MessageInput
-            input={input}
-            onInputChange={setInput}
-            onSubmit={handleSubmit}
-            isLoading={isLoading}
-            selectedModel={selectedModel}
-            models={models}
-            isModelDropdownOpen={isModelDropdownOpen}
-            onToggleModelDropdown={() => setIsModelDropdownOpen((s) => !s)}
-            onSelectModel={(model: Model) => {
-              setSelectedModel(model);
-              setIsModelDropdownOpen(false);
-            }}
-          />
-        </div>
+        {messages.length === 0 ? (
+          <div className="flex-1 relative pb-40">
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="max-w-4xl w-full px-4 text-center">
+                <h1 className="text-3xl md:text-4xl font-semibold mb-5">
+                  Welcome
+                  {session?.user?.name ? `, ${session.user.name}` : ", anon"}{" "}
+                  Ask Anything
+                </h1>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10 justify-center">
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
+                    <h3 className="font-medium mb-1">💡 Ask</h3>
+                    <p className="text-sm text-neutral-400">
+                      Explain code, algorithms, concepts
+                    </p>
+                  </div>
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
+                    <h3 className="font-medium mb-1">✍️ Create</h3>
+                    <p className="text-sm text-neutral-400">
+                      Draft docs, posts, stories
+                    </p>
+                  </div>
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
+                    <h3 className="font-medium mb-1">💻 Code</h3>
+                    <p className="text-sm text-neutral-400">
+                      Generate & refactor snippets
+                    </p>
+                  </div>
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
+                    <h3 className="font-medium mb-1">🧠 Reason</h3>
+                    <p className="text-sm text-neutral-400">
+                      Walk through complex problems
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <MessageInput
+              input={input}
+              onInputChange={setInput}
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+              selectedModel={selectedModel}
+              models={models}
+              onOpenModelModal={() => setIsModelModalOpen(true)}
+              onStop={stopGeneration}
+            />
+          </div>
+        ) : (
+          <div className="flex-1 overflow-y-auto pb-40 relative">
+            <MessageArea
+              messages={messages}
+              isLoading={isLoading}
+              messagesEndRef={messagesEndRef}
+              onRegenerateMessage={regenerateMessage}
+              onToggleSidebar={() => setIsSidebarOpen(true)}
+            />
+            <MessageInput
+              input={input}
+              onInputChange={setInput}
+              onSubmit={handleSubmit}
+              isLoading={isLoading}
+              selectedModel={selectedModel}
+              models={models}
+              onOpenModelModal={() => setIsModelModalOpen(true)}
+              onStop={stopGeneration}
+            />
+          </div>
+        )}
       </div>
 
       <SettingsModal
         isOpen={isSettingsOpen}
-    apiKeyOpenRouter={apiKeyOpenRouter}
-    onApiKeyOpenRouterChange={setApiKeyOpenRouter}
-  customInstructions={customInstructions}
-  onCustomInstructionsChange={setCustomInstructions}
-  onSave={saveAccessToken}
+        apiKeyOpenRouter={apiKeyOpenRouter}
+        onApiKeyOpenRouterChange={setApiKeyOpenRouter}
+        apiKeyGemini={apiKeyGemini}
+        onApiKeyGeminiChange={setApiKeyGemini}
+        apiKeyGroq={apiKeyGroq}
+        onApiKeyGroqChange={setApiKeyGroq}
+        customInstructions={customInstructions}
+        onCustomInstructionsChange={setCustomInstructions}
+        onSave={saveAccessToken}
         onClose={() => setIsSettingsOpen(false)}
+      />
+      <ModelModal
+        isOpen={isModelModalOpen}
+        models={models as any}
+        selectedModel={selectedModel as any}
+        onSelectModel={(m: any) => {
+          setSelectedModel(m);
+          setIsModelModalOpen(false);
+        }}
+        onClose={() => setIsModelModalOpen(false)}
       />
     </div>
   );

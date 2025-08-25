@@ -1,6 +1,8 @@
 "use client";
 
 import React from "react";
+import UserCard from "./UserCard";
+import { useSession, signOut } from "next-auth/react";
 import { SquarePen, Settings, Trash2, Github } from "lucide-react";
 import Link from "next/link";
 
@@ -38,14 +40,17 @@ export default function Sidebar({
   onDeleteChat,
   onOpenSettings,
 }: SidebarProps) {
+  const { data: session } = useSession();
+  const user = session?.user || { name: "", email: "", image: "" };
+  const handleLogout = () => signOut();
   return (
     <div
       className={`${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-  } fixed inset-y-0 left-0 z-50 w-64 bg-neutral-900 border-r border-neutral-800 transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
+      } fixed inset-y-0 left-0 z-50 w-64 bg-[#191919] border-r border-[#282828] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
     >
       <div className="flex flex-col h-full">
-        <div className="px-4 py-4 border-b border-neutral-800">
+        <div className="px-4 py-4 border-b border-[#282828]">
           <h1 className="text-2xl font-semibold text-center mb-4 hidden lg:block">
             XeroChat
           </h1>
@@ -67,16 +72,16 @@ export default function Sidebar({
               <div
                 key={chat.id}
                 onClick={() => onLoadChat(chat)}
-                className={`group flex items-center justify-between px-3 py-1.5 rounded-lg text-sm cursor-pointer transition-colors hover:bg-neutral-700 ${
+                className={`group flex items-center justify-between px-3 py-1.5 rounded-lg text-sm cursor-pointer transition-colors hover:bg-[#242424] ${
                   currentChatId === chat.id
-                    ? "bg-neutral-700"
-                    : "bg-neutral-800"
+                    ? "bg-[#242424]"
+                    : "bg-[#222222]"
                 }`}
               >
                 <span className="truncate flex-1 mr-2">{chat.title}</span>
                 <button
                   onClick={(e) => onDeleteChat(chat.id, e)}
-                  className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-red-400 transition-all p-1 cursor-pointer"
+                  className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-red-500 transition-all p-1 cursor-pointer"
                 >
                   <Trash2 size={14} />
                 </button>
@@ -90,13 +95,21 @@ export default function Sidebar({
           </div>
         </div>
 
-        <div className="p-4 border-t border-neutral-800">
-          <p className="text-xs text-neutral-500 mb-2">
+  <div className="p-4 border-t border-[#282828] flex flex-col gap-2">
+          {user && user.email && (
+            <UserCard
+              name={user.name || ""}
+              email={user.email || ""}
+              image={user.image || "/window.svg"}
+              onLogout={handleLogout}
+            />
+          )}
+          <p className="text-xs text-neutral-500">
             Save your api key here
           </p>
           <button
             onClick={onOpenSettings}
-            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-400 bg-neutral-800 hover:bg-neutral-700 rounded-lg transition-colors cursor-pointer mb-2"
+            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-400 bg-[#222222] hover:bg-[#242424] rounded-lg transition-colors cursor-pointer"
           >
             <Settings size={18} />
             Settings

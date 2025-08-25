@@ -6,7 +6,7 @@ import { ChevronDown } from "lucide-react";
 interface Model {
   id: string;
   name: string;
-  description: string;
+  description?: string;
 }
 
 interface ModelSelectorProps {
@@ -49,7 +49,7 @@ export default function ModelSelector({
   }, [isModelDropdownOpen, onToggleModelDropdown]);
 
   const baseButtonClasses =
-    "flex items-center gap-2 rounded-lg border border-neutral-600 transition-colors cursor-pointer px-3 py-2 text-xs bg-neutral-800 hover:bg-neutral-700";
+    "flex items-center gap-2 rounded-lg border border-neutral-600 transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]";
 
   const dropdownPositionClasses =
     variant === "mobile"
@@ -74,7 +74,7 @@ export default function ModelSelector({
 
       {isModelDropdownOpen && (
         <div
-          className={`absolute ${dropdownPositionClasses} bg-neutral-800 border border-neutral-700 rounded-lg z-50`}
+          className={`absolute ${dropdownPositionClasses} bg-[#222222] border border-[#282828] rounded-lg z-50`}
         >
           <div className="p-2">
             {models.map((model) => (
@@ -82,8 +82,8 @@ export default function ModelSelector({
                 key={model.id}
                 type="button"
                 onClick={() => onSelectModel(model)}
-                className={`w-full text-left px-3 py-2 mb-1 last:mb-0 rounded-md hover:bg-neutral-700 transition-colors cursor-pointer ${
-                  selectedModel.id === model.id ? "bg-neutral-700 text-sm" : ""
+                className={`w-full text-left px-3 py-2 mb-1 last:mb-0 rounded-md hover:bg-[#242424] transition-colors cursor-pointer ${
+                  selectedModel.id === model.id ? "bg-[#242424] text-sm" : ""
                 }`}
               >
                 <div className="font-medium text-white text-xs whitespace-nowrap">

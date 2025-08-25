@@ -11,12 +11,12 @@ export async function POST(req: Request) {
   const finalMessages = [buildSystemPrompt(customInstructions), ...messages];
 
     const client = new OpenAI({
-      baseURL: "https://openrouter.ai/api/v1",
+      baseURL: "https://generativelanguage.googleapis.com/v1beta/openai/",
       apiKey: accessToken,
     });
 
     const stream = await client.chat.completions.create({
-      model: model || "openai/gpt-oss-20b:free",
+      model: model || "gemini-2.5",
       messages: finalMessages,
       stream: true,
       max_tokens: 4096,

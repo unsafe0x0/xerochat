@@ -2,17 +2,13 @@
 @import "highlight.js/styles/github-dark.css";
 
 :root {
-  --background: #1a1a1a;
+  --background: #191919;
   --foreground: #e5e5e5;
-  --border: #2a2a2a;
-  --input: #2a2a2a;
-  --primary: #ffffff;
-  --secondary: #262626;
+  --border: #282828;
+  --input: #222222;
+  --primary: #191919;
+  --secondary: #202020;
   --muted: #525252;
-}
-
-* {
-  border-color: var(--border);
 }
 
 body {
@@ -101,9 +97,10 @@ body {
   font-family: "Courier New", monospace;
 }
 
+
 .markdown-content pre {
-  background-color: #171717;
-  border: 1px solid #2a2a2a;
+  background-color: #222222;
+  border: 1px solid var(--border);
   border-radius: 0.5rem;
   padding: 1em;
   overflow-x: auto;

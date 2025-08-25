@@ -1,0 +1,25 @@
+"use client";
+
+import Image from "next/image";
+import React from "react";
+import { signIn } from "next-auth/react";
+
+export default function Login() {
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#191919]">
+      <div className="bg-[#202020] border border-[#282828] rounded-2xl p-8 w-full max-w-sm flex flex-col items-center">
+        <h2 className="text-3xl font-semibold text-white mb-8">
+          Sign in to continue
+        </h2>
+        <button
+          onClick={() => signIn("google")}
+          className="w-full flex items-center justify-center gap-3 py-2 px-4 rounded-lg bg-white hover:bg-neutral-100 text-neutral-900 font-normal text-base border border-neutral-200 transition-colors cursor-pointer"
+          style={{ outline: "none" }}
+        >
+          <Image src="/google.svg" alt="Google" width={24} height={24} />
+          Continue with Google
+        </button>
+      </div>
+    </div>
+  );
+}

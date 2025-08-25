@@ -32,7 +32,7 @@ export default function MessageArea({
     return (
       <div className="flex flex-col h-full">
         {onToggleSidebar && (
-          <div className="lg:hidden flex items-center justify-between p-2 border-b border-neutral-800">
+          <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828]">
             <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
             <button
               onClick={onToggleSidebar}
@@ -50,25 +50,25 @@ export default function MessageArea({
             conversation.
           </p>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl w-full">
-            <div className="bg-neutral-800/50 rounded-lg p-4 border border-neutral-700">
+            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
               <h3 className="font-medium mb-2">💡 Ask questions</h3>
               <p className="text-sm text-neutral-400">
                 Get answers on any topic
               </p>
             </div>
-            <div className="bg-neutral-800/50 rounded-lg p-4 border border-neutral-700">
+            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
               <h3 className="font-medium mb-2">✍️ Write content</h3>
               <p className="text-sm text-neutral-400">
                 Create articles, stories, and more
               </p>
             </div>
-            <div className="bg-neutral-800/50 rounded-lg p-4 border border-neutral-700">
+            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
               <h3 className="font-medium mb-2">💻 Code assistance</h3>
               <p className="text-sm text-neutral-400">
                 Get help with programming
               </p>
             </div>
-            <div className="bg-neutral-800/50 rounded-lg p-4 border border-neutral-700">
+            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
               <h3 className="font-medium mb-2">🧠 Reasoning</h3>
               <p className="text-sm text-neutral-400">Solve complex problems</p>
             </div>
@@ -81,7 +81,7 @@ export default function MessageArea({
   return (
     <div className="flex flex-col h-full">
       {onToggleSidebar && (
-        <div className="lg:hidden flex items-center justify-between p-2 border-b border-neutral-800">
+        <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828]">
           <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
           <button
             onClick={onToggleSidebar}
@@ -97,14 +97,16 @@ export default function MessageArea({
           {messages.map((message) => (
             <div
               key={message.id}
-              className={`flex gap-4 group ${message.role === "user" ? "justify-end" : "justify-start"
-                }`}
+              className={`flex gap-4 group ${
+                message.role === "user" ? "justify-end" : "justify-start"
+              }`}
             >
               <div
-                className={`flex-1 min-w-0 ${message.role === "user"
+                className={`flex-1 min-w-0 ${
+                  message.role === "user"
                     ? "flex flex-col items-end"
                     : "flex flex-col items-start"
-                  }`}
+                }`}
               >
                 {message.images && message.images.length > 0 && (
                   <div className="mb-3 flex flex-wrap gap-2">
@@ -113,7 +115,7 @@ export default function MessageArea({
                         key={index}
                         src={image}
                         alt={`Image ${index + 1}`}
-                        className="max-w-xs max-h-64 rounded-lg border border-neutral-700 object-cover"
+                        className="max-w-xs max-h-64 rounded-lg border border-[#282828] object-cover"
                       />
                     ))}
                   </div>
@@ -121,10 +123,11 @@ export default function MessageArea({
 
                 {message.content && (
                   <div
-                    className={`max-w-none ${message.role === "user"
-                        ? "bg-neutral-800 rounded-lg p-4"
+                    className={`max-w-none ${
+                      message.role === "user"
+                        ? "bg-[#222222] rounded-lg p-4"
                         : ""
-                      }`}
+                    }`}
                   >
                     {message.role === "assistant" ? (
                       <MarkdownRenderer content={message.content} />

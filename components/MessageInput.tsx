@@ -1,13 +1,12 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { SendHorizontal } from "lucide-react";
-import ModelSelector from "./ModelSelector";
+import { SendHorizontal, Square } from "lucide-react";
 
 interface Model {
   id: string;
   name: string;
-  description: string;
+  description?: string;
 }
 
 interface MessageInputProps {
@@ -17,9 +16,9 @@ interface MessageInputProps {
   isLoading: boolean;
   selectedModel: Model;
   models: Model[];
-  isModelDropdownOpen: boolean;
-  onToggleModelDropdown: () => void;
-  onSelectModel: (model: Model) => void;
+  onOpenModelModal: () => void;
+  isInitial?: boolean;
+  onStop?: () => void;
 }
 
 export default function MessageInput({
@@ -28,10 +27,9 @@ export default function MessageInput({
   onSubmit,
   isLoading,
   selectedModel,
-  models,
-  isModelDropdownOpen,
-  onToggleModelDropdown,
-  onSelectModel,
+  onOpenModelModal,
+  isInitial = false,
+  onStop,
 }: MessageInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
@@ -55,10 +53,20 @@ export default function MessageInput({
   }, [input]);
 
   return (
-    <div className="absolute left-0 right-0 bottom-4 z-20 lg:z-50 pointer-events-none">
-      <div className="max-w-4xl mx-auto pointer-events-auto">
+    <div
+      className={
+        isInitial
+          ? "static pointer-events-auto"
+          : "absolute left-0 right-0 bottom-4 z-20 lg:z-50 pointer-events-none"
+      }
+    >
+      <div
+        className={`${
+          isInitial ? "max-w-3xl mx-auto" : "max-w-4xl mx-auto pointer-events-auto"
+        }`}
+      >
         <form onSubmit={onSubmit} className="relative">
-          <div className="bg-neutral-900/95 rounded-2xl border border-neutral-700 backdrop-blur-sm focus-within:border-neutral-600">
+          <div className="bg-[#191919]/95 rounded-2xl border border-[#282828] backdrop-blur-sm focus-within:border-neutral-600">
             <div className="p-4">
               <textarea
                 ref={textareaRef}
@@ -78,30 +86,36 @@ export default function MessageInput({
             </div>
 
             <div className="flex items-center justify-between px-4 pb-4">
-              <ModelSelector
-                selectedModel={selectedModel}
-                models={models}
-                isModelDropdownOpen={isModelDropdownOpen}
-                onToggleModelDropdown={onToggleModelDropdown}
-                onSelectModel={onSelectModel}
-                variant="desktop"
-                className=""
-              />
+              <button
+                type="button"
+                onClick={onOpenModelModal}
+                className="flex items-center gap-2 rounded-lg border border-neutral-600 transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]"
+              >
+                <span className="font-medium">{selectedModel.name}</span>
+              </button>
 
               <button
-                type="submit"
-                disabled={!input.trim() || isLoading}
-                className="px-3 py-1.5 bg-white text-neutral-900 rounded-lg flex items-center justify-center gap-2 hover:bg-neutral-100 disabled:opacity-50 disabled:cursor-not-allowed transition-colors cursor-pointer"
+                type={isLoading ? "button" : "submit"}
+                disabled={!input.trim() && !isLoading}
+                onClick={() => {
+                  if (isLoading && onStop) onStop();
+                }}
+                className={`w-9 h-9 rounded-md flex items-center justify-center transition-colors cursor-pointer border ${
+                  isLoading
+                    ? "bg-[#242424] text-white hover:bg-[#282828] border-neutral-600"
+                    : "bg-white text-neutral-900 hover:bg-neutral-100 border-neutral-600 disabled:opacity-50 disabled:cursor-not-allowed"
+                }`}
               >
-                Send
-                <SendHorizontal size={18} />
+                {isLoading ? <Square size={20} /> : <SendHorizontal size={20} />}
               </button>
             </div>
           </div>
         </form>
-        <div className="text-xs text-neutral-500 mt-2 text-center">
-          XeroChat can make mistakes. Check important info.
-        </div>
+        {!isInitial && (
+          <div className="text-xs text-neutral-500 mt-2 text-center">
+            XeroChat can make mistakes. Check important info.
+          </div>
+        )}
       </div>
     </div>
   );
