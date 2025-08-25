@@ -49,7 +49,7 @@ export default function ModelSelector({
   }, [isModelDropdownOpen, onToggleModelDropdown]);
 
   const baseButtonClasses =
-    "flex items-center gap-2 rounded-lg border border-neutral-600 transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]";
+    "flex items-center gap-2 rounded-lg border border-[#282828] transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]";
 
   const dropdownPositionClasses =
     variant === "mobile"
@@ -63,7 +63,9 @@ export default function ModelSelector({
         onClick={onToggleModelDropdown}
         className={baseButtonClasses}
       >
-        <span className="font-medium">{selectedModel.name}</span>
+        <span className="font-medium truncate max-w-[10rem] sm:max-w-[14rem] text-sm sm:text-xs">
+          {selectedModel.name}
+        </span>
         <ChevronDown
           size={variant === "mobile" ? 14 : 12}
           className={`transition-transform ${

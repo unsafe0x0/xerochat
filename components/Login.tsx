@@ -7,7 +7,7 @@ import { signIn } from "next-auth/react";
 export default function Login() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-[#191919]">
-      <div className="bg-[#202020] border border-[#282828] rounded-2xl p-8 w-full max-w-sm flex flex-col items-center">
+      <div className="bg-[#202020] border border-[#282828] rounded-2xl p-8 mx-3 w-full max-w-sm flex flex-col items-center">
         <h2 className="text-3xl font-semibold text-white mb-8">
           Sign in to continue
         </h2>

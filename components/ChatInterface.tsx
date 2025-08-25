@@ -207,8 +207,8 @@ export default function ChatInterface() {
               prev.map((msg) =>
                 msg.id === assistantMessage.id
                   ? { ...msg, content: msg.content + chunk }
-                  : msg
-              )
+                  : msg,
+              ),
             );
           }
         } catch (err: any) {
@@ -241,6 +241,7 @@ export default function ChatInterface() {
     }
     setMessages([]);
     setCurrentChatId(null);
+    setIsSidebarOpen(false);
   };
 
   const regenerateMessage = async (messageId: string) => {
@@ -280,7 +281,7 @@ export default function ChatInterface() {
         const text = await response.text().catch(() => "");
         console.error("Chat API regenerate error", response.status, text);
         throw new Error(
-          `Failed to regenerate message: ${response.status} ${text}`
+          `Failed to regenerate message: ${response.status} ${text}`,
         );
       }
 
@@ -306,8 +307,8 @@ export default function ChatInterface() {
               prev.map((msg) =>
                 msg.id === assistantMessage.id
                   ? { ...msg, content: msg.content + chunk }
-                  : msg
-              )
+                  : msg,
+              ),
             );
           }
         } catch (err: any) {
@@ -364,11 +365,37 @@ export default function ChatInterface() {
       <div className="flex-1 flex flex-col">
         {messages.length === 0 ? (
           <div className="flex-1 relative pb-40">
+            {/** mobile header so sidebar can be opened on new chats */}
+            <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828] absolute top-0 left-0 right-0 z-10">
+              <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
+              <button
+                onClick={() => setIsSidebarOpen(true)}
+                className="text-neutral-400 hover:text-white cursor-pointer mr-4"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  className="h-7 w-7"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="currentColor"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth={2}
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </button>
+            </div>
+
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="max-w-4xl w-full px-4 text-center">
                 <h1 className="text-3xl md:text-4xl font-semibold mb-5">
                   Welcome
-                  {session?.user?.name ? `, ${session.user.name}` : ", anon"}{" "}
+                  {session?.user?.name
+                    ? `, ${session.user.name}`
+                    : ", anon"}{" "}
                   Ask Anything
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10 justify-center">

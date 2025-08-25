@@ -12,7 +12,8 @@ export async function callModelEndpoint(options: {
   customInstructions?: string;
   signal?: AbortSignal;
 }) {
-  const { endpoint, messages, modelId, keys, customInstructions, signal } = options;
+  const { endpoint, messages, modelId, keys, customInstructions, signal } =
+    options;
 
   let accessToken = keys.openRouter || "";
   if (endpoint.includes("/gemini")) accessToken = keys.gemini || accessToken;
