@@ -17,7 +17,7 @@ const secondary = Roboto({
 export const metadata: Metadata = {
   title: "XeroChat",
   description:
-    "XeroChat – Modern AI chat interface built with Next.js. Supports GPT‑OSS, Llama, and more. Fast, responsive, and open source.",
+    "XeroChat – Modern AI chat interface built with Next.js. Supports multiple LLM models. Fast, responsive, and open source.",
   keywords: [
     "XeroChat",
     "Unsafezero",
@@ -64,9 +64,12 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" className="dark">
+    <html
+      lang="en"
+      className="dark"
+    >
       <body
-        className={`${primary.variable} ${secondary.variable} antialiased bg-[#191919] text-neutral-100 h-screen`}
+        className={`${primary.variable} ${secondary.variable} antialiased bg-[#191919] text-neutral-100`}
       >
         <SessionProviderClient>{children}</SessionProviderClient>
         <Analytics />

@@ -9,6 +9,7 @@ import SettingsModal from "./SettingsModal";
 import models from "@/data/Models";
 import ModelModal from "./ModelModal";
 import { callModelEndpoint, ProviderKeys } from "@/utils/api";
+import { Menu, Lightbulb, PencilLine, Code2, BrainCog } from "lucide-react";
 
 interface Message {
   id: string;
@@ -141,6 +142,65 @@ export default function ChatInterface() {
     setIsSettingsOpen(false);
   };
 
+  const streamResponse = async (
+    conversationMessages: any[],
+    controller: AbortController
+  ) => {
+    const providerKeys: ProviderKeys = {
+      openRouter: apiKeyOpenRouter,
+      gemini: apiKeyGemini,
+      groq: apiKeyGroq,
+    };
+
+    const response = await callModelEndpoint({
+      endpoint: (selectedModel as any).endpoint || "/api/open-router",
+      messages: conversationMessages,
+      modelId: selectedModel.id,
+      keys: providerKeys,
+      customInstructions: customInstructions,
+      signal: controller.signal,
+    });
+
+    if (!response.ok) {
+      const text = await response.text().catch(() => "");
+      console.error("Chat API error", response.status, text);
+      throw new Error(`Failed to send message: ${response.status} ${text}`);
+    }
+
+    const reader = response.body?.getReader();
+    const decoder = new TextDecoder();
+
+    const assistantMessage: Message = {
+      id: Date.now().toString(),
+      content: "",
+      role: "assistant",
+      timestamp: new Date(),
+    };
+
+    setMessages((prev) => [...prev, assistantMessage]);
+
+    if (reader) {
+      try {
+        while (true) {
+          const { done, value } = await reader.read();
+          if (done) break;
+          const chunk = decoder.decode(value, { stream: true });
+          setMessages((prev) =>
+            prev.map((msg) =>
+              msg.id === assistantMessage.id
+                ? { ...msg, content: msg.content + chunk }
+                : msg
+            )
+          );
+        }
+      } catch (err: any) {
+        if (err?.name !== "AbortError") {
+          console.error("Stream error:", err);
+        }
+      }
+    }
+  };
+
   const handleSubmit = async (e?: React.FormEvent) => {
     e?.preventDefault();
     if (!input.trim() || isLoading) return;
@@ -160,63 +220,14 @@ export default function ChatInterface() {
     const controller = new AbortController();
     setAbortController(controller);
     try {
-      const providerKeys: ProviderKeys = {
-        openRouter: apiKeyOpenRouter,
-        gemini: apiKeyGemini,
-        groq: apiKeyGroq,
-      };
-
-      const response = await callModelEndpoint({
-        endpoint: (selectedModel as any).endpoint || "/api/open-router",
-        messages: updatedMessages.map((m) => ({
+      await streamResponse(
+        updatedMessages.map((m) => ({
           role: m.role,
           content: m.content,
           images: m.images,
         })),
-        modelId: selectedModel.id,
-        keys: providerKeys,
-        customInstructions: customInstructions,
-        signal: controller.signal,
-      });
-
-      if (!response.ok) {
-        const text = await response.text().catch(() => "");
-        console.error("Chat API error", response.status, text);
-        throw new Error(`Failed to send message: ${response.status} ${text}`);
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-
-      const assistantMessage: Message = {
-        id: (Date.now() + 1).toString(),
-        content: "",
-        role: "assistant",
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-
-      if (reader) {
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            const chunk = decoder.decode(value, { stream: true });
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === assistantMessage.id
-                  ? { ...msg, content: msg.content + chunk }
-                  : msg,
-              ),
-            );
-          }
-        } catch (err: any) {
-          if (err?.name !== "AbortError") {
-            console.error("Stream error:", err);
-          }
-        }
-      }
+        controller
+      );
     } catch (error) {
       console.error("Error:", error);
       setMessages((prev) => [
@@ -262,61 +273,7 @@ export default function ChatInterface() {
     const controller = new AbortController();
     setAbortController(controller);
     try {
-      const providerKeys: ProviderKeys = {
-        openRouter: apiKeyOpenRouter,
-        gemini: apiKeyGemini,
-        groq: apiKeyGroq,
-      };
-
-      const response = await callModelEndpoint({
-        endpoint: (selectedModel as any).endpoint || "/api/open-router",
-        messages: conversationHistory,
-        modelId: selectedModel.id,
-        keys: providerKeys,
-        customInstructions: customInstructions,
-        signal: controller.signal,
-      });
-
-      if (!response.ok) {
-        const text = await response.text().catch(() => "");
-        console.error("Chat API regenerate error", response.status, text);
-        throw new Error(
-          `Failed to regenerate message: ${response.status} ${text}`,
-        );
-      }
-
-      const reader = response.body?.getReader();
-      const decoder = new TextDecoder();
-
-      const assistantMessage: Message = {
-        id: Date.now().toString(),
-        content: "",
-        role: "assistant",
-        timestamp: new Date(),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-
-      if (reader) {
-        try {
-          while (true) {
-            const { done, value } = await reader.read();
-            if (done) break;
-            const chunk = decoder.decode(value, { stream: true });
-            setMessages((prev) =>
-              prev.map((msg) =>
-                msg.id === assistantMessage.id
-                  ? { ...msg, content: msg.content + chunk }
-                  : msg,
-              ),
-            );
-          }
-        } catch (err: any) {
-          if (err?.name !== "AbortError") {
-            console.error("Stream error:", err);
-          }
-        }
-      }
+      await streamResponse(conversationHistory, controller);
     } catch (error) {
       console.error("Error regenerating message:", error);
       setMessages((prev) => [
@@ -365,27 +322,13 @@ export default function ChatInterface() {
       <div className="flex-1 flex flex-col">
         {messages.length === 0 ? (
           <div className="flex-1 relative pb-40">
-            {/** mobile header so sidebar can be opened on new chats */}
             <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828] absolute top-0 left-0 right-0 z-10">
               <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
               <button
                 onClick={() => setIsSidebarOpen(true)}
                 className="text-neutral-400 hover:text-white cursor-pointer mr-4"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="h-7 w-7"
-                  fill="none"
-                  viewBox="0 0 24 24"
-                  stroke="currentColor"
-                >
-                  <path
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth={2}
-                    d="M4 6h16M4 12h16M4 18h16"
-                  />
-                </svg>
+                <Menu size={24} />
               </button>
             </div>
 
@@ -393,35 +336,51 @@ export default function ChatInterface() {
               <div className="max-w-4xl w-full px-4 text-center">
                 <h1 className="text-3xl md:text-4xl font-semibold mb-5">
                   Welcome
-                  {session?.user?.name
-                    ? `, ${session.user.name}`
-                    : ", anon"}{" "}
+                  {session?.user?.name ? (
+                    <span
+                      className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-rose-400 bg-clip-text text-transparent ml-2"
+                    >
+                      {`${session.user.name}`}
+                    </span>
+                  ) : ", anon"} {" "}
                   Ask Anything
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10 justify-center">
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-                    <h3 className="font-medium mb-1">💡 Ask</h3>
-                    <p className="text-sm text-neutral-400">
-                      Explain code, algorithms, concepts
-                    </p>
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                    <Lightbulb size={22} className="text-yellow-400" />
+                    <div>
+                      <h3 className="font-medium mb-1">Ask</h3>
+                      <p className="text-sm text-neutral-400">
+                        Explain code, algorithms, concepts
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-                    <h3 className="font-medium mb-1">✍️ Create</h3>
-                    <p className="text-sm text-neutral-400">
-                      Draft docs, posts, stories
-                    </p>
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                    <PencilLine size={22} className="text-blue-400" />
+                    <div>
+                      <h3 className="font-medium mb-1">Create</h3>
+                      <p className="text-sm text-neutral-400">
+                        Draft docs, posts, stories
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-                    <h3 className="font-medium mb-1">💻 Code</h3>
-                    <p className="text-sm text-neutral-400">
-                      Generate & refactor snippets
-                    </p>
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                    <Code2 size={22} className="text-green-400" />
+                    <div>
+                      <h3 className="font-medium mb-1">Code</h3>
+                      <p className="text-sm text-neutral-400">
+                        Generate & refactor snippets
+                      </p>
+                    </div>
                   </div>
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-                    <h3 className="font-medium mb-1">🧠 Reason</h3>
-                    <p className="text-sm text-neutral-400">
-                      Walk through complex problems
-                    </p>
+                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                    <BrainCog size={22} className="text-purple-400" />
+                    <div>
+                      <h3 className="font-medium mb-1">Reason</h3>
+                      <p className="text-sm text-neutral-400">
+                        Walk through complex problems
+                      </p>
+                    </div>
                   </div>
                 </div>
               </div>

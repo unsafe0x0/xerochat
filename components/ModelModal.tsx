@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X } from "lucide-react";
+import { X, CheckCheck } from "lucide-react";
 
 type GenericModel = Record<string, any>;
 
@@ -36,39 +36,45 @@ export default function ModelModal({
   };
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-[#191919] border border-[#282828] rounded-lg w-full max-w-md max-h-[90vh] overflow-hidden">
-        <div className="flex items-center justify-between p-4 border-b border-[#282828]">
-          <h3 className="text-lg font-semibold">Choose a model</h3>
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 transition-opacity animate-fadeIn">
+      <div className="bg-[#191919] border border-[#282828] rounded-xl w-full max-w-lg max-h-[90vh] overflow-hidden shadow-2xl animate-modalPop">
+        <div className="flex items-center justify-between p-5 border-b border-[#282828]">
+          <h3 className="text-xl font-bold tracking-tight text-white">Choose a Model</h3>
           <button
             onClick={onClose}
-            className="text-neutral-400 hover:text-white transition-colors cursor-pointer"
+            className="text-neutral-400 hover:text-white transition-colors cursor-pointer rounded-full p-1"
+            aria-label="Close"
           >
-            <X size={18} />
+            <X size={20} />
           </button>
         </div>
 
-        <div className="p-4 space-y-6 overflow-y-auto max-h-[calc(90vh-72px)]">
+        <div className="p-5 space-y-8 overflow-y-auto max-h-[calc(90vh-80px)]">
           {Object.keys(grouped).map((endpoint) => (
             <div key={endpoint}>
-              <div className="text-sm text-neutral-400 mb-2 font-medium">
+              <div className="text-base text-neutral-300 mb-3 font-semibold">
                 {endpointDisplay[endpoint] || endpoint}
               </div>
 
-              <div className="flex flex-wrap gap-3 justify-start">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                 {grouped[endpoint].map((m) => (
                   <button
                     key={m.id}
                     onClick={() => onSelectModel(m)}
-                    className={`text-left px-3 py-2 transition-colors rounded-lg min-w-[140px] sm:min-w-[200px] flex-none ${
+                    className={`relative text-left px-4 py-3 transition-colors rounded-lg border flex flex-col gap-1 items-start min-h-[70px] ${
                       selectedModel?.id === m.id
-                        ? "bg-white text-neutral-900 border border-neutral-200"
-                        : "bg-[#222222] text-neutral-100 hover:bg-[#242424] border border-[#282828]"
-                    } cursor-pointer`}
+                        ? "bg-white text-neutral-900 border-neutral-200 shadow-md"
+                        : "bg-[#222222] text-neutral-100 hover:bg-[#242424] border-[#282828]"
+                    } cursor-pointer group`}
                   >
-                    <div className="font-medium text-xs sm:text-sm truncate">
-                      {m.name}
+                    <div className="flex items-center gap-2 w-full">
+                      <span className="font-semibold text-sm truncate flex-1">{m.name}</span>
                     </div>
+                    {m.description && (
+                      <div className="text-xs text-neutral-400 mt-1 line-clamp-2">
+                        {m.description.split(' ').slice(0, 15).join(' ')}{m.description.split(' ').length > 15 ? '...' : ''}
+                      </div>
+                    )}
                   </button>
                 ))}
               </div>
@@ -76,6 +82,22 @@ export default function ModelModal({
           ))}
         </div>
       </div>
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease;
+        }
+        @keyframes modalPop {
+          from { transform: scale(0.95); opacity: 0.7; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        .animate-modalPop {
+          animation: modalPop 0.2s cubic-bezier(0.4,0,0.2,1);
+        }
+      `}</style>
     </div>
   );
 }

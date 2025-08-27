@@ -28,51 +28,29 @@ export default function MessageArea({
   onRegenerateMessage,
   onToggleSidebar,
 }: MessageAreaProps) {
+  const Header = () => (
+    onToggleSidebar && (
+      <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828]">
+        <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
+        <button
+          onClick={onToggleSidebar}
+          className="text-neutral-400 hover:text-white cursor-pointer"
+        >
+          <Menu size={28} />
+        </button>
+      </div>
+    )
+  );
+
   if (messages.length === 0) {
     return (
       <div className="flex flex-col h-full">
-        {onToggleSidebar && (
-          <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828]">
-            <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
-            <button
-              onClick={onToggleSidebar}
-              className="text-neutral-400 hover:text-white cursor-pointer"
-            >
-              <Menu size={28} />
-            </button>
-          </div>
-        )}
-
+        <Header />
         <div className="flex-1 flex flex-col items-center justify-center p-8 text-center">
-          <h2 className="text-2xl font-semibold mb-2">Welcome to XeroChat</h2>
-          <p className="text-neutral-400 mb-8 max-w-md">
-            Your AI assistant is ready to help. Choose a model below and start a
-            conversation.
+          <h2 className="text-2xl font-semibold mb-2">No messages yet</h2>
+          <p className="text-neutral-400">
+            Start a conversation to see messages here.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 max-w-2xl w-full">
-            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-              <h3 className="font-medium mb-2">💡 Ask questions</h3>
-              <p className="text-sm text-neutral-400">
-                Get answers on any topic
-              </p>
-            </div>
-            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-              <h3 className="font-medium mb-2">✍️ Write content</h3>
-              <p className="text-sm text-neutral-400">
-                Create articles, stories, and more
-              </p>
-            </div>
-            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-              <h3 className="font-medium mb-2">💻 Code assistance</h3>
-              <p className="text-sm text-neutral-400">
-                Get help with programming
-              </p>
-            </div>
-            <div className="bg-[#212121] rounded-lg p-4 border border-[#282828]">
-              <h3 className="font-medium mb-2">🧠 Reasoning</h3>
-              <p className="text-sm text-neutral-400">Solve complex problems</p>
-            </div>
-          </div>
         </div>
       </div>
     );
@@ -80,18 +58,7 @@ export default function MessageArea({
 
   return (
     <div className="flex flex-col h-full">
-      {onToggleSidebar && (
-        <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828]">
-          <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
-          <button
-            onClick={onToggleSidebar}
-            className="text-neutral-400 hover:text-white cursor-pointer"
-          >
-            <Menu size={28} />
-          </button>
-        </div>
-      )}
-
+      <Header />
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-4xl mx-auto p-4 space-y-6">
           {messages.map((message) => (

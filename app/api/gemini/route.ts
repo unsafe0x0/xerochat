@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     });
 
     const stream = await client.chat.completions.create({
-      model: model || "gemini-2.5",
+      model: model || "gemini-2.5-flash",
       messages: finalMessages,
       stream: true,
       max_tokens: 4096,
