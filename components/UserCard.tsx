@@ -17,7 +17,7 @@ export default function UserCard({
   onLogout,
 }: UserCardProps) {
   return (
-    <div className="flex items-center gap-3 p-3 bg-[#202020] border border-[#282828] rounded-lg">
+    <div className="flex items-center gap-3 p-3 bg-[#222222] border border-[#282828] rounded-lg">
       <img
         src={image}
         alt={name}
@@ -29,7 +29,7 @@ export default function UserCard({
       </div>
       <button
         onClick={onLogout}
-        className="w-8 h-8 flex items-center justify-center rounded-md bg-[#222222] text-neutral-400 hover:bg-[#242424] hover:text-red-500 border border-[#282828] transition-colors cursor-pointer"
+        className="w-8 h-8 flex items-center justify-center rounded-md bg-[#242424] text-neutral-400 hover:bg-[#242424] hover:text-red-500 border border-[#282828] transition-colors cursor-pointer"
         title="Logout"
       >
         <LogOut size={18} />

@@ -7,6 +7,13 @@ const models = [
     endpoint: "/api/open-router",
   },
   {
+    id: "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
+    name: "Dolphin Mistral",
+    description:
+      "24B parameter model from Cognitive Computations, optimized for dialogue and creative tasks",
+    endpoint: "/api/open-router",
+  },
+  {
     id: "z-ai/glm-4.5-air:free",
     name: "GLM-4.5 Air",
     description:
@@ -34,6 +41,12 @@ const models = [
       "Microsoft model for dialogue, summarization, and code completion",
     endpoint: "/api/open-router",
   },
+  // {
+  //   id: "google/gemini-2.5-flash-image-preview:free",
+  //   name: "Gemini 2.5 Flash Image Preview",
+  //   description: "Gemini 2.5 variant optimized for image preview tasks",
+  //   endpoint: "/api/open-router",
+  // },
   {
     id: "gemini-2.5-pro",
     name: "Gemini 2.5 Pro",

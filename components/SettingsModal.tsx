@@ -35,8 +35,8 @@ export default function SettingsModal({
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4">
-      <div className="bg-[#191919] border border-[#282828] rounded-lg w-full max-w-md">
+    <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 transition-opacity animate-fadeIn">
+      <div className="bg-[#191919] border border-[#282828] rounded-xl w-full max-w-md shadow-2xl animate-modalPop">
         <div className="flex items-center justify-between p-4 border-b border-[#282828]">
           <h2 className="text-lg font-semibold">Settings</h2>
           <button
@@ -143,6 +143,22 @@ export default function SettingsModal({
           </button>
         </div>
       </div>
+      <style jsx>{`
+        @keyframes fadeIn {
+          from { opacity: 0; }
+          to { opacity: 1; }
+        }
+        .animate-fadeIn {
+          animation: fadeIn 0.2s ease;
+        }
+        @keyframes modalPop {
+          from { transform: scale(0.95); opacity: 0.7; }
+          to { transform: scale(1); opacity: 1; }
+        }
+        .animate-modalPop {
+          animation: modalPop 0.2s cubic-bezier(0.4,0,0.2,1);
+        }
+      `}</style>
     </div>
   );
 }

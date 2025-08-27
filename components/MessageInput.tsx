@@ -105,9 +105,7 @@ export default function MessageInput({
                   if (isLoading && onStop) onStop();
                 }}
                 className={`w-9 h-9 rounded-md flex items-center justify-center transition-colors cursor-pointer border ${
-                  isLoading
-                    ? "bg-[#242424] text-white hover:bg-[#282828] border-[#282828]"
-                    : "bg-white text-neutral-900 hover:bg-neutral-100 border-[#282828] disabled:opacity-50 disabled:cursor-not-allowed"
+                    "bg-white text-neutral-900 hover:bg-neutral-100 border-[#282828] disabled:opacity-50 disabled:cursor-not-allowed"
                 }`}
               >
                 {isLoading ? (
