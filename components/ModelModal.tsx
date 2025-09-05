@@ -37,7 +37,7 @@ export default function ModelModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 transition-opacity animate-fadeIn">
-      <div className="bg-[#191919] border border-[#282828] rounded-xl w-full max-w-lg max-h-[90vh] overflow-hidden shadow-2xl animate-modalPop">
+      <div className="bg-[#191919] border border-[#282828] rounded-md w-full max-w-lg max-h-[90vh] overflow-hidden shadow-2xl animate-modalPop">
         <div className="flex items-center justify-between p-5 border-b border-[#282828]">
           <h3 className="text-xl font-bold tracking-tight text-white">Choose a Model</h3>
           <button
@@ -61,7 +61,7 @@ export default function ModelModal({
                   <button
                     key={m.id}
                     onClick={() => onSelectModel(m)}
-                    className={`relative text-left px-4 py-3 transition-colors rounded-lg border flex flex-col gap-1 items-start min-h-[70px] ${
+                    className={`relative text-left px-4 py-3 transition-colors rounded-md border flex flex-col gap-1 items-start min-h-[70px] ${
                       selectedModel?.id === m.id
                         ? "bg-white text-neutral-900 border-neutral-200 shadow-md"
                         : "bg-[#222222] text-neutral-100 hover:bg-[#242424] border-[#282828]"

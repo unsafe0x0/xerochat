@@ -49,7 +49,7 @@ export default function ModelSelector({
   }, [isModelDropdownOpen, onToggleModelDropdown]);
 
   const baseButtonClasses =
-    "flex items-center gap-2 rounded-lg border border-[#282828] transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]";
+    "flex items-center gap-2 rounded-md border border-[#282828] transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]";
 
   const dropdownPositionClasses =
     variant === "mobile"
@@ -76,7 +76,7 @@ export default function ModelSelector({
 
       {isModelDropdownOpen && (
         <div
-          className={`absolute ${dropdownPositionClasses} bg-[#222222] border border-[#282828] rounded-lg z-50`}
+          className={`absolute ${dropdownPositionClasses} bg-[#222222] border border-[#282828] rounded-md z-50`}
         >
           <div className="p-2">
             {models.map((model) => (

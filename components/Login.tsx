@@ -13,7 +13,7 @@ export default function Login() {
         </h2>
         <button
           onClick={() => signIn("google")}
-          className="w-full flex items-center justify-center gap-3 py-2 px-4 rounded-lg bg-white hover:bg-neutral-100 text-neutral-900 font-normal text-base border border-neutral-200 transition-colors cursor-pointer"
+          className="w-full flex items-center justify-center gap-3 py-2 px-4 rounded-md bg-white hover:bg-neutral-100 text-neutral-900 font-normal text-base border border-neutral-200 transition-colors cursor-pointer"
           style={{ outline: "none" }}
         >
           <Image src="/google.svg" alt="Google" width={24} height={24} />

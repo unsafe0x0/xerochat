@@ -17,11 +17,11 @@ export default function UserCard({
   onLogout,
 }: UserCardProps) {
   return (
-    <div className="flex items-center gap-3 p-3 bg-[#222222] border border-[#282828] rounded-lg">
+    <div className="flex items-center gap-3 p-3 bg-[#222222] border border-[#282828] rounded-md">
       <img
         src={image}
-        alt={name}
-        className="w-10 h-10 rounded-full object-cover border border-[#282828]"
+        alt=""
+        className="w-10 h-10 rounded-md object-cover border border-[#282828]"
       />
       <div className="flex-1 min-w-0">
         <div className="text-sm font-semibold text-white truncate">{name}</div>

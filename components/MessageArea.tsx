@@ -59,8 +59,8 @@ export default function MessageArea({
   return (
     <div className="flex flex-col h-full">
       <Header />
-      <div className="flex-1 overflow-y-auto">
-        <div className="max-w-4xl mx-auto p-4 space-y-6">
+      <div className="flex-1 overflow-y-auto overflow-x-hidden">
+        <div className="max-w-4xl mx-auto p-4 space-y-6 min-w-0">
           {messages.map((message) => (
             <div
               key={message.id}
@@ -82,7 +82,7 @@ export default function MessageArea({
                         key={index}
                         src={image}
                         alt={`Image ${index + 1}`}
-                        className="max-w-xs max-h-64 rounded-lg border border-[#282828] object-cover"
+                        className="max-w-xs max-h-64 rounded-md border border-[#282828] object-cover"
                       />
                     ))}
                   </div>
@@ -92,12 +92,15 @@ export default function MessageArea({
                   <div
                     className={`max-w-none ${
                       message.role === "user"
-                        ? "bg-[#222222] rounded-lg p-4"
+                        ? "bg-[#222222] rounded-md p-4"
                         : ""
                     }`}
                   >
                     {message.role === "assistant" ? (
-                      <MarkdownRenderer content={message.content} />
+                      <MarkdownRenderer 
+                        content={message.content} 
+                        isStreaming={isLoading && message.id === messages[messages.length - 1]?.id}
+                      />
                     ) : (
                       <div className="whitespace-pre-wrap text-neutral-100 leading-relaxed">
                         {message.content}

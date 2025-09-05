@@ -1,5 +1,26 @@
 const models = [
   {
+    id: "deepseek/deepseek-chat-v3.1:free",
+    name: "DeepSeek Chat v3.1",
+    description:
+      "Latest DeepSeek model optimized for dialogue, reasoning, and coding tasks",
+    endpoint: "/api/open-router",
+  },
+  {
+    id: "deepseek/deepseek-r1:free",
+    name: "DeepSeek R1",
+    description:
+      "DeepSeek reasoning model, strong in code generation and structured problem solving",
+    endpoint: "/api/open-router",
+  },
+  {
+    id: "openai/gpt-oss-120b:free",
+    name: "GPT-OSS 120B",
+    description:
+      "120B parameter open-weight model from OpenAI, high-capacity for complex language and code tasks",
+    endpoint: "/api/open-router",
+  },
+  {
     id: "openai/gpt-oss-20b:free",
     name: "GPT-OSS 20B",
     description:
@@ -8,7 +29,7 @@ const models = [
   },
   {
     id: "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
-    name: "Dolphin Mistral",
+    name: "Uncensored Model",
     description:
       "24B parameter model from Cognitive Computations, optimized for dialogue and creative tasks",
     endpoint: "/api/open-router",
@@ -18,13 +39,6 @@ const models = [
     name: "GLM-4.5 Air",
     description:
       "Lightweight model from Z-AI, tuned for low-latency inference and chat",
-    endpoint: "/api/open-router",
-  },
-  {
-    id: "deepseek/deepseek-r1:free",
-    name: "DeepSeek R1",
-    description:
-      "DeepSeek reasoning model, strong in code generation and structured problem solving",
     endpoint: "/api/open-router",
   },
   {

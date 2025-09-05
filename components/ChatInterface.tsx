@@ -230,11 +230,15 @@ export default function ChatInterface() {
       );
     } catch (error) {
       console.error("Error:", error);
+      const errMsg =
+        error && (error as any).message
+          ? (error as any).message
+          : String(error ?? "Unknown error");
       setMessages((prev) => [
         ...prev,
         {
           id: (Date.now() + 2).toString(),
-          content: "Sorry, I encountered an error. Please try again.",
+          content: `Error: ${errMsg}`,
           role: "assistant",
           timestamp: new Date(),
         },
@@ -276,12 +280,15 @@ export default function ChatInterface() {
       await streamResponse(conversationHistory, controller);
     } catch (error) {
       console.error("Error regenerating message:", error);
+      const errMsg =
+        error && (error as any).message
+          ? (error as any).message
+          : String(error ?? "Unknown error");
       setMessages((prev) => [
         ...prev,
         {
           id: Date.now().toString(),
-          content:
-            "Sorry, I encountered an error while regenerating. Please try again.",
+          content: `Error regenerating: ${errMsg}`,
           role: "assistant",
           timestamp: new Date(),
         },
@@ -346,7 +353,7 @@ export default function ChatInterface() {
                   Ask Anything
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10 justify-center">
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <Lightbulb size={22} className="text-yellow-400" />
                     <div>
                       <h3 className="font-medium mb-1">Ask</h3>
@@ -355,7 +362,7 @@ export default function ChatInterface() {
                       </p>
                     </div>
                   </div>
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <PencilLine size={22} className="text-blue-400" />
                     <div>
                       <h3 className="font-medium mb-1">Create</h3>
@@ -364,7 +371,7 @@ export default function ChatInterface() {
                       </p>
                     </div>
                   </div>
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <Code2 size={22} className="text-green-400" />
                     <div>
                       <h3 className="font-medium mb-1">Code</h3>
@@ -373,7 +380,7 @@ export default function ChatInterface() {
                       </p>
                     </div>
                   </div>
-                  <div className="bg-[#212121] rounded-lg p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <BrainCog size={22} className="text-purple-400" />
                     <div>
                       <h3 className="font-medium mb-1">Reason</h3>

@@ -36,7 +36,7 @@ export default function SettingsModal({
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 z-50 flex items-center justify-center p-4 transition-opacity animate-fadeIn">
-      <div className="bg-[#191919] border border-[#282828] rounded-xl w-full max-w-md shadow-2xl animate-modalPop">
+      <div className="bg-[#191919] border border-[#282828] rounded-md w-full max-w-md shadow-2xl animate-modalPop">
         <div className="flex items-center justify-between p-4 border-b border-[#282828]">
           <h2 className="text-lg font-semibold">Settings</h2>
           <button
@@ -57,7 +57,7 @@ export default function SettingsModal({
               value={apiKeyOpenRouter}
               onChange={(e) => onApiKeyOpenRouterChange(e.target.value)}
               placeholder="Enter your Open Router API key..."
-              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-md text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
             />
             <p className="text-xs text-neutral-400 mt-1">
               Required for API access. Get your API key from{" "}
@@ -80,7 +80,7 @@ export default function SettingsModal({
               value={apiKeyGemini}
               onChange={(e) => onApiKeyGeminiChange(e.target.value)}
               placeholder="Enter your Gemini API key..."
-              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-md text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
             />
             <p className="text-xs text-neutral-400 mt-1">
               Required for API access. Get your Gemini API key from{" "}
@@ -103,7 +103,7 @@ export default function SettingsModal({
               value={apiKeyGroq}
               onChange={(e) => onApiKeyGroqChange(e.target.value)}
               placeholder="Enter your Groq API key..."
-              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-md text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500"
             />
             <p className="text-xs text-neutral-400 mt-1">
               Required for API access. Get your Groq API key from{" "}
@@ -125,7 +125,7 @@ export default function SettingsModal({
               value={customInstructions}
               onChange={(e) => onCustomInstructionsChange(e.target.value)}
               placeholder="Provide custom instructions for the assistant..."
-              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-lg text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500 min-h-[100px] resize-none"
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-md text-white placeholder-neutral-400 focus:outline-none focus:border-neutral-500 min-h-[100px] resize-none"
             />
             <p className="text-xs text-neutral-400 mt-1">
               These instructions will be prepended to the system prompt for
@@ -137,7 +137,7 @@ export default function SettingsModal({
         <div className="flex justify-end gap-3 p-4 border-t border-[#282828]">
           <button
             onClick={onSave}
-            className="px-4 py-1.5 bg-white text-neutral-900 rounded-lg hover:bg-neutral-100 transition-colors cursor-pointer"
+            className="px-4 py-1.5 bg-white text-neutral-900 rounded-md hover:bg-neutral-100 transition-colors cursor-pointer"
           >
             Save
           </button>

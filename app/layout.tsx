@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
-import { Public_Sans, Roboto } from "next/font/google";
+import { Geist, Roboto } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import SessionProviderClient from "@/components/SessionProviderClient";
 
-const primary = Public_Sans({
+const primary = Geist({
   variable: "--font-primary",
   subsets: ["latin"],
 });
@@ -40,7 +40,7 @@ export const metadata: Metadata = {
     siteName: "XeroChat",
     images: [
       {
-        url: "https://xerochat.tech/og.png",
+        url: "https://xerochat.tech/og.avif",
         width: 1200,
         height: 630,
         alt: "XeroChat OpenGraph Image",
@@ -53,7 +53,7 @@ export const metadata: Metadata = {
     title: "XeroChat",
     description:
       "Modern AI chat interface built with Next.js. Supports GPT‑OSS, Llama, and more. Fast, responsive, and open source.",
-    images: ["https://xerochat.tech/og.png"],
+    images: ["https://xerochat.tech/og.avif"],
     creator: "@unsafe0x0",
   },
 };
@@ -64,10 +64,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html
-      lang="en"
-      className="dark"
-    >
+    <html lang="en" className="dark">
       <body
         className={`${primary.variable} ${secondary.variable} antialiased bg-[#191919] text-neutral-100`}
       >

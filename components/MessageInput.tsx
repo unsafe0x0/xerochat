@@ -68,7 +68,7 @@ export default function MessageInput({
         }`}
       >
         <form onSubmit={onSubmit} className="relative">
-          <div className="bg-[#191919]/95 rounded-2xl border border-[#282828] backdrop-blur-sm focus-within:border-[#282828]">
+          <div className="bg-[#191919]/95 rounded-2xl border border-[#282828] backdrop-blur-sm focus-within:border-[#404040] transition-colors">
             <div className="p-4">
               <textarea
                 ref={textareaRef}
@@ -91,7 +91,7 @@ export default function MessageInput({
               <button
                 type="button"
                 onClick={onOpenModelModal}
-                className="flex items-center gap-2 rounded-lg border border-[#282828] transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]"
+                className="flex items-center gap-2 rounded-md border border-[#282828] transition-colors cursor-pointer px-3 py-2 text-xs bg-[#222222] hover:bg-[#242424]"
               >
                 <span className="font-medium truncate max-w-[8rem] sm:max-w-[12rem] text-sm sm:text-xs">
                   {selectedModel.name}
