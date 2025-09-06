@@ -33,9 +33,9 @@ export default function MessageArea({
   onRegenerateMessage,
   onToggleSidebar,
 }: MessageAreaProps) {
-  const Header = () => (
+  const Header = () =>
     onToggleSidebar && (
-  <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828] bg-[#191919]">
+      <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828] bg-[#191919]">
         <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
         <button
           onClick={onToggleSidebar}
@@ -44,8 +44,7 @@ export default function MessageArea({
           <Menu size={28} />
         </button>
       </div>
-    )
-  );
+    );
 
   if (messages.length === 0) {
     return (
@@ -97,14 +96,17 @@ export default function MessageArea({
                   <div
                     className={`max-w-none ${
                       message.role === "user"
-                        ? "bg-[#222222] rounded-md p-4"
+                        ? "bg-[#222222] rounded-md p-2.5"
                         : ""
                     }`}
                   >
                     {message.role === "assistant" ? (
-                      <MarkdownRenderer 
-                        content={message.content} 
-                        isStreaming={isLoading && message.id === messages[messages.length - 1]?.id}
+                      <MarkdownRenderer
+                        content={message.content}
+                        isStreaming={
+                          isLoading &&
+                          message.id === messages[messages.length - 1]?.id
+                        }
                       />
                     ) : (
                       <div className="whitespace-pre-wrap text-neutral-100 leading-relaxed">
@@ -121,9 +123,10 @@ export default function MessageArea({
               </div>
             </div>
           ))}
-          {isThinking && !messages.some(msg => msg.role === "assistant" && msg.content === "") && (
-            <ThinkingIndicator model={selectedModel?.name} />
-          )}
+          {isThinking &&
+            !messages.some(
+              (msg) => msg.role === "assistant" && msg.content === ""
+            ) && <ThinkingIndicator />}
           <div ref={messagesEndRef} />
         </div>
       </div>

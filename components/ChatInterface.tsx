@@ -354,7 +354,7 @@ export default function ChatInterface() {
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="max-w-4xl w-full px-4 text-center">
                 <h1 className="text-3xl md:text-4xl font-semibold mb-5">
-                  Good to see you, {session?.user?.name ? `${session.user.name}` : ", anon"}
+                  Good to see you, {session?.user?.name ? `${session.user.name}` : "anon"}
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10 justify-center">
                   <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">

@@ -10,27 +10,51 @@ const primary = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "XeroChat",
+  metadataBase: new URL("https://xerochat.tech"),
+  title: {
+    default: "XeroChat",
+    template: "%s | XeroChat",
+  },
   description:
-    "XeroChat – Modern AI chat interface built with Next.js. Supports multiple LLM models. Fast, responsive, and open source.",
+    "XeroChat is an open source AI chat interface built with Next.js. Connect with GPT-OSS, Llama, and other LLMs. Fast, responsive, modern, and developer-friendly.",
   keywords: [
     "XeroChat",
     "Unsafezero",
-    "Unsafe0x0",
+    "unsafezero",
+    "AI chat",
     "AI assistant",
-    "chat interface",
-    "Next.js AI app",
-    "GPT-OSS",
-    "Llama model chat",
-    "Open Router API",
+    "LLM chat UI",
+    "Next.js AI",
+    "GPT OSS",
+    "Llama AI model",
+    "OpenRouter API",
     "real-time AI chat",
-    "dark mode assistant",
-    "open source chat UI",
+    "dark mode chat app",
+    "open source AI project",
+    "AI developer tools",
   ],
+  authors: [{ name: "unsafezero", url: "https://x.com/unsafezero" }],
+  creator: "unsafezero",
+  publisher: "XeroChat",
+  alternates: {
+    canonical: "https://xerochat.tech",
+  },
+  robots: {
+    index: true,
+    follow: true,
+    nocache: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-snippet": -1,
+      "max-image-preview": "large",
+      "max-video-preview": -1,
+    },
+  },
   openGraph: {
     title: "XeroChat",
     description:
-      "Modern AI chat interface built with Next.js. Supports GPT‑OSS, Llama, and more. Fast, responsive, and open source.",
+      "Modern AI chat interface for GPT-OSS, Llama, and more. Built with Next.js. Open source, fast, and customizable.",
     url: "https://xerochat.tech",
     siteName: "XeroChat",
     images: [
@@ -38,18 +62,20 @@ export const metadata: Metadata = {
         url: "https://xerochat.tech/og.avif",
         width: 1200,
         height: 630,
-        alt: "XeroChat OpenGraph Image",
+        alt: "XeroChat – Open Source AI Chat",
       },
     ],
+    locale: "en_US",
     type: "website",
   },
   twitter: {
     card: "summary_large_image",
     title: "XeroChat",
     description:
-      "Modern AI chat interface built with Next.js. Supports GPT‑OSS, Llama, and more. Fast, responsive, and open source.",
+      "Fast, modern AI chat built with Next.js. Supports GPT-OSS, Llama, and OpenRouter API. Open source and developer-friendly.",
     images: ["https://xerochat.tech/og.avif"],
-    creator: "@unsafe0x0",
+    creator: "@unsafezero",
+    site: "@unsafezero",
   },
 };
 
