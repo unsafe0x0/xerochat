@@ -1,7 +1,6 @@
 export type ProviderKeys = {
   openRouter?: string;
   gemini?: string;
-  groq?: string;
 };
 
 export async function callModelEndpoint(options: {
@@ -17,7 +16,6 @@ export async function callModelEndpoint(options: {
 
   let accessToken = keys.openRouter || "";
   if (endpoint.includes("/gemini")) accessToken = keys.gemini || accessToken;
-  if (endpoint.includes("/groq")) accessToken = keys.groq || accessToken;
 
   const body = {
     messages,

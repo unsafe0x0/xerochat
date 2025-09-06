@@ -14,6 +14,20 @@ const models = [
     endpoint: "/api/open-router",
   },
   {
+    id: "openrouter/sonoma-sky-alpha",
+    name: "Sonoma Sky Alpha",
+    description:
+      "Sonoma Sky model, optimized for creativity and complex instructions",
+    endpoint: "/api/open-router",
+  },
+  {
+    id: "openrouter/sonoma-dusk-alpha",
+    name: "Sonoma Dusk Alpha",
+    description:
+      "Sonoma Dusk model, balanced for general-purpose tasks with efficiency",
+    endpoint: "/api/open-router",
+  },
+  {
     id: "openai/gpt-oss-120b:free",
     name: "GPT-OSS 120B",
     description:
@@ -81,62 +95,6 @@ const models = [
     description:
       "Lowest-latency Gemini model, cost-efficient for large-scale usage",
     endpoint: "/api/gemini",
-  },
-  {
-    id: "openai/gpt-oss-20b",
-    name: "GPT-OSS 20B",
-    description:
-      "20B parameter open-weight model on Groq Cloud, general-purpose for language and code",
-    endpoint: "/api/groq-cloud",
-  },
-  {
-    id: "openai/gpt-oss-120b",
-    name: "GPT-OSS 120B",
-    description:
-      "120B parameter open-weight model on Groq Cloud, high-capacity for complex tasks",
-    endpoint: "/api/groq-cloud",
-  },
-  {
-    id: "llama-3.3-70b-versatile",
-    name: "Llama-3.3 70B Versatile",
-    description:
-      "70B parameter Llama model on Groq Cloud, general-purpose with high throughput",
-    endpoint: "/api/groq-cloud",
-  },
-  {
-    id: "deepseek-r1-distill-llama-70b",
-    name: "DeepSeek R1",
-    description:
-      "Groq Cloud preview – DeepSeek R1 distilled on Llama-70B for reasoning tasks",
-    endpoint: "/api/groq-cloud",
-  },
-  {
-    id: "qwen/qwen3-32b",
-    name: "Qwen-3 32B",
-    description:
-      "32B parameter Qwen model on Groq Cloud (preview), strong at generation and analysis",
-    endpoint: "/api/groq-cloud",
-  },
-  {
-    id: "compound-beta",
-    name: "Compound Beta",
-    description:
-      "Groq Cloud – compound model (beta) blending multiple architectures, high performance across tasks",
-    endpoint: "/api/groq-cloud",
-  },
-  {
-    id: "meta-llama/llama-4-maverick-17b-128e-instruct",
-    name: "Llama 4 Maverick",
-    description:
-      "Groq Cloud – Llama 4 Maverick 17B Instruct, tuned for reasoning and code with extended context",
-    endpoint: "/api/groq-cloud",
-  },
-  {
-    id: "meta-llama/llama-4-scout-17b-16e-instruct",
-    name: "Llama 4 Scout",
-    description:
-      "Groq Cloud – Llama 4 Scout 17B Instruct, optimized for efficiency and long-context applications",
-    endpoint: "/api/groq-cloud",
   },
 ];
 

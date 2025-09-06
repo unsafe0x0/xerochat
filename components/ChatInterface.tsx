@@ -38,13 +38,13 @@ export default function ChatInterface() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
   const [isLoading, setIsLoading] = useState(false);
+  const [isThinking, setIsThinking] = useState(false);
   const [selectedModel, setSelectedModel] = useState<Model>(models[0] as Model);
   const [isModelModalOpen, setIsModelModalOpen] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [apiKeyOpenRouter, setApiKeyOpenRouter] = useState("");
   const [apiKeyGemini, setApiKeyGemini] = useState("");
-  const [apiKeyGroq, setApiKeyGroq] = useState("");
   const [customInstructions, setCustomInstructions] = useState("");
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
@@ -66,8 +66,6 @@ export default function ChatInterface() {
     if (savedApiKeyOpenRouter) setApiKeyOpenRouter(savedApiKeyOpenRouter);
     const savedApiKeyGemini = localStorage.getItem("apiKeyGemini");
     if (savedApiKeyGemini) setApiKeyGemini(savedApiKeyGemini);
-    const savedApiKeyGroq = localStorage.getItem("apiKeyGroq");
-    if (savedApiKeyGroq) setApiKeyGroq(savedApiKeyGroq);
 
     const savedCustomInstructions = localStorage.getItem("custom_instructions");
     if (savedCustomInstructions) setCustomInstructions(savedCustomInstructions);
@@ -137,7 +135,6 @@ export default function ChatInterface() {
   const saveAccessToken = () => {
     localStorage.setItem("apiKeyOpenRouter", apiKeyOpenRouter);
     localStorage.setItem("apiKeyGemini", apiKeyGemini);
-    localStorage.setItem("apiKeyGroq", apiKeyGroq);
     localStorage.setItem("custom_instructions", customInstructions);
     setIsSettingsOpen(false);
   };
@@ -146,10 +143,12 @@ export default function ChatInterface() {
     conversationMessages: any[],
     controller: AbortController
   ) => {
+    // Start thinking state
+    setIsThinking(true);
+
     const providerKeys: ProviderKeys = {
       openRouter: apiKeyOpenRouter,
       gemini: apiKeyGemini,
-      groq: apiKeyGroq,
     };
 
     const response = await callModelEndpoint({
@@ -181,9 +180,17 @@ export default function ChatInterface() {
 
     if (reader) {
       try {
+        let isFirstChunk = true;
         while (true) {
           const { done, value } = await reader.read();
           if (done) break;
+
+          // Stop thinking on first chunk received
+          if (isFirstChunk) {
+            setIsThinking(false);
+            isFirstChunk = false;
+          }
+
           const chunk = decoder.decode(value, { stream: true });
           setMessages((prev) =>
             prev.map((msg) =>
@@ -230,6 +237,7 @@ export default function ChatInterface() {
       );
     } catch (error) {
       console.error("Error:", error);
+      setIsThinking(false);
       const errMsg =
         error && (error as any).message
           ? (error as any).message
@@ -245,6 +253,7 @@ export default function ChatInterface() {
       ]);
     } finally {
       setIsLoading(false);
+      setIsThinking(false);
       setAbortController(null);
       setTimeout(() => saveCurrentChat(), 100);
     }
@@ -280,6 +289,7 @@ export default function ChatInterface() {
       await streamResponse(conversationHistory, controller);
     } catch (error) {
       console.error("Error regenerating message:", error);
+      setIsThinking(false);
       const errMsg =
         error && (error as any).message
           ? (error as any).message
@@ -295,6 +305,7 @@ export default function ChatInterface() {
       ]);
     } finally {
       setIsLoading(false);
+      setIsThinking(false);
       setAbortController(null);
       setTimeout(() => saveCurrentChat(), 100);
     }
@@ -305,6 +316,7 @@ export default function ChatInterface() {
       abortController.abort();
       setAbortController(null);
       setIsLoading(false);
+      setIsThinking(false);
       setTimeout(() => saveCurrentChat(), 100);
     }
   };
@@ -322,14 +334,14 @@ export default function ChatInterface() {
       />
       {isSidebarOpen && (
         <div
-          className="fixed inset-0 bg-black bg-opacity-50 z-40 lg:hidden"
+          className="fixed inset-0 bg-[#191919] bg-opacity-95 z-40 lg:hidden"
           onClick={() => setIsSidebarOpen(false)}
         />
       )}
       <div className="flex-1 flex flex-col">
         {messages.length === 0 ? (
           <div className="flex-1 relative pb-40">
-            <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828] absolute top-0 left-0 right-0 z-10">
+            <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828] absolute top-0 left-0 right-0 z-10 bg-[#191919]">
               <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
               <button
                 onClick={() => setIsSidebarOpen(true)}
@@ -342,18 +354,10 @@ export default function ChatInterface() {
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="max-w-4xl w-full px-4 text-center">
                 <h1 className="text-3xl md:text-4xl font-semibold mb-5">
-                  Welcome
-                  {session?.user?.name ? (
-                    <span
-                      className="bg-gradient-to-r from-yellow-400 via-yellow-300 to-rose-400 bg-clip-text text-transparent ml-2"
-                    >
-                      {`${session.user.name}`}
-                    </span>
-                  ) : ", anon"} {" "}
-                  Ask Anything
+                  Good to see you, {session?.user?.name ? `${session.user.name}` : ", anon"}
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10 justify-center">
-                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <Lightbulb size={22} className="text-yellow-400" />
                     <div>
                       <h3 className="font-medium mb-1">Ask</h3>
@@ -362,7 +366,7 @@ export default function ChatInterface() {
                       </p>
                     </div>
                   </div>
-                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <PencilLine size={22} className="text-blue-400" />
                     <div>
                       <h3 className="font-medium mb-1">Create</h3>
@@ -371,7 +375,7 @@ export default function ChatInterface() {
                       </p>
                     </div>
                   </div>
-                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <Code2 size={22} className="text-green-400" />
                     <div>
                       <h3 className="font-medium mb-1">Code</h3>
@@ -380,7 +384,7 @@ export default function ChatInterface() {
                       </p>
                     </div>
                   </div>
-                  <div className="bg-[#212121] rounded-md p-4 border border-[#282828] flex items-center gap-3">
+                  <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
                     <BrainCog size={22} className="text-purple-400" />
                     <div>
                       <h3 className="font-medium mb-1">Reason</h3>
@@ -408,6 +412,8 @@ export default function ChatInterface() {
             <MessageArea
               messages={messages}
               isLoading={isLoading}
+              isThinking={isThinking}
+              selectedModel={selectedModel}
               messagesEndRef={messagesEndRef}
               onRegenerateMessage={regenerateMessage}
               onToggleSidebar={() => setIsSidebarOpen(true)}
@@ -432,8 +438,6 @@ export default function ChatInterface() {
         onApiKeyOpenRouterChange={setApiKeyOpenRouter}
         apiKeyGemini={apiKeyGemini}
         onApiKeyGeminiChange={setApiKeyGemini}
-        apiKeyGroq={apiKeyGroq}
-        onApiKeyGroqChange={setApiKeyGroq}
         customInstructions={customInstructions}
         onCustomInstructionsChange={setCustomInstructions}
         onSave={saveAccessToken}

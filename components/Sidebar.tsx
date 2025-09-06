@@ -47,7 +47,7 @@ export default function Sidebar({
     <div
       className={`${
         isSidebarOpen ? "translate-x-0" : "-translate-x-full"
-      } fixed inset-y-0 left-0 z-50 w-64 bg-[#191919] border-r border-[#282828] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
+  } fixed inset-y-0 left-0 z-50 w-64 bg-[#191919] border-r border-[#282828] transition-transform duration-300 ease-in-out lg:translate-x-0 lg:static lg:inset-0`}
     >
       <div className="flex flex-col h-full">
         <div className="px-4 py-4 border-b border-[#282828]">
@@ -56,7 +56,7 @@ export default function Sidebar({
           </h1>
           <button
             onClick={onNewChat}
-            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-neutral-100 hover:bg-neutral-200 rounded-md transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-white hover:bg-neutral-100 rounded-md transition-colors cursor-pointer border border-[#282828]"
           >
             <SquarePen size={18} />
             New Chat
@@ -72,9 +72,9 @@ export default function Sidebar({
               <div
                 key={chat.id}
                 onClick={() => onLoadChat(chat)}
-                className={`group flex items-center justify-between px-3 py-1.5 rounded-md text-sm cursor-pointer transition-colors hover:bg-[#242424] ${
-                  currentChatId === chat.id ? "bg-[#242424]" : "bg-[#222222]"
-                }`}
+                className={`group flex items-center justify-between px-3 py-1.5 rounded-md text-sm cursor-pointer transition-colors hover:bg-[#252525] ${
+                  currentChatId === chat.id ? "bg-[#252525]" : "bg-[#222222]"
+                } border border-[#282828]`}
               >
                 <span className="truncate flex-1 mr-2">{chat.title}</span>
                 <button
@@ -105,7 +105,7 @@ export default function Sidebar({
           <p className="text-xs text-neutral-500">Save your api key here</p>
           <button
             onClick={onOpenSettings}
-            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-400 bg-[#222222] hover:bg-[#242424] rounded-md transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-white hover:bg-neutral-100 rounded-md transition-colors cursor-pointer border border-[#282828]"
           >
             <Settings size={18} />
             Settings
@@ -113,7 +113,7 @@ export default function Sidebar({
           <Link
             href={"https://github.com/unsafe0x0/xerochat"}
             target="_blank"
-            className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-neutral-100 hover:bg-neutral-200 rounded-md transition-colors cursor-pointer"
+            className="flex items-center gap-2 w-full px-3 py-1.5 text-white bg-[#222222] hover:bg-[#252525] rounded-md transition-colors cursor-pointer border border-[#282828]"
           >
             <Github size={18} />
             GitHub

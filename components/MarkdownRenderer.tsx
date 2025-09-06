@@ -70,13 +70,13 @@ export default function MarkdownRenderer({
 
     return (
       <div className="relative group my-6 w-full max-w-full rounded-md border border-[#282828] bg-[#222222] overflow-hidden">
-        <div className="flex justify-between items-center bg-[#1f1f1f] px-4 py-2 border-b border-[#282828]">
+        <div className="flex justify-between items-center bg-[#252525] px-4 py-2 border-b border-[#282828]">
           <span className="text-xs font-medium text-neutral-400 uppercase tracking-wide">
             {language}
           </span>
           <button
             onClick={handleCopy}
-            className="opacity-70 hover:opacity-100 transition-all duration-200 bg-[#242424] hover:bg-[#353535] text-neutral-300 hover:text-white px-3 py-1.5 rounded-md text-xs flex items-center gap-2 font-medium"
+            className="opacity-70 hover:opacity-100 transition-all duration-200 bg-[#252525] hover:bg-[#222222] text-neutral-300 hover:text-white px-3 py-1.5 rounded-md text-xs flex items-center gap-2 font-medium"
             aria-label="Copy code"
           >
             {copied ? (
@@ -110,7 +110,7 @@ export default function MarkdownRenderer({
 
   const InlineCode = ({ children, ...props }: any) => (
     <code
-      className="bg-[#242424] px-2 py-0.5 rounded-md text-sm text-[#ff6b6b] font-mono border border-[#363636] break-all max-w-full inline-block"
+      className="bg-[#252525] px-2 py-0.5 rounded-md text-sm text-[#ff6b6b] font-mono border border-[#282828] break-all max-w-full inline-block"
       {...props}
     >
       {children}
@@ -162,13 +162,13 @@ export default function MarkdownRenderer({
 
             return (
               <div className="relative group my-6 w-full rounded-md border border-[#282828] bg-[#222222] overflow-hidden">
-                <div className="flex justify-between items-center bg-[#1f1f1f] px-4 py-2 border-b border-[#282828]">
+                <div className="flex justify-between items-center bg-[#252525] px-4 py-2 border-b border-[#282828]">
                   <span className="text-xs font-medium text-neutral-400 uppercase tracking-wide">
                     text
                   </span>
                   <button
                     onClick={handleCopy}
-                    className="opacity-70 hover:opacity-100 transition-all duration-200 bg-[#242424] hover:bg-[#353535] text-neutral-300 hover:text-white px-3 py-1.5 rounded-md text-xs flex items-center gap-2 font-medium"
+                    className="opacity-70 hover:opacity-100 transition-all duration-200 bg-[#252525] hover:bg-[#222222] text-neutral-300 hover:text-white px-3 py-1.5 rounded-md text-xs flex items-center gap-2 font-medium"
                     aria-label="Copy code"
                   >
                     {copied ? (
@@ -244,7 +244,7 @@ export default function MarkdownRenderer({
             <li className="text-[#e6e6e6] leading-7 break-words overflow-wrap-anywhere">{children}</li>
           ),
           blockquote: ({ children }) => (
-            <blockquote className="border-l-4 border-[#4a90e2] bg-[#1f2937] bg-opacity-50 pl-4 py-2 my-6 rounded-r-lg">
+            <blockquote className="border-l-4 border-[#4a90e2] bg-[#222222] pl-4 py-2 my-6 rounded-r-lg">
               <div className="text-[#d1d5db] italic">{children}</div>
             </blockquote>
           ),
@@ -258,7 +258,7 @@ export default function MarkdownRenderer({
             </div>
           ),
           thead: ({ children }) => (
-            <thead className="bg-[#242424]">{children}</thead>
+            <thead className="bg-[#252525]">{children}</thead>
           ),
           tbody: ({ children }) => <tbody>{children}</tbody>,
           tr: ({ children }) => (

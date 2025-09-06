@@ -1,16 +1,11 @@
 import type { Metadata } from "next";
-import { Geist, Roboto } from "next/font/google";
+import { Inter } from "next/font/google";
 import "./globals.css";
 import { Analytics } from "@vercel/analytics/next";
 import SessionProviderClient from "@/components/SessionProviderClient";
 
-const primary = Geist({
+const primary = Inter({
   variable: "--font-primary",
-  subsets: ["latin"],
-});
-
-const secondary = Roboto({
-  variable: "--font-secondary",
   subsets: ["latin"],
 });
 
@@ -66,7 +61,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="dark">
       <body
-        className={`${primary.variable} ${secondary.variable} antialiased bg-[#191919] text-neutral-100`}
+        className={`${primary.variable} antialiased bg-[#191919] text-neutral-100`}
       >
         <SessionProviderClient>{children}</SessionProviderClient>
         <Analytics />

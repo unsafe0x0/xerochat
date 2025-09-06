@@ -4,6 +4,7 @@ import React from "react";
 import { Menu } from "lucide-react";
 import MarkdownRenderer from "./MarkdownRenderer";
 import MessageActions from "./MessageActions";
+import ThinkingIndicator from "./ThinkingIndicator";
 
 interface Message {
   id: string;
@@ -16,6 +17,8 @@ interface Message {
 interface MessageAreaProps {
   messages: Message[];
   isLoading: boolean;
+  isThinking?: boolean;
+  selectedModel?: { name: string };
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   onRegenerateMessage?: (messageId: string) => void;
   onToggleSidebar?: () => void;
@@ -24,13 +27,15 @@ interface MessageAreaProps {
 export default function MessageArea({
   messages,
   isLoading,
+  isThinking = false,
+  selectedModel,
   messagesEndRef,
   onRegenerateMessage,
   onToggleSidebar,
 }: MessageAreaProps) {
   const Header = () => (
     onToggleSidebar && (
-      <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828]">
+  <div className="lg:hidden flex items-center justify-between p-2 border-b border-[#282828] bg-[#191919]">
         <h1 className="ml-4 text-2xl font-semibold">XeroChat</h1>
         <button
           onClick={onToggleSidebar}
@@ -82,7 +87,7 @@ export default function MessageArea({
                         key={index}
                         src={image}
                         alt={`Image ${index + 1}`}
-                        className="max-w-xs max-h-64 rounded-md border border-[#282828] object-cover"
+                        className="max-w-xs max-h-64 rounded-md border border-[#282828] object-cover bg-[#222222]"
                       />
                     ))}
                   </div>
@@ -116,16 +121,8 @@ export default function MessageArea({
               </div>
             </div>
           ))}
-          {isLoading && (
-            <div className="flex gap-4 justify-start">
-              <div className="flex-1">
-                <div className="flex items-center gap-1">
-                  <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse"></div>
-                  <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse delay-75"></div>
-                  <div className="w-1 h-1 bg-neutral-400 rounded-full animate-pulse delay-150"></div>
-                </div>
-              </div>
-            </div>
+          {isThinking && !messages.some(msg => msg.role === "assistant" && msg.content === "") && (
+            <ThinkingIndicator model={selectedModel?.name} />
           )}
           <div ref={messagesEndRef} />
         </div>
