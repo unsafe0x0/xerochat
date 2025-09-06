@@ -5,7 +5,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import hljs from "highlight.js";
-import { Copy, Check } from "lucide-react";
+import { MdContentCopy } from "react-icons/md";
+import { IoMdCheckmark } from "react-icons/io";
 
 interface MarkdownRendererProps {
   content: string;
@@ -81,12 +82,12 @@ export default function MarkdownRenderer({
           >
             {copied ? (
               <>
-                <Check size={12} />
+                <IoMdCheckmark size={12} />
                 <span>Copied!</span>
               </>
             ) : (
               <>
-                <Copy size={12} />
+                <MdContentCopy size={12} />
                 <span>Copy</span>
               </>
             )}
@@ -173,12 +174,12 @@ export default function MarkdownRenderer({
                   >
                     {copied ? (
                       <>
-                        <Check size={12} />
+                        <IoMdCheckmark size={12} />
                         <span>Copied!</span>
                       </>
                     ) : (
                       <>
-                        <Copy size={12} />
+                        <MdContentCopy size={12} />
                         <span>Copy</span>
                       </>
                     )}
@@ -241,7 +242,9 @@ export default function MarkdownRenderer({
             </ol>
           ),
           li: ({ children }) => (
-            <li className="text-[#e6e6e6] leading-7 break-words overflow-wrap-anywhere">{children}</li>
+            <li className="text-[#e6e6e6] leading-7 break-words overflow-wrap-anywhere">
+              {children}
+            </li>
           ),
           blockquote: ({ children }) => (
             <blockquote className="border-l-4 border-[#4a90e2] bg-[#222222] pl-4 py-2 my-6 rounded-r-lg">
@@ -272,7 +275,9 @@ export default function MarkdownRenderer({
             </th>
           ),
           td: ({ children }) => (
-            <td className="px-4 py-3 text-[#e6e6e6] text-sm whitespace-nowrap">{children}</td>
+            <td className="px-4 py-3 text-[#e6e6e6] text-sm whitespace-nowrap">
+              {children}
+            </td>
           ),
           a: ({ href, children }) => (
             <a

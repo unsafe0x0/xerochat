@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X } from "lucide-react";
+import { AiOutlineClose } from "react-icons/ai";
 import Link from "next/link";
 
 interface SettingsModalProps {
@@ -39,7 +39,7 @@ export default function SettingsModal({
             onClick={onClose}
             className="text-neutral-400 hover:text-white transition-colors cursor-pointer"
           >
-            <X size={20} />
+            <AiOutlineClose size={20} />
           </button>
         </div>
 

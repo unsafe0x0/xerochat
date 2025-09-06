@@ -16,7 +16,7 @@ export async function POST(req: Request) {
     });
 
     const stream = await client.chat.completions.create({
-      model: model || "openai/gpt-oss-20b:free",
+      model: model || "deepseek/deepseek-chat-v3.1:free",
       messages: finalMessages,
       stream: true,
       max_tokens: 4096,

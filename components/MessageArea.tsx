@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { Menu } from "lucide-react";
+import { RiMenu3Fill } from "react-icons/ri";
 import MarkdownRenderer from "./MarkdownRenderer";
 import MessageActions from "./MessageActions";
 import ThinkingIndicator from "./ThinkingIndicator";
@@ -41,7 +41,7 @@ export default function MessageArea({
           onClick={onToggleSidebar}
           className="text-neutral-400 hover:text-white cursor-pointer"
         >
-          <Menu size={28} />
+          <RiMenu3Fill size={28} />
         </button>
       </div>
     );

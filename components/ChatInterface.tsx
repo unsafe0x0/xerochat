@@ -9,7 +9,11 @@ import SettingsModal from "./SettingsModal";
 import models from "@/data/Models";
 import ModelModal from "./ModelModal";
 import { callModelEndpoint, ProviderKeys } from "@/utils/api";
-import { Menu, Lightbulb, PencilLine, Code2, BrainCog } from "lucide-react";
+import { RiMenu3Line } from "react-icons/ri";
+import { FiZap } from "react-icons/fi";
+import { LuBrain } from "react-icons/lu";
+import { FaCodepen } from "react-icons/fa6";
+import { ImPencil2 } from "react-icons/im";
 
 interface Message {
   id: string;
@@ -143,7 +147,6 @@ export default function ChatInterface() {
     conversationMessages: any[],
     controller: AbortController
   ) => {
-    // Start thinking state
     setIsThinking(true);
 
     const providerKeys: ProviderKeys = {
@@ -185,7 +188,6 @@ export default function ChatInterface() {
           const { done, value } = await reader.read();
           if (done) break;
 
-          // Stop thinking on first chunk received
           if (isFirstChunk) {
             setIsThinking(false);
             isFirstChunk = false;
@@ -347,18 +349,19 @@ export default function ChatInterface() {
                 onClick={() => setIsSidebarOpen(true)}
                 className="text-neutral-400 hover:text-white cursor-pointer mr-4"
               >
-                <Menu size={24} />
+                <RiMenu3Line size={24} />
               </button>
             </div>
 
             <div className="absolute inset-0 flex flex-col items-center justify-center">
               <div className="max-w-4xl w-full px-4 text-center">
                 <h1 className="text-3xl md:text-4xl font-semibold mb-5">
-                  Good to see you, {session?.user?.name ? `${session.user.name}` : "anon"}
+                  Good to see you,{" "}
+                  {session?.user?.name ? `${session.user.name}` : "anon"}
                 </h1>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-left mb-10 justify-center">
                   <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
-                    <Lightbulb size={22} className="text-yellow-400" />
+                    <FiZap size={22} className="text-yellow-400" />
                     <div>
                       <h3 className="font-medium mb-1">Ask</h3>
                       <p className="text-sm text-neutral-400">
@@ -367,7 +370,7 @@ export default function ChatInterface() {
                     </div>
                   </div>
                   <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
-                    <PencilLine size={22} className="text-blue-400" />
+                    <ImPencil2 size={22} className="text-blue-400" />
                     <div>
                       <h3 className="font-medium mb-1">Create</h3>
                       <p className="text-sm text-neutral-400">
@@ -376,7 +379,7 @@ export default function ChatInterface() {
                     </div>
                   </div>
                   <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
-                    <Code2 size={22} className="text-green-400" />
+                    <FaCodepen size={22} className="text-green-400" />
                     <div>
                       <h3 className="font-medium mb-1">Code</h3>
                       <p className="text-sm text-neutral-400">
@@ -385,7 +388,7 @@ export default function ChatInterface() {
                     </div>
                   </div>
                   <div className="bg-[#222222] rounded-md p-4 border border-[#282828] flex items-center gap-3">
-                    <BrainCog size={22} className="text-purple-400" />
+                    <LuBrain size={22} className="text-purple-400" />
                     <div>
                       <h3 className="font-medium mb-1">Reason</h3>
                       <p className="text-sm text-neutral-400">

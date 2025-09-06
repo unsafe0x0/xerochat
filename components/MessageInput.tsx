@@ -1,7 +1,8 @@
 "use client";
 
 import React, { useEffect, useRef } from "react";
-import { SendHorizontal, Square } from "lucide-react";
+import { LuSendHorizontal } from "react-icons/lu";
+import { FaRegSquare } from "react-icons/fa6";
 
 interface Model {
   id: string;
@@ -109,9 +110,9 @@ export default function MessageInput({
                 }`}
               >
                 {isLoading ? (
-                  <Square size={20} />
+                  <FaRegSquare size={20} />
                 ) : (
-                  <SendHorizontal size={20} />
+                  <LuSendHorizontal size={20} />
                 )}
               </button>
             </div>

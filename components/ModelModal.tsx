@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { X, CheckCheck } from "lucide-react";
+import { AiOutlineClose } from "react-icons/ai";
 
 type GenericModel = Record<string, any>;
 
@@ -44,7 +44,7 @@ export default function ModelModal({
             className="text-neutral-400 hover:text-white transition-colors cursor-pointer rounded-full p-1"
             aria-label="Close"
           >
-            <X size={20} />
+            <AiOutlineClose size={20} />
           </button>
         </div>
 

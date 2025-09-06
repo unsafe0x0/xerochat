@@ -1,7 +1,11 @@
 "use client";
 
 import React, { useState } from "react";
-import { Copy, RotateCcw, ThumbsUp, ThumbsDown, Check } from "lucide-react";
+import { MdContentCopy } from "react-icons/md";
+import { GrRotateLeft } from "react-icons/gr";
+import { BiLike } from "react-icons/bi";
+import { BiDislike } from "react-icons/bi";
+import { IoMdCheckmark } from "react-icons/io";
 
 interface Message {
   id: string;
@@ -54,7 +58,7 @@ export default function MessageActions({
         className="p-1.5 rounded hover:bg-[#242424] text-neutral-400 hover:text-white transition-colors cursor-pointer"
         title="Copy message"
       >
-        {copied ? <Check size={14} /> : <Copy size={14} />}
+        {copied ? <IoMdCheckmark size={14} /> : <MdContentCopy size={14} />}
       </button>
 
       {message.role === "assistant" && onRegenerate && (
@@ -63,7 +67,7 @@ export default function MessageActions({
           className="p-1.5 rounded hover:bg-[#242424] text-neutral-400 hover:text-white transition-colors cursor-pointer"
           title="Regenerate response"
         >
-          <RotateCcw size={14} />
+          <GrRotateLeft size={14} />
         </button>
       )}
 
@@ -78,7 +82,7 @@ export default function MessageActions({
             }`}
             title="Good response"
           >
-            <ThumbsUp size={14} />
+            <BiLike size={14} />
           </button>
           <button
             onClick={() => handleFeedback("down")}
@@ -89,7 +93,7 @@ export default function MessageActions({
             }`}
             title="Bad response"
           >
-            <ThumbsDown size={14} />
+            <BiDislike size={14} />
           </button>
         </>
       )}

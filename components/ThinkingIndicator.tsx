@@ -1,14 +1,14 @@
 "use client";
 
 import React from "react";
-import { Brain } from "lucide-react";
+import { LuBrain } from "react-icons/lu";
 
 export default function ThinkingIndicator() {
   return (
     <div className="flex gap-4 justify-start">
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-3 py-2">
-          <Brain size={18} className="text-neutral-300 animate-pulse" />
+          <LuBrain size={18} className="text-neutral-300 animate-pulse" />
           <div className="flex items-center gap-2">
             <span className="text-sm font-medium text-neutral-300">Thinking</span>
             <div className="flex gap-1">

@@ -3,7 +3,10 @@
 import React from "react";
 import UserCard from "./UserCard";
 import { useSession, signOut } from "next-auth/react";
-import { SquarePen, Settings, Trash2, Github } from "lucide-react";
+import { MdChatBubbleOutline } from "react-icons/md";
+import { SlSettings } from "react-icons/sl";
+import { FaRegTrashAlt } from "react-icons/fa";
+import { IoLogoGithub } from "react-icons/io5";
 import Link from "next/link";
 
 interface Message {
@@ -58,7 +61,7 @@ export default function Sidebar({
             onClick={onNewChat}
             className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-white hover:bg-neutral-100 rounded-md transition-colors cursor-pointer border border-[#282828]"
           >
-            <SquarePen size={18} />
+            <MdChatBubbleOutline size={18} />
             New Chat
           </button>
         </div>
@@ -81,7 +84,7 @@ export default function Sidebar({
                   onClick={(e) => onDeleteChat(chat.id, e)}
                   className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-red-500 transition-all p-1 cursor-pointer"
                 >
-                  <Trash2 size={14} />
+                  <FaRegTrashAlt size={14} />
                 </button>
               </div>
             ))}
@@ -107,7 +110,7 @@ export default function Sidebar({
             onClick={onOpenSettings}
             className="flex items-center gap-2 w-full px-3 py-1.5 text-neutral-800 bg-white hover:bg-neutral-100 rounded-md transition-colors cursor-pointer border border-[#282828]"
           >
-            <Settings size={18} />
+            <SlSettings size={18} />
             Settings
           </button>
           <Link
@@ -115,7 +118,7 @@ export default function Sidebar({
             target="_blank"
             className="flex items-center gap-2 w-full px-3 py-1.5 text-white bg-[#222222] hover:bg-[#252525] rounded-md transition-colors cursor-pointer border border-[#282828]"
           >
-            <Github size={18} />
+            <IoLogoGithub size={18} />
             GitHub
           </Link>
         </div>

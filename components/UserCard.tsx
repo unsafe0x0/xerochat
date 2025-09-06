@@ -1,7 +1,7 @@
 "use client";
 
 import React from "react";
-import { LogOut } from "lucide-react";
+import { MdOutlineLogout } from "react-icons/md";
 
 interface UserCardProps {
   name: string;
@@ -32,7 +32,7 @@ export default function UserCard({
         className="w-8 h-8 flex items-center justify-center rounded-md bg-[#242424] text-neutral-400 hover:bg-[#242424] hover:text-red-500 border border-[#282828] transition-colors cursor-pointer"
         title="Logout"
       >
-        <LogOut size={18} />
+        <MdOutlineLogout size={18} />
       </button>
     </div>
   );
