@@ -82,7 +82,7 @@ export default function Sidebar({
                 <span className="truncate flex-1 mr-2">{chat.title}</span>
                 <button
                   onClick={(e) => onDeleteChat(chat.id, e)}
-                  className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-red-500 transition-all p-1 cursor-pointer"
+                  className="opacity-0 group-hover:opacity-100 text-neutral-400 hover:text-[#ff6b6b] transition-all p-1 cursor-pointer"
                 >
                   <FaRegTrashAlt size={14} />
                 </button>

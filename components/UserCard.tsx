@@ -29,7 +29,7 @@ export default function UserCard({
       </div>
       <button
         onClick={onLogout}
-        className="w-8 h-8 flex items-center justify-center rounded-md bg-[#242424] text-neutral-400 hover:bg-[#242424] hover:text-red-500 border border-[#282828] transition-colors cursor-pointer"
+        className="w-8 h-8 flex items-center justify-center rounded-md bg-[#242424] text-neutral-400 hover:bg-[#242424] hover:text-[#ff6b6b] border border-[#282828] transition-colors cursor-pointer"
         title="Logout"
       >
         <MdOutlineLogout size={18} />

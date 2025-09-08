@@ -34,6 +34,16 @@ export default function MessageInput({
 }: MessageInputProps) {
   const textareaRef = useRef<HTMLTextAreaElement>(null);
 
+  useEffect(() => {
+    const ta = textareaRef.current;
+    if (!ta) return;
+    ta.focus();
+    const len = ta.value?.length ?? 0;
+    try {
+      ta.setSelectionRange(len, len);
+    } catch (e) {}
+  }, []);
+
   const handleTextareaInput = (e: React.FormEvent<HTMLTextAreaElement>) => {
     const target = e.target as HTMLTextAreaElement;
     target.style.height = "auto";
@@ -105,9 +115,7 @@ export default function MessageInput({
                 onClick={() => {
                   if (isLoading && onStop) onStop();
                 }}
-                className={`w-9 h-9 rounded-md flex items-center justify-center transition-colors cursor-pointer border ${
-                    "bg-white text-neutral-900 hover:bg-neutral-100 border-[#282828] disabled:opacity-50 disabled:cursor-not-allowed"
-                }`}
+                className={`w-9 h-9 rounded-md flex items-center justify-center transition-colors cursor-pointer border ${"bg-white text-neutral-900 hover:bg-neutral-100 border-[#282828] disabled:opacity-50 disabled:cursor-not-allowed"}`}
               >
                 {isLoading ? (
                   <FaRegSquare size={20} />
