@@ -1,7 +1,7 @@
 const models = [
   {
     id: "deepseek/deepseek-chat-v3.1:free",
-    name: "DeepSeek Chat v3.1",
+    name: "DeepSeek V3",
     description:
       "Latest DeepSeek model optimized for dialogue, reasoning, and coding tasks",
     endpoint: "/api/open-router",
@@ -27,13 +27,13 @@ const models = [
       "Sonoma Dusk model, balanced for general-purpose tasks with efficiency",
     endpoint: "/api/open-router",
   },
-  {
-    id: "openai/gpt-oss-120b:free",
-    name: "GPT-OSS 120B",
-    description:
-      "120B parameter open-weight model from OpenAI, high-capacity for complex language and code tasks",
-    endpoint: "/api/open-router",
-  },
+  // {
+  //   id: "openai/gpt-oss-120b:free",
+  //   name: "GPT-OSS 120B",
+  //   description:
+  //     "120B parameter open-weight model from OpenAI, high-capacity for complex language and code tasks",
+  //   endpoint: "/api/open-router",
+  // },
   {
     id: "openai/gpt-oss-20b:free",
     name: "GPT-OSS 20B",
@@ -49,6 +49,20 @@ const models = [
     endpoint: "/api/open-router",
   },
   {
+    id: "meta-llama/llama-4-scout:free",
+    name: "Llama 4 Scout",
+    description:
+      "Latest Llama 4 model from Meta, fine-tuned for dialogue and interactive tasks",
+    endpoint: "/api/open-router",
+  },
+  {
+    id: "meta-llama/llama-4-maverick:free",
+    name: "Llama 4 Maverick",
+    description:
+      "High-performance Llama 4 variant, balanced for reasoning and language skills",
+    endpoint: "/api/open-router",
+  },
+  {
     id: "z-ai/glm-4.5-air:free",
     name: "GLM-4.5 Air",
     description:
@@ -57,16 +71,16 @@ const models = [
   },
   {
     id: "qwen/qwen3-14b:free",
-    name: "Qwen 3 14B",
+    name: "Qwen 3",
     description:
       "14B parameter model from Qwen, balanced for language understanding and generation",
     endpoint: "/api/open-router",
   },
   {
-    id: "microsoft/mai-ds-r1:free",
-    name: "MAI-DS R1",
+    id: "mistralai/mistral-nemo:free",
+    name: "Mistral Nemo",
     description:
-      "Microsoft model for dialogue, summarization, and code completion",
+      "Specialized Mistral variant fine-tuned for dialogue and interactive tasks",
     endpoint: "/api/open-router",
   },
   // {
@@ -98,7 +112,7 @@ const models = [
   },
   {
     id: "mistral-small-latest",
-    name: "Mistral Small Latest",
+    name: "Mistral Small",
     description:
       "Latest Mistral model optimized for chat, reasoning, and coding tasks",
     endpoint: "/api/mistral",
@@ -114,6 +128,20 @@ const models = [
     id: "mistral-large-latest",
     name: "Mistral Large",
     description: "Top-tier reasoning, multilingual, and coding capabilities",
+    endpoint: "/api/mistral",
+  },
+  {
+    id: "open-mistral-nemo",
+    name: "Mistral Nemo",
+    description:
+      "Specialized Mistral variant fine-tuned for dialogue and interactive tasks",
+    endpoint: "/api/mistral",
+  },
+  {
+    id: "pixtral-12b-2409",
+    name: "Pixtral 12B",
+    description:
+      "Pixtral 12B model, optimized for various language tasks with efficiency",
     endpoint: "/api/mistral",
   },
 ];
