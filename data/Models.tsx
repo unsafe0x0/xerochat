@@ -96,6 +96,26 @@ const models = [
       "Lowest-latency Gemini model, cost-efficient for large-scale usage",
     endpoint: "/api/gemini",
   },
+  {
+    id: "mistral-small-latest",
+    name: "Mistral Small Latest",
+    description:
+      "Latest Mistral model optimized for chat, reasoning, and coding tasks",
+    endpoint: "/api/mistral",
+  },
+  {
+    id: "mistral-medium-latest",
+    name: "Mistral Medium",
+    description:
+      "High-performance model with balanced reasoning and language skills",
+    endpoint: "/api/mistral",
+  },
+  {
+    id: "mistral-large-latest",
+    name: "Mistral Large",
+    description: "Top-tier reasoning, multilingual, and coding capabilities",
+    endpoint: "/api/mistral",
+  },
 ];
 
 export default models;

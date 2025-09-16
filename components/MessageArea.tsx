@@ -125,7 +125,7 @@ export default function MessageArea({
           ))}
           {isThinking &&
             !messages.some(
-              (msg) => msg.role === "assistant" && msg.content === ""
+              (msg) => msg.role === "assistant" && msg.content === "",
             ) && <ThinkingIndicator />}
           <div ref={messagesEndRef} />
         </div>

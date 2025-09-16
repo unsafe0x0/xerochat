@@ -11,6 +11,8 @@ interface SettingsModalProps {
   apiKeyGemini: string;
   onApiKeyGeminiChange: (value: string) => void;
   customInstructions: string;
+  apiKeyMistral: string;
+  onApiKeyMistralChange: (value: string) => void;
   onCustomInstructionsChange: (value: string) => void;
   onSave: () => void;
   onClose: () => void;
@@ -22,6 +24,8 @@ export default function SettingsModal({
   onApiKeyOpenRouterChange,
   apiKeyGemini,
   onApiKeyGeminiChange,
+  apiKeyMistral,
+  onApiKeyMistralChange,
   customInstructions,
   onCustomInstructionsChange,
 
@@ -92,6 +96,29 @@ export default function SettingsModal({
           </div>
           <div>
             <label className="block text-sm font-medium text-neutral-300 mb-2">
+              API key Mistral
+            </label>
+            <input
+              type="password"
+              value={apiKeyMistral}
+              onChange={(e) => onApiKeyMistralChange(e.target.value)}
+              placeholder="Enter your Mistral API key..."
+              className="w-full px-3 py-2 bg-[#222222] border border-[#282828] rounded-md text-white placeholder-neutral-400 focus:outline-none focus:border-[#282828]"
+            />
+            <p className="text-xs text-neutral-400 mt-1">
+              Required for API access. Get your Mistral API key from{" "}
+              <Link
+                href="https://mistral.ai/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-white hover:underline"
+              >
+                here
+              </Link>
+            </p>
+          </div>
+          <div>
+            <label className="block text-sm font-medium text-neutral-300 mb-2">
               Custom Instructions
             </label>
             <textarea
@@ -118,18 +145,28 @@ export default function SettingsModal({
       </div>
       <style jsx>{`
         @keyframes fadeIn {
-          from { opacity: 0; }
-          to { opacity: 1; }
+          from {
+            opacity: 0;
+          }
+          to {
+            opacity: 1;
+          }
         }
         .animate-fadeIn {
           animation: fadeIn 0.2s ease;
         }
         @keyframes modalPop {
-          from { transform: scale(0.95); opacity: 0.7; }
-          to { transform: scale(1); opacity: 1; }
+          from {
+            transform: scale(0.95);
+            opacity: 0.7;
+          }
+          to {
+            transform: scale(1);
+            opacity: 1;
+          }
         }
         .animate-modalPop {
-          animation: modalPop 0.2s cubic-bezier(0.4,0,0.2,1);
+          animation: modalPop 0.2s cubic-bezier(0.4, 0, 0.2, 1);
         }
       `}</style>
     </div>

@@ -49,6 +49,7 @@ export default function ChatInterface() {
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
   const [apiKeyOpenRouter, setApiKeyOpenRouter] = useState("");
   const [apiKeyGemini, setApiKeyGemini] = useState("");
+  const [apiKeyMistral, setApiKeyMistral] = useState("");
   const [customInstructions, setCustomInstructions] = useState("");
   const [abortController, setAbortController] =
     useState<AbortController | null>(null);
@@ -70,6 +71,8 @@ export default function ChatInterface() {
     if (savedApiKeyOpenRouter) setApiKeyOpenRouter(savedApiKeyOpenRouter);
     const savedApiKeyGemini = localStorage.getItem("apiKeyGemini");
     if (savedApiKeyGemini) setApiKeyGemini(savedApiKeyGemini);
+    const savedApiKeyMistral = localStorage.getItem("apiKeyMistral");
+    if (savedApiKeyMistral) setApiKeyMistral(savedApiKeyMistral);
 
     const savedCustomInstructions = localStorage.getItem("custom_instructions");
     if (savedCustomInstructions) setCustomInstructions(savedCustomInstructions);
@@ -139,19 +142,21 @@ export default function ChatInterface() {
   const saveAccessToken = () => {
     localStorage.setItem("apiKeyOpenRouter", apiKeyOpenRouter);
     localStorage.setItem("apiKeyGemini", apiKeyGemini);
+    localStorage.setItem("apiKeyMistral", apiKeyMistral);
     localStorage.setItem("custom_instructions", customInstructions);
     setIsSettingsOpen(false);
   };
 
   const streamResponse = async (
     conversationMessages: any[],
-    controller: AbortController
+    controller: AbortController,
   ) => {
     setIsThinking(true);
 
     const providerKeys: ProviderKeys = {
       openRouter: apiKeyOpenRouter,
       gemini: apiKeyGemini,
+      mistral: apiKeyMistral,
     };
 
     const response = await callModelEndpoint({
@@ -198,8 +203,8 @@ export default function ChatInterface() {
             prev.map((msg) =>
               msg.id === assistantMessage.id
                 ? { ...msg, content: msg.content + chunk }
-                : msg
-            )
+                : msg,
+            ),
           );
         }
       } catch (err: any) {
@@ -235,7 +240,7 @@ export default function ChatInterface() {
           content: m.content,
           images: m.images,
         })),
-        controller
+        controller,
       );
     } catch (error) {
       console.error("Error:", error);
@@ -441,6 +446,8 @@ export default function ChatInterface() {
         onApiKeyOpenRouterChange={setApiKeyOpenRouter}
         apiKeyGemini={apiKeyGemini}
         onApiKeyGeminiChange={setApiKeyGemini}
+        apiKeyMistral={apiKeyMistral}
+        onApiKeyMistralChange={setApiKeyMistral}
         customInstructions={customInstructions}
         onCustomInstructionsChange={setCustomInstructions}
         onSave={saveAccessToken}

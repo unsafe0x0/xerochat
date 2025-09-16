@@ -15,11 +15,11 @@ Open http://localhost:3000
 
 ## Configure Keys
 
-
 Open Settings in the sidebar and paste any API keys you have:
 
 - **OpenRouter** (models using `/api/open-router`)
 - **Gemini** (models using `/api/gemini`)
+- **Mistral** (models using `/api/mistral`)
 
 Keys are stored in localStorage; no server env vars needed.
 

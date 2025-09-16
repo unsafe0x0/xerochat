@@ -140,7 +140,7 @@ export default function MarkdownRenderer({
           },
           pre: ({ children }) => {
             const codeChild = React.Children.toArray(children).find(
-              (child: any) => child?.props?.className?.includes("language-")
+              (child: any) => child?.props?.className?.includes("language-"),
             );
 
             if (codeChild) {

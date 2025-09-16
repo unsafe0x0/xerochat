@@ -1,6 +1,7 @@
 export type ProviderKeys = {
   openRouter?: string;
   gemini?: string;
+  mistral?: string;
 };
 
 export async function callModelEndpoint(options: {
@@ -16,6 +17,7 @@ export async function callModelEndpoint(options: {
 
   let accessToken = keys.openRouter || "";
   if (endpoint.includes("/gemini")) accessToken = keys.gemini || accessToken;
+  if (endpoint.includes("/mistral")) accessToken = keys.mistral || accessToken;
 
   const body = {
     messages,

@@ -10,7 +10,9 @@ export default function ThinkingIndicator() {
         <div className="flex items-center gap-3 py-2">
           <LuBrain size={18} className="text-neutral-300 animate-pulse" />
           <div className="flex items-center gap-2">
-            <span className="text-sm font-medium text-neutral-300">Thinking</span>
+            <span className="text-sm font-medium text-neutral-300">
+              Thinking
+            </span>
             <div className="flex gap-1">
               <div className="w-1 h-1 bg-neutral-300 rounded-full animate-bounce" />
               <div className="w-1 h-1 bg-neutral-300 rounded-full animate-bounce delay-100" />
