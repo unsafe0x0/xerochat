@@ -1,5 +1,12 @@
 const models = [
   {
+    id: "x-ai/grok-4-fast:free",
+    name: "Grok 4 Fast",
+    description:
+      "Latest Grok model optimized for speed and general purpose tasks",
+    endpoint: "/api/open-router",
+  },
+  {
     id: "deepseek/deepseek-chat-v3.1:free",
     name: "DeepSeek V3",
     description:
