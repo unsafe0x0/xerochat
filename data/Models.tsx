@@ -20,20 +20,20 @@ const models = [
       "DeepSeek reasoning model, strong in code generation and structured problem solving",
     endpoint: "/api/open-router",
   },
-  {
-    id: "openrouter/sonoma-sky-alpha",
-    name: "Sonoma Sky Alpha",
-    description:
-      "Sonoma Sky model, optimized for creativity and complex instructions",
-    endpoint: "/api/open-router",
-  },
-  {
-    id: "openrouter/sonoma-dusk-alpha",
-    name: "Sonoma Dusk Alpha",
-    description:
-      "Sonoma Dusk model, balanced for general-purpose tasks with efficiency",
-    endpoint: "/api/open-router",
-  },
+  // {
+  //   id: "openrouter/sonoma-sky-alpha",
+  //   name: "Sonoma Sky Alpha",
+  //   description:
+  //     "Sonoma Sky model, optimized for creativity and complex instructions",
+  //   endpoint: "/api/open-router",
+  // },
+  // {
+  //   id: "openrouter/sonoma-dusk-alpha",
+  //   name: "Sonoma Dusk Alpha",
+  //   description:
+  //     "Sonoma Dusk model, balanced for general-purpose tasks with efficiency",
+  //   endpoint: "/api/open-router",
+  // },
   // {
   //   id: "openai/gpt-oss-120b:free",
   //   name: "GPT-OSS 120B",
