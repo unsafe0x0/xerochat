@@ -10,31 +10,27 @@
     "postinstall": "prisma generate"
   },
   "dependencies": {
-    "@ai-sdk/google": "^2.0.3",
-    "@ai-sdk/openai": "^2.0.8",
-    "@prisma/client": "^6.14.0",
-    "@tailwindcss/typography": "^0.5.16",
+    "@prisma/client": "^6.16.3",
+    "@tailwindcss/typography": "^0.5.19",
     "@vercel/analytics": "^1.5.0",
-    "ai": "^5.0.9",
     "highlight.js": "^11.11.1",
     "next": "15.4.5",
     "next-auth": "^4.24.11",
-    "openai": "^5.16.0",
-    "prisma": "^6.14.0",
+    "openai": "^5.23.2",
+    "prisma": "^6.16.3",
     "react": "19.1.0",
     "react-dom": "19.1.0",
     "react-icons": "^5.5.0",
     "react-markdown": "^10.1.0",
     "rehype-highlight": "^7.0.2",
-    "rehype-raw": "^7.0.0",
     "remark-gfm": "^4.0.1"
   },
   "devDependencies": {
-    "@tailwindcss/postcss": "^4",
-    "@types/node": "^20",
-    "@types/react": "^19",
-    "@types/react-dom": "^19",
-    "tailwindcss": "^4",
-    "typescript": "^5"
+    "@tailwindcss/postcss": "^4.1.14",
+    "@types/node": "^20.19.19",
+    "@types/react": "^19.2.0",
+    "@types/react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.14",
+    "typescript": "^5.9.3"
   }
 }
