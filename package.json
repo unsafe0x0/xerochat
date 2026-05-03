@@ -14,7 +14,7 @@
     "@tailwindcss/typography": "^0.5.19",
     "@vercel/analytics": "^1.6.1",
     "highlight.js": "^11.11.1",
-    "next": "15.4.5",
+    "next": "15.4.10",
     "next-auth": "^4.24.14",
     "openai": "^5.23.2",
     "prisma": "^6.19.3",
