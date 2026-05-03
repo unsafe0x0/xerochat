@@ -18,7 +18,6 @@ interface MessageAreaProps {
   messages: Message[];
   isLoading: boolean;
   isThinking?: boolean;
-  selectedModel?: { name: string };
   messagesEndRef: React.RefObject<HTMLDivElement | null>;
   onRegenerateMessage?: (messageId: string) => void;
   onToggleSidebar?: () => void;
@@ -28,7 +27,6 @@ export default function MessageArea({
   messages,
   isLoading,
   isThinking = false,
-  selectedModel,
   messagesEndRef,
   onRegenerateMessage,
   onToggleSidebar,
