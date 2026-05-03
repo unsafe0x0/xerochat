@@ -421,7 +421,6 @@ export default function ChatInterface() {
               messages={messages}
               isLoading={isLoading}
               isThinking={isThinking}
-              selectedModel={selectedModel}
               messagesEndRef={messagesEndRef}
               onRegenerateMessage={regenerateMessage}
               onToggleSidebar={() => setIsSidebarOpen(true)}

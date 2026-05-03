@@ -1,6 +1,25 @@
 import { OpenAI } from "openai";
 import { buildSystemPrompt } from "@/utils/systemPrompt";
 
+// Sanitize error messages to prevent leaking upstream details
+function sanitizeError(err: any): { message: string; status: number } {
+  const raw =
+    err?.message || (typeof err === "string" ? err : "Unknown error");
+  const lower = raw.toLowerCase();
+
+  if (lower.includes("api key") || lower.includes("authorization") || lower.includes("authentication")) {
+    return { message: "Invalid or missing API key.", status: 401 };
+  }
+  if (lower.includes("rate limit") || lower.includes("quota")) {
+    return { message: "Rate limit exceeded. Please try again later.", status: 429 };
+  }
+  if (lower.includes("model") && lower.includes("not found")) {
+    return { message: "The selected model is not available.", status: 404 };
+  }
+
+  return { message: "An error occurred while processing your request.", status: 502 };
+}
+
 export async function POST(req: Request) {
   try {
     const { messages, model, accessToken, customInstructions } =
@@ -32,12 +51,8 @@ export async function POST(req: Request) {
             if (content) controller.enqueue(encoder.encode(content));
           }
         } catch (err: any) {
-          const msg =
-            err?.message ||
-            (typeof err === "string" ? err : "Unknown upstream error");
-          controller.enqueue(
-            encoder.encode(`Error from upstream provider: ${msg}`),
-          );
+          const { message } = sanitizeError(err);
+          controller.enqueue(encoder.encode(`Error: ${message}`));
         } finally {
           controller.close();
         }
@@ -52,13 +67,7 @@ export async function POST(req: Request) {
       },
     });
   } catch (err: any) {
-    const msg =
-      err?.message || (typeof err === "string" ? err : "Unknown error");
-    const status =
-      msg.toLowerCase().includes("api key") ||
-      msg.toLowerCase().includes("authorization")
-        ? 401
-        : 502;
-    return new Response(`Error: ${msg}`, { status });
+    const { message, status } = sanitizeError(err);
+    return new Response(`Error: ${message}`, { status });
   }
 }

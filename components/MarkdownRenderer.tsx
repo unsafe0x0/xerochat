@@ -285,16 +285,27 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
               {children}
             </td>
           ),
-          a: ({ href, children }) => (
-            <a
-              href={href}
-              className="text-red-400 hover:text-red-500 underline transition-colors duration-200 break-all overflow-wrap-anywhere"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {children}
-            </a>
-          ),
+          a: ({ href, children }) => {
+            // Sanitize href to prevent javascript: protocol XSS
+            const hrefStr = typeof href === "string" ? href : "";
+            const isSafe =
+              hrefStr &&
+              (hrefStr.startsWith("https://") ||
+                hrefStr.startsWith("http://") ||
+                hrefStr.startsWith("mailto:") ||
+                hrefStr.startsWith("/") ||
+                hrefStr.startsWith("#"));
+            return (
+              <a
+                href={isSafe ? hrefStr : "#"}
+                className="text-red-400 hover:text-red-500 underline transition-colors duration-200 break-all overflow-wrap-anywhere"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                {children}
+              </a>
+            );
+          },
           strong: ({ children }) => (
             <strong className="font-semibold text-white">{children}</strong>
           ),
@@ -302,15 +313,25 @@ export default function MarkdownRenderer({ content }: MarkdownRendererProps) {
             <em className="italic text-neutral-300">{children}</em>
           ),
           hr: () => <hr className="border-t border-[#282828] my-8" />,
-          img: ({ src, alt }) => (
-            <div className="my-6">
-              <img
-                src={src}
-                alt={alt}
-                className="max-w-full h-auto rounded-md"
-              />
-            </div>
-          ),
+          img: ({ src, alt }) => {
+            // Only allow https and data: URLs for images
+            const srcStr = typeof src === "string" ? src : "";
+            const isSafeSrc =
+              srcStr &&
+              (srcStr.startsWith("https://") || srcStr.startsWith("data:image/"));
+            if (!isSafeSrc) return null;
+            return (
+              <div className="my-6">
+                <img
+                  src={srcStr}
+                  alt={alt || ""}
+                  className="max-w-full h-auto rounded-md"
+                  loading="lazy"
+                  referrerPolicy="no-referrer"
+                />
+              </div>
+            );
+          },
         }}
       >
         {content}
